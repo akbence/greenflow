@@ -65,7 +65,7 @@
 
 
     <build>
-        <finalName>duckTalk</finalName>
+        <finalName>greenflow</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
