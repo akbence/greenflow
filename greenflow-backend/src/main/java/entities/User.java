@@ -12,4 +12,8 @@ public class User {
 
     @Column(unique = true)
     private String username;
+
+    public User(String username){
+        this.username=username;
+    }
 }
