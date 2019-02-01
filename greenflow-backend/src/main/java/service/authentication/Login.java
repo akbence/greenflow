@@ -1,4 +1,4 @@
-package action;
+package service.authentication;
 
 import inputs.UserInput;
 
@@ -12,14 +12,16 @@ import java.io.Serializable;
 @Named
 public class Login implements Serializable {
 
-    @Inject
-    Credentials credentials;
+    @Inject PasswordHandler passwordHandler;
 
     private User user;
 
     public void login(UserInput userInput) {
         User user=new User();
         user.setUsername(userInput.getUsername());
+        //user.setPasswordHash(passwordHandler);
+
+
 
     }
 
@@ -32,7 +34,8 @@ public class Login implements Serializable {
     }
 
     @Produces
-    @LoggedIn User getCurrentUser() {
+    @LoggedIn
+    User getCurrentUser() {
         return user;
     }
 

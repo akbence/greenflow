@@ -1,4 +1,4 @@
-package action;
+package service.authentication;
 
 import javax.inject.Qualifier;
 import java.lang.annotation.Retention;

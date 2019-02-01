@@ -1,10 +1,14 @@
 package entities;
 
-
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
-public class User {
+@Table(name = UserEntity.tableName)
+public class UserEntity {
+
+    public  static final String tableName= "User";
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -15,10 +19,17 @@ public class User {
     @Column
     private String passwordHash;
 
-    public User(String username){
-        this.username=username;
-    }
-    public User(){};
+    @Column
+    private LocalDateTime registrationDate;
+
+    public UserEntity(String username, String passwordHash, LocalDateTime timestamp) {
+        this.username = username;
+        this.passwordHash= passwordHash;
+        this.registrationDate = timestamp;
+    };
+
+    public UserEntity() {
+    };
 
     public int getId() {
         return id;
@@ -44,4 +55,11 @@ public class User {
         this.passwordHash = passwordHash;
     }
 
+    public LocalDateTime getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(LocalDateTime registrationDate) {
+        this.registrationDate = registrationDate;
+    }
 }

@@ -1,27 +1,33 @@
 package dao;
 
-import entities.User;
-import inputs.UserInput;
+import service.authentication.User;
+import entities.UserEntity;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 
 @Model
 public class UserDao {
 
     @Inject
-    EntityManager em;
+    private EntityManager em;
 
-    public void registerUser(UserInput userInput){
-        User user=new User();
-        user
+    @Transactional
+    public void registerUser(User user){
+        UserEntity userEntity=new UserEntity();
+        userEntity.setUsername(user.getUsername());
+        userEntity.setPasswordHash(user.getPasswordHash());
+        userEntity.setRegistrationDate(user.getRegistration_date());
 
         try {
-            em.persist();
+            em.persist(userEntity);
         }
         catch (Exception e){
-            System.out.println("adduser problem");
+
+            e.printStackTrace();
+
         }
     }
 
