@@ -1,5 +1,7 @@
 package action;
 
+import inputs.UserInput;
+
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
@@ -15,10 +17,10 @@ public class Login implements Serializable {
 
     private User user;
 
-    public void login() {
-       user=new User();
-      user.setPassword("password");
-      user.setUsername("admin");
+    public void login(UserInput userInput) {
+        User user=new User();
+        user.setUsername(userInput.getUsername());
+
     }
 
     public void logout() {
