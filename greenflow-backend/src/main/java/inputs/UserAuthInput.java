@@ -1,6 +1,6 @@
 package inputs;
 
-public class UserInput {
+public class UserAuthInput {
 
     private String username;
     private String password;

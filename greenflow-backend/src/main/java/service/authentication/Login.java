@@ -1,6 +1,6 @@
 package service.authentication;
 
-import inputs.UserInput;
+import inputs.UserAuthInput;
 
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
@@ -16,9 +16,9 @@ public class Login implements Serializable {
 
     private User user;
 
-    public void login(UserInput userInput) {
+    public void login(UserAuthInput userAuthInput) {
         User user=new User();
-        user.setUsername(userInput.getUsername());
+        user.setUsername(userAuthInput.getUsername());
         //user.setPasswordHash(passwordHandler);
 
 
