@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Table(name = UserEntity.tableName)
 public class UserEntity {
 
-    public static final String QUERY_USER_GET_PASSWORDHASH_BY_USERNAME = "User.getUsername";
+    public static final String QUERY_USER_GET_PASSWORDHASH_BY_USERNAME = "User.getPasswordHash";
     public static final String QUERY_USER_GET_CREATIONDATE_BY_USERNAME = "User.getCreationDate";
     public static final String tableName= "User";
 
