@@ -4,10 +4,14 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@NamedQueries({ @NamedQuery(name = "User.getPasswordHash", query = "select u.passwordHash from UserEntity u where u.username = :username"),
+         @NamedQuery(name = "User.getCreationDate", query = "select u.registrationDate from UserEntity u where u.username = :username")})
 @Table(name = UserEntity.tableName)
 public class UserEntity {
 
-    public  static final String tableName= "User";
+    public static final String QUERY_USER_GET_PASSWORDHASH_BY_USERNAME = "User.getUsername";
+    public static final String QUERY_USER_GET_CREATIONDATE_BY_USERNAME = "User.getCreationDate";
+    public static final String tableName= "User";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

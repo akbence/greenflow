@@ -3,6 +3,7 @@ package dao;
 import service.authentication.User;
 import entities.UserEntity;
 
+import javax.ejb.Local;
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -35,8 +36,7 @@ public class UserDao {
     public String getPasswordHash(User loginUser) {
         String result = null;
         try {
-            UserEntity user = em.find(UserEntity.class, loginUser.getUsername());
-            result = user.getPasswordHash();
+            result = em.createNamedQuery(UserEntity.QUERY_USER_GET_PASSWORDHASH_BY_USERNAME,String.class).setParameter("username",loginUser.getUsername()).getSingleResult();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -46,8 +46,7 @@ public class UserDao {
     public LocalDateTime getCreationDate(User loginUser) {
         LocalDateTime result = null;
         try {
-            UserEntity user = em.find(UserEntity.class, loginUser.getUsername());
-            result = user.getRegistrationDate();
+            result = em.createNamedQuery(UserEntity.QUERY_USER_GET_CREATIONDATE_BY_USERNAME, LocalDateTime.class).setParameter("username",loginUser.getUsername()).getSingleResult();
         } catch (Exception e) {
             e.printStackTrace();
         }
