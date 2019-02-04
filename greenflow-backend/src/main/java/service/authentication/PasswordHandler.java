@@ -8,6 +8,9 @@ import javax.inject.Named;
 
 import org.apache.commons.codec.binary.Hex;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Named
 @RequestScoped
 public class PasswordHandler {
@@ -22,12 +25,16 @@ public class PasswordHandler {
      * 
      * @param password
      *            the field which need to be stored
-     * @param salt
-     *            some random value used to make the hashing more safe
+     * @param creationDate
+     *            LocalDateTime which will be used as salt
      * @return
      * @throws Exception
      */
-    public static String createPasswordHash(String password, String salt) throws Exception {
+    public static String createPasswordHash(String password, LocalDateTime creationDate) throws Exception {
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String salt= creationDate.format(formatter);
+
         char[] passwordChars = password.toCharArray();
         byte[] saltBytes = salt.getBytes();
 

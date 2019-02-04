@@ -1,5 +1,6 @@
 package service.authentication;
 
+import dao.UserDao;
 import inputs.UserAuthInput;
 
 import javax.enterprise.context.SessionScoped;
@@ -10,11 +11,12 @@ import java.io.Serializable;
 
 @SessionScoped
 @Named
-public class Login implements Serializable {
+public class LoggedInService implements Serializable {
 
     @Inject PasswordHandler passwordHandler;
 
     private User user;
+
 
     public void login(UserAuthInput userAuthInput) {
         User user=new User();

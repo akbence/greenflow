@@ -1,17 +1,19 @@
 package rest;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import inputs.UserAuthInput;
-import service.authentication.Login;
+import service.authentication.LoggedInService;
+import service.authentication.AuthService;
 import service.RestAction;
 import dao.GreenflowDao;
-import service.authentication.RegisterService;
 
 @Path("")
+@ApplicationScoped
 public class RestService {
 
     @Inject
@@ -21,10 +23,10 @@ public class RestService {
     private RestAction restAction;
 
     @Inject
-    private Login login;
+    private LoggedInService loggedInService;
 
     @Inject
-    private RegisterService registerService;
+    private AuthService authService;
 
     @GET
     @Path("/hello")
@@ -38,7 +40,7 @@ public class RestService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response register(UserAuthInput userAuthInput) {
         try {
-            registerService.registerUser(userAuthInput);
+            authService.registerUser(userAuthInput);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -51,7 +53,7 @@ public class RestService {
 //    @Produces(MediaType.APPLICATION_JSON)
     public Response login(UserAuthInput userAuthInput){
         try {
-            registerService.loginUser(userAuthInput);
+            authService.loginUser(userAuthInput);
         } catch (Exception e) {
             e.printStackTrace();
         }
