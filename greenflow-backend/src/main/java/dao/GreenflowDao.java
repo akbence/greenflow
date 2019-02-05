@@ -1,6 +1,6 @@
 package dao;
 
-import entities.User;
+import entities.UserEntity;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
@@ -17,7 +17,8 @@ public class GreenflowDao {
     @Transactional
     public void addUser(){
         try {
-            em.persist(new User("testUser"));
+            //em.persist(new User("testUser"));
+//            em.persist();
         }
         catch (Exception e){
             System.out.println("adduser problem");

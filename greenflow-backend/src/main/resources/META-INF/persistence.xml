@@ -7,7 +7,7 @@
                       http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
     <persistence-unit name="greenflow" transaction-type="JTA">
         <jta-data-source>java:jboss/datasources/greenflowDS</jta-data-source>
-        <class>entities.User</class>
+        <class>entities.UserEntity</class>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
             <property name="hibernate.show_sql" value="false"/>
