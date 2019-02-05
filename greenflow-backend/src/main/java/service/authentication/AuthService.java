@@ -17,6 +17,9 @@ public class AuthService {
     @Inject
     PasswordHandler passwordHandler;
 
+    @Inject
+    LoggedInService loggedInService;
+
     public void registerUser(UserAuthInput userAuthInput) throws Exception {
 
         User newUser = new User();
@@ -27,7 +30,7 @@ public class AuthService {
         userDao.registerUser(newUser);
     }
 
-    public boolean loginUser(UserAuthInput userAuthInput) throws Exception {
+    public void loginUser(UserAuthInput userAuthInput) throws Exception {
         User loginUser = new User();
         loginUser.setUsername(userAuthInput.getUsername());
         String passwordHash = userDao.getPasswordHash(loginUser);
@@ -37,7 +40,9 @@ public class AuthService {
         if (passwordHash.isEmpty() || !passwordHash.equals(authHash)) {
             throw new Exception("Password incorrect");
         } else {
-            return true;
+            //TODO: Need to implement a good auth token here. E.g. JWT_AUTH_TOKEN
+            loginUser.setToken(loginUser.getUsername()+"_"+System.currentTimeMillis());
+            loggedInService.login(loginUser);
         }
     }
 }

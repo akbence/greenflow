@@ -18,13 +18,8 @@ public class LoggedInService implements Serializable {
     private User user;
 
 
-    public void login(UserAuthInput userAuthInput) {
-        User user=new User();
-        user.setUsername(userAuthInput.getUsername());
-        //user.setPasswordHash(passwordHandler);
-
-
-
+    public void login(User  loggingInUser) {
+        user=loggingInUser;
     }
 
     public void logout() {
