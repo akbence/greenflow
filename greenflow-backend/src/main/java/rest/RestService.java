@@ -6,7 +6,8 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import inputs.UserAuthInput;
+import rest.Input.UserAuthInput;
+import rest.Response.LoginResponse;
 import service.authentication.LoggedInService;
 import service.authentication.AuthService;
 import service.RestAction;
@@ -47,17 +48,19 @@ public class RestService {
         return Response.status(200).entity("").build();
     }
 
-    @GET
+    @POST
     @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
-//    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response login(UserAuthInput userAuthInput){
+        LoginResponse loginResponse=null;
         try {
-            authService.loginUser(userAuthInput);
+            loginResponse=authService.loginUser(userAuthInput);
+            return Response.status(200).entity(loginResponse).build();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return Response.status(200).entity("").build();
+        return Response.status(400).entity("").build();
     }
 
     @POST

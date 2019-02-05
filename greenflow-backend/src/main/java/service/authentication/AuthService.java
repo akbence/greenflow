@@ -1,12 +1,12 @@
 package service.authentication;
 
 import dao.UserDao;
-import inputs.UserAuthInput;
+import rest.Input.UserAuthInput;
+import rest.Response.LoginResponse;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Model
 public class AuthService {
@@ -30,7 +30,7 @@ public class AuthService {
         userDao.registerUser(newUser);
     }
 
-    public void loginUser(UserAuthInput userAuthInput) throws Exception {
+    public LoginResponse loginUser(UserAuthInput userAuthInput) throws Exception {
         User loginUser = new User();
         loginUser.setUsername(userAuthInput.getUsername());
         String passwordHash = userDao.getPasswordHash(loginUser);
@@ -43,6 +43,9 @@ public class AuthService {
             //TODO: Need to implement a good auth token here. E.g. JWT_AUTH_TOKEN
             loginUser.setToken(loginUser.getUsername()+"_"+System.currentTimeMillis());
             loggedInService.login(loginUser);
+            LoginResponse response = new LoginResponse();
+            response.setToken(loginUser.getToken());
+            return  response;
         }
     }
 }

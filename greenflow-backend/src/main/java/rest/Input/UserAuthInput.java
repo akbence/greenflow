@@ -1,4 +1,4 @@
-package inputs;
+package rest.Input;
 
 public class UserAuthInput {
 
