@@ -14,6 +14,7 @@ import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { AuthorizationComponent } from './authorization/authorization.component';
 
 @NgModule({
   imports: [
@@ -29,6 +30,7 @@ import { environment } from '../environments/environment';
   ],
   declarations: [
     AppComponent,
+    AuthorizationComponent,
     AdminLayoutComponent
   ],
   providers: [],

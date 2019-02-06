@@ -3,13 +3,19 @@ import { CommonModule, } from '@angular/common';
 import { BrowserModule  } from '@angular/platform-browser';
 import { Routes, RouterModule } from '@angular/router';
 
+
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { AuthorizationComponent } from './authorization/authorization.component';
 
 const routes: Routes =[
   {
     path: '',
-    redirectTo: 'dashboard',
-    pathMatch: 'full',
+    component: AuthorizationComponent,
+    children: [{
+      redirectTo: 'authorize',
+      pathMatch: 'full'
+    }
+    ]
   }, {
     path: '',
     component: AdminLayoutComponent,
@@ -20,7 +26,7 @@ const routes: Routes =[
   }]},
   {
     path: '**',
-    redirectTo: 'dashboard'
+    redirectTo: 'authorize'
   }
 ];
 
