@@ -1,5 +1,11 @@
 # GreenflowFrontend
 
+Preinstall: Nodejs, Angular CLI 7.2
+
+Build and serve: ng serve --> it will serve on the 4200 port
+
+
+-------Generated from the CLI generator-----------
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.2.2.
 
 ## Development server

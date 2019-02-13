@@ -8,12 +8,15 @@ import { AppRoutingModule } from './app.routing';
 import { NavbarModule } from './shared/navbar/navbar.module';
 import { FooterModule } from './shared/footer/footer.module';
 import { SidebarModule } from './sidebar/sidebar.module';
+import { HttpClientModule} from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { AuthorizationComponent } from './authorization/authorization.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -21,14 +24,17 @@ import { environment } from '../environments/environment';
     FormsModule,
     RouterModule,
     HttpModule,
+    HttpClientModule,
     NavbarModule,
     FooterModule,
     SidebarModule,
     AppRoutingModule,
+    ReactiveFormsModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   declarations: [
     AppComponent,
+    AuthorizationComponent,
     AdminLayoutComponent
   ],
   providers: [],
