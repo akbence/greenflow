@@ -13,6 +13,8 @@ import service.authentication.AuthService;
 import service.RestAction;
 import dao.GreenflowDao;
 
+import java.util.Date;
+
 @Path("")
 @ApplicationScoped
 public class RestService {
@@ -29,12 +31,6 @@ public class RestService {
     @Inject
     private AuthService authService;
 
-    @GET
-    @Path("/hello")
-    public Response printMessage() {
-        String result = restAction.quickTest();
-        return Response.status(200).entity(result).build();
-    }
 
     @POST
     @Path("/register")
@@ -42,6 +38,7 @@ public class RestService {
     public Response register(UserAuthInput userAuthInput) {
         try {
             authService.registerUser(userAuthInput);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
