@@ -1,4 +1,4 @@
-package entities.transactions;
+package enums;
 
 public enum Currency {
     HUF,

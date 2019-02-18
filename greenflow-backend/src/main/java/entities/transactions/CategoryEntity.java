@@ -1,7 +1,6 @@
-package entities;
+package entities.transactions;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = CategoryEntity.tableName)
