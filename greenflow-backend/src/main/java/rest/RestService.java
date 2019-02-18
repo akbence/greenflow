@@ -6,14 +6,14 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import rest.Input.TransactionInput;
 import rest.Input.UserAuthInput;
 import rest.Response.LoginResponse;
 import service.authentication.LoggedInService;
 import service.authentication.AuthService;
-import service.RestAction;
+import service.transaction.TransactionService;
 import dao.GreenflowDao;
 
-import java.util.Date;
 
 @Path("")
 @ApplicationScoped
@@ -21,9 +21,6 @@ public class RestService {
 
     @Inject
     private GreenflowDao greenflowDao;
-
-    @Inject
-    private RestAction restAction;
 
     @Inject
     private LoggedInService loggedInService;
@@ -61,10 +58,16 @@ public class RestService {
     }
 
     @POST
-    @Path("/add")
-    public Response postUser() {
-        System.out.println("hello restService");
-        greenflowDao.addUser();
-        return Response.status(200).entity("user added").build();
+    @Path("/postTransaction")
+    public Response postTransaction(TransactionInput transactionInput){
+        Response postTransactionResponse = null;
+        try{
+            transactionService.post(transactionInput);
+            return Response.status(200).entity("test").build();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return Response.status(400).entity("testFail").build();;
     }
+
 }

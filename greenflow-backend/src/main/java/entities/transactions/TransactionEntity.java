@@ -31,8 +31,6 @@ public class TransactionEntity {
     @Column
     private int ammount;
 
-    @Column
-    private String unit;
 
     @Column
     @Enumerated(EnumType.STRING)
@@ -46,13 +44,12 @@ public class TransactionEntity {
     @Enumerated(EnumType.STRING)
     private LocalDateTime date;
 
-    public TransactionEntity(int user_id, int category_id, String name, boolean isExpense, int ammount, String unit, PaymentType paymentType, Currency currency, LocalDateTime date) {
+    public TransactionEntity(int user_id, int category_id, String name, boolean isExpense, int ammount, PaymentType paymentType, Currency currency, LocalDateTime date) {
         this.user_id = user_id;
         this.category_id = category_id;
         this.name = name;
         this.isExpense = isExpense;
         this.ammount = ammount;
-        this.unit = unit;
         this.paymentType = paymentType;
         this.currency = currency;
         this.date = date;
@@ -111,14 +108,6 @@ public class TransactionEntity {
 
     public void setAmmount(int ammount) {
         this.ammount = ammount;
-    }
-
-    public String getUnit() {
-        return unit;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
     }
 
     public PaymentType getPaymentType() {
