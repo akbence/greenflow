@@ -28,6 +28,9 @@ public class RestService {
     @Inject
     private AuthService authService;
 
+    @Inject
+    private TransactionService transactionService;
+
 
     @POST
     @Path("/register")
@@ -67,7 +70,7 @@ public class RestService {
         } catch (Exception e){
             e.printStackTrace();
         }
-        return Response.status(400).entity("testFail").build();;
+        return Response.status(400).entity("testFail").build();
     }
 
 }

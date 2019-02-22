@@ -1,51 +1,32 @@
-package entities.transactions;
+package service.transaction;
 
 import enums.Currency;
 import enums.PaymentType;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = CategoryEntity.tableName)
-public class TransactionEntity {
 
-    public static final String tableName = "Transaction";
+public class Transaction {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private String username;
 
-    @Column
-    private int user_id;
+    private String category;
 
-    @Column
-    private int category_id;
-
-    @Column
     private String name;
 
-    @Column
     private boolean isExpense;
 
-    @Column
     private int ammount;
 
-
-    @Column
-    @Enumerated(EnumType.STRING)
     private PaymentType paymentType;
 
-    @Column
-    @Enumerated(EnumType.STRING)
     private Currency currency;
 
-    @Column
     private LocalDateTime date;
 
-    public TransactionEntity(int user_id, int category_id, String name, boolean isExpense, int ammount, PaymentType paymentType, Currency currency, LocalDateTime date) {
-        this.user_id = user_id;
-        this.category_id = category_id;
+    public Transaction(String username, String category, String name, boolean isExpense, int ammount, PaymentType paymentType, Currency currency, LocalDateTime date) {
+        this.username = username;
+        this.category = category;
         this.name = name;
         this.isExpense = isExpense;
         this.ammount = ammount;
@@ -54,35 +35,24 @@ public class TransactionEntity {
         this.date = date;
     }
 
-    public TransactionEntity() {
+    public Transaction() {
+
     }
 
-    public static String getTableName() {
-        return tableName;
+    public String getUsername() {
+        return username;
     }
 
-    public int getId() {
-        return id;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String getCategory() {
+        return category;
     }
 
-    public int getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
-    }
-
-    public int getCategory_id() {
-        return category_id;
-    }
-
-    public void setCategory_id(int category_id) {
-        this.category_id = category_id;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getName() {
@@ -133,3 +103,4 @@ public class TransactionEntity {
         this.date = date;
     }
 }
+

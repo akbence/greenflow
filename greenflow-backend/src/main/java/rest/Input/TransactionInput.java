@@ -10,6 +10,15 @@ public class TransactionInput {
     private String paymentType;
     private String currency;
     private String date;
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getUsername() {
         return username;

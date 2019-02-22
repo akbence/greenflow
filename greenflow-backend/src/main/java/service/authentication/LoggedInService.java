@@ -27,10 +27,20 @@ public class LoggedInService implements Serializable {
         return user != null;
     }
 
+    public String getCurrentUserName(){
+        return user.getUsername();
+    }
+
+
     @Produces
     @LoggedIn
     User getCurrentUser() {
         return user;
     }
 
+    public void checkToken(String token) throws Exception{
+        if(!token.equals(user.getToken())){
+            throw new Exception("user token not valid for the current user");
+        }
+    }
 }
