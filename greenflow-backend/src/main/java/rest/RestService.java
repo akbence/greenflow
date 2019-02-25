@@ -6,11 +6,13 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import rest.Input.CategoryInput;
 import rest.Input.TransactionInput;
 import rest.Input.UserAuthInput;
 import rest.Response.LoginResponse;
 import service.authentication.LoggedInService;
 import service.authentication.AuthService;
+import service.transaction.CategoryService;
 import service.transaction.TransactionService;
 import dao.GreenflowDao;
 
@@ -30,6 +32,9 @@ public class RestService {
 
     @Inject
     private TransactionService transactionService;
+
+    @Inject
+    private CategoryService categoryService;
 
 
     @POST
@@ -66,6 +71,19 @@ public class RestService {
         Response postTransactionResponse = null;
         try{
             transactionService.post(transactionInput);
+            return Response.status(200).entity("test").build();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return Response.status(400).entity("testFail").build();
+    }
+
+    @POST
+    @Path("/postCategory")
+    public Response postCategory(CategoryInput categoryInput){
+        Response postCategoryResponse = null;
+        try{
+            categoryService.post(categoryInput);
             return Response.status(200).entity("test").build();
         } catch (Exception e){
             e.printStackTrace();

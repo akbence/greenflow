@@ -1,6 +1,8 @@
 package service.transaction;
 
+import dao.transactions.CategoryDao;
 import enums.PaymentType;
+import rest.Input.CategoryInput;
 import rest.Input.TransactionInput;
 import service.authentication.LoggedInService;
 import javax.enterprise.inject.Model;
@@ -13,6 +15,9 @@ public class TransactionService {
 
     @Inject
     private LoggedInService loggedInService;
+
+    @Inject
+    CategoryDao categoryDao;
 
     public void post(TransactionInput transactionInput) throws Exception {
         if (loggedInService.isLoggedIn()) {

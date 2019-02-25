@@ -25,7 +25,6 @@ public class CategoryDao {
         categoryEntity.setName(category.getName());
         categoryEntity.setUser_id(userDao.getId(category.getUsername()));
         try {
-
             em.persist(categoryEntity);
         }
         catch (Exception e){

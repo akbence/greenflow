@@ -2,13 +2,14 @@ package entities.transactions;
 
 import enums.Currency;
 import enums.PaymentType;
+import service.transaction.Transaction;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = CategoryEntity.tableName)
+@Table(name = TransactionEntity.tableName)
 public class TransactionEntity {
 
     public static final String tableName = "Transaction";
