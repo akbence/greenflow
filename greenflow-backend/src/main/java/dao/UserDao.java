@@ -43,11 +43,24 @@ public class UserDao {
         return result;
     }
 
+    @Transactional
     public LocalDateTime getCreationDate(User loginUser) {
         LocalDateTime result = null;
         try {
             result = em.createNamedQuery(UserEntity.QUERY_USER_GET_CREATIONDATE_BY_USERNAME, LocalDateTime.class).setParameter("username",loginUser.getUsername()).getSingleResult();
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Transactional
+    public int getId(String name){
+        int result = -1;
+        try {
+            result = em.createNamedQuery(UserEntity.QUERY_USER_GET_ID_BY_USERNAME, Integer.class).setParameter("username",name).getSingleResult();
+        }
+        catch (Exception e ){
             e.printStackTrace();
         }
         return result;

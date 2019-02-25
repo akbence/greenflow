@@ -1,39 +1,54 @@
 package service.transaction;
 
+import enums.PaymentType;
 import rest.Input.TransactionInput;
 import service.authentication.LoggedInService;
-import service.authentication.User;
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Model
 public class TransactionService {
-
 
     @Inject
     private LoggedInService loggedInService;
 
     public void post(TransactionInput transactionInput) throws Exception {
-        if (loggedInService.isLoggedIn()){
+        if (loggedInService.isLoggedIn()) {
             loggedInService.checkToken(transactionInput.getToken());
 
             Transaction transaction = new Transaction();
             transaction.setAmmount(transactionInput.getAmount());
-            transaction.setCategory(transaction.getCategory());
             transaction.setCurrency(transaction.getCurrency());
             transaction.setExpense(transactionInput.isExpense());
             transaction.setName(transactionInput.getName());
-//TODO: setDate
-//            transaction.setDate();
-//TODO: setPaymentType
-//            transaction.setPaymentType(transactionInput.getPaymentType());
+            transaction.setDate(stringToDate(transactionInput.getDate()));
+            transaction.setPaymentType(stringToPayment(transactionInput.getPaymentType()));
+            transaction.setCategory(transaction.getCategory());
 
-            //TODO: implement the rest of the service
+            // TODO: implement the rest of the service
             System.out.println("user logged in");
             System.out.println(loggedInService.getCurrentUserName());
 
         }
 
+    }
 
+    private PaymentType stringToPayment(String paymentType) throws Exception {
+
+        if (paymentType.equals("CASH")) {
+            return PaymentType.CASH;
+        } else if (paymentType.equals("CARD")) {
+            return PaymentType.CARD;
+        } else {
+            throw new Exception("payment type invalid");
+        }
+    }
+
+    private LocalDate stringToDate(String date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate localDate = LocalDate.parse(date, formatter);
+        return localDate;
     }
 }

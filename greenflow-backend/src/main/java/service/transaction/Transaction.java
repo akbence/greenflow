@@ -3,6 +3,7 @@ package service.transaction;
 import enums.Currency;
 import enums.PaymentType;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
@@ -22,9 +23,9 @@ public class Transaction {
 
     private Currency currency;
 
-    private LocalDateTime date;
+    private LocalDate date;
 
-    public Transaction(String username, String category, String name, boolean isExpense, int ammount, PaymentType paymentType, Currency currency, LocalDateTime date) {
+    public Transaction(String username, String category, String name, boolean isExpense, int ammount, PaymentType paymentType, Currency currency, LocalDate date) {
         this.username = username;
         this.category = category;
         this.name = name;
@@ -95,11 +96,11 @@ public class Transaction {
         this.currency = currency;
     }
 
-    public LocalDateTime getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 }

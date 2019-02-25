@@ -9,7 +9,7 @@ public class TransactionInput {
     private int amount;
     private String paymentType;
     private String currency;
-    private String date;
+    private String date; // YYYY-MM-DD
     private String name;
 
     public String getName() {

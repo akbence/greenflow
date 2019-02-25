@@ -4,6 +4,7 @@ import enums.Currency;
 import enums.PaymentType;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -41,9 +42,9 @@ public class TransactionEntity {
     private Currency currency;
 
     @Column
-    private LocalDateTime date;
+    private LocalDate date;
 
-    public TransactionEntity(int user_id, int category_id, String name, boolean isExpense, int ammount, PaymentType paymentType, Currency currency, LocalDateTime date) {
+    public TransactionEntity(int user_id, int category_id, String name, boolean isExpense, int ammount, PaymentType paymentType, Currency currency, LocalDate date) {
         this.user_id = user_id;
         this.category_id = category_id;
         this.name = name;
@@ -125,11 +126,11 @@ public class TransactionEntity {
         this.currency = currency;
     }
 
-    public LocalDateTime getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 }
