@@ -63,6 +63,7 @@ public class UserDao {
         catch (Exception e ){
             e.printStackTrace();
         }
+        System.out.println(name+" " + result);
         return result;
     }
 }

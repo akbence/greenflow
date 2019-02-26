@@ -32,4 +32,22 @@ public class CategoryDao {
         }
 
     }
+
+    public int getID(String category,int userID) {
+
+        System.out.println(category + " " + userID);
+
+        int result = -1;
+        try {
+            result = em.createNamedQuery(CategoryEntity.QUERY_CATEGORY_GET_ID_BY_NAME, Integer.class)
+                    .setParameter("name",category)
+                    .setParameter("user_id",userID)
+                    .getSingleResult();
+        }
+        catch (Exception e ){
+            e.printStackTrace();
+        }
+
+        return result;
+    }
 }

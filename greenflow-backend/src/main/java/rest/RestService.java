@@ -69,6 +69,13 @@ public class RestService {
     @Path("/postTransaction")
     public Response postTransaction(TransactionInput transactionInput){
         Response postTransactionResponse = null;
+
+        ///TEST
+        System.out.println(transactionInput.getCategory());
+        System.out.println(transactionInput.getUsername());
+        System.out.println(transactionInput.getCurrency());
+
+
         try{
             transactionService.post(transactionInput);
             return Response.status(200).entity("test").build();
@@ -82,6 +89,7 @@ public class RestService {
     @Path("/postCategory")
     public Response postCategory(CategoryInput categoryInput){
         Response postCategoryResponse = null;
+
         try{
             categoryService.post(categoryInput);
             return Response.status(200).entity("test").build();

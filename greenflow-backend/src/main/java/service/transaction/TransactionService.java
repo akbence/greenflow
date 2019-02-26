@@ -1,6 +1,8 @@
 package service.transaction;
 
 import dao.transactions.CategoryDao;
+import dao.transactions.TransactionDao;
+import enums.Currency;
 import enums.PaymentType;
 import rest.Input.CategoryInput;
 import rest.Input.TransactionInput;
@@ -17,6 +19,9 @@ public class TransactionService {
     private LoggedInService loggedInService;
 
     @Inject
+    private TransactionDao transactionDao;
+
+    @Inject
     CategoryDao categoryDao;
 
     public void post(TransactionInput transactionInput) throws Exception {
@@ -25,12 +30,15 @@ public class TransactionService {
 
             Transaction transaction = new Transaction();
             transaction.setAmmount(transactionInput.getAmount());
-            transaction.setCurrency(transaction.getCurrency());
             transaction.setExpense(transactionInput.isExpense());
             transaction.setName(transactionInput.getName());
+            transaction.setCategory(transactionInput.getCategory());
+
             transaction.setDate(stringToDate(transactionInput.getDate()));
             transaction.setPaymentType(stringToPayment(transactionInput.getPaymentType()));
-            transaction.setCategory(transaction.getCategory());
+            transaction.setCurrency(stringToCurrency(transactionInput.getCurrency()));
+
+            transactionDao.post(transaction);
 
             // TODO: implement the rest of the service
             System.out.println("user logged in");
@@ -55,5 +63,9 @@ public class TransactionService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate localDate = LocalDate.parse(date, formatter);
         return localDate;
+    }
+
+    private Currency stringToCurrency(String currency){
+        return Currency.valueOf(currency);
     }
 }
