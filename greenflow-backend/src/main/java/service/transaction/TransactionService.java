@@ -33,6 +33,7 @@ public class TransactionService {
             transaction.setExpense(transactionInput.isExpense());
             transaction.setName(transactionInput.getName());
             transaction.setCategory(transactionInput.getCategory());
+            transaction.setUsername(transactionInput.getUsername());
 
             transaction.setDate(stringToDate(transactionInput.getDate()));
             transaction.setPaymentType(stringToPayment(transactionInput.getPaymentType()));

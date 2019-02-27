@@ -32,7 +32,7 @@ public class TransactionDao {
         transactionEntity.setName(transaction.getName());
         transactionEntity.setPaymentType(transaction.getPaymentType());
 
-        int userId=userDao.getId(transaction.getName());
+        int userId=userDao.getId(transaction.getUsername());
 
         transactionEntity.setCategory_id(categoryDao.getID(transaction.getCategory(),userId));
         transactionEntity.setUser_id(userId);
