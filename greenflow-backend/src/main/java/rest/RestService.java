@@ -7,25 +7,20 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import rest.Input.CategoryInput;
+import rest.Input.ExportInput;
 import rest.Input.TransactionInput;
 import rest.Input.UserAuthInput;
 import rest.Response.LoginResponse;
 import service.authentication.LoggedInService;
 import service.authentication.AuthService;
+import service.export.ExportService;
 import service.transaction.CategoryService;
 import service.transaction.TransactionService;
-import dao.GreenflowDao;
 
 
 @Path("")
 @ApplicationScoped
 public class RestService {
-
-    @Inject
-    private GreenflowDao greenflowDao;
-
-    @Inject
-    private LoggedInService loggedInService;
 
     @Inject
     private AuthService authService;
@@ -36,6 +31,8 @@ public class RestService {
     @Inject
     private CategoryService categoryService;
 
+    @Inject
+    private ExportService exportService;
 
     @POST
     @Path("/register")
@@ -78,7 +75,7 @@ public class RestService {
 
         try{
             transactionService.post(transactionInput);
-            return Response.status(200).entity("test").build();
+            return Response.status(200).entity("postTransaction success").build();
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -92,11 +89,27 @@ public class RestService {
 
         try{
             categoryService.post(categoryInput);
-            return Response.status(200).entity("test").build();
+            return Response.status(200).entity("postCategory success").build();
         } catch (Exception e){
             e.printStackTrace();
         }
         return Response.status(400).entity("testFail").build();
     }
+
+    @POST
+    @Path("/export")
+    public Response exportAsCSV(ExportInput exportInput){
+        Response postCategoryResponse = null;
+
+        try{
+            exportService.export(exportInput);
+            return Response.status(200).entity("postCategory success").build();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return Response.status(400).entity("testFail").build();
+
+    }
+
 
 }

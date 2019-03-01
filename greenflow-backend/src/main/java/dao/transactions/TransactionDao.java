@@ -1,5 +1,6 @@
 package dao.transactions;
 
+import converters.TransactionConverter;
 import dao.UserDao;
 import entities.transactions.CategoryEntity;
 import entities.transactions.TransactionEntity;
@@ -9,6 +10,7 @@ import service.transaction.Transaction;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 
 public class TransactionDao {
 
@@ -21,6 +23,9 @@ public class TransactionDao {
 
     @Inject
     private CategoryDao categoryDao;
+
+    @Inject
+    TransactionConverter transactionConverter;
 
     @Transactional
     public void post(Transaction transaction) {
@@ -44,5 +49,18 @@ public class TransactionDao {
             System.out.println("add category problem");
         }
 
+    }
+
+    @Transactional
+    public ArrayList<Transaction> getTransactions(String username) throws Exception{
+        ArrayList <TransactionEntity> entityList= new ArrayList<>();
+        try {
+            entityList= (ArrayList<TransactionEntity>) em.createNamedQuery(TransactionEntity.QUERY_TRANSACTION_GETALL_BY_USERNAME,TransactionEntity.class).setParameter("username",username).getResultList();
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return transactionConverter.daoToServiceList(entityList);
     }
 }

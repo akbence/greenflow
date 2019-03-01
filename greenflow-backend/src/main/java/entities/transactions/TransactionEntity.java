@@ -9,10 +9,13 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
+@NamedQueries({ @NamedQuery(name = "Transaction.getAllforUser", query = "select t from TransactionEntity t where t.user_id = :user_id")})
+
 @Table(name = TransactionEntity.tableName)
 public class TransactionEntity {
 
     public static final String tableName = "Transaction";
+    public static final String QUERY_TRANSACTION_GETALL_BY_USERNAME = "Transaction.getAllforUser";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

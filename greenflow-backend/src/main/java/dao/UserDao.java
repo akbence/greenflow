@@ -66,4 +66,15 @@ public class UserDao {
         System.out.println(name+" " + result);
         return result;
     }
+
+    public String getName(int user_id) {
+        String result = null;
+        try {
+            result = em.createNamedQuery(UserEntity.QUERY_USER_GET_USERNAME_BY_ID, String.class).setParameter("id",user_id).getSingleResult();
+        }
+        catch (Exception e ){
+            e.printStackTrace();
+        }
+        return result;
+    }
 }
