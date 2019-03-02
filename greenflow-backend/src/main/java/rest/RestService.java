@@ -13,6 +13,7 @@ import rest.Input.UserAuthInput;
 import rest.Response.LoginResponse;
 import service.authentication.LoggedInService;
 import service.authentication.AuthService;
+import service.authentication.Secured;
 import service.export.ExportService;
 import service.transaction.CategoryService;
 import service.transaction.TransactionService;
@@ -63,6 +64,7 @@ public class RestService {
     }
 
     @POST
+    @Secured
     @Path("/postTransaction")
     public Response postTransaction(TransactionInput transactionInput){
         Response postTransactionResponse = null;
@@ -83,6 +85,7 @@ public class RestService {
     }
 
     @POST
+    @Secured
     @Path("/postCategory")
     public Response postCategory(CategoryInput categoryInput){
         Response postCategoryResponse = null;
@@ -96,13 +99,13 @@ public class RestService {
         return Response.status(400).entity("testFail").build();
     }
 
-    @POST
+    @GET
+    @Secured
     @Path("/export")
-    public Response exportAsCSV(ExportInput exportInput){
+    public Response exportAsCSV(){
         Response postCategoryResponse = null;
-
         try{
-            exportService.export(exportInput);
+            exportService.export();
             return Response.status(200).entity("postCategory success").build();
         } catch (Exception e){
             e.printStackTrace();

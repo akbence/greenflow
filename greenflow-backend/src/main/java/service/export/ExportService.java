@@ -18,17 +18,16 @@ public class ExportService {
     @Inject
     LoggedInService loggedInService;
 
-    public void export(ExportInput exportInput) throws Exception {
-        if (loggedInService.isLoggedIn()) {
-            loggedInService.checkToken(exportInput.getToken());
-            try {
-                ArrayList<Transaction> transactions = transactionDao.getTransactions(exportInput.getUsername());
-                //TODO:implement csv generation
-                //return createCsv(transactions);
-            } catch (Exception e) {
-                throw e;
-            }
+    public void export() throws Exception {
 
+        try {
+            ArrayList<Transaction> transactions = transactionDao.getTransactions(loggedInService.getCurrentUserName());
+            // TODO:implement csv generation
+            // return createCsv(transactions);
+        } catch (Exception e) {
+            throw e;
         }
+
     }
+
 }
