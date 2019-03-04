@@ -42,21 +42,18 @@ public class TransactionConverter {
         result.setDate(transactionEntity.getDate());
 
         String username = usersWithIdCache.get(transactionEntity.getUser_id());
-        if (username != null) {
-            result.setUsername(username);
-
-        } else {
+        if (username == null) {
             username=userDao.getName(transactionEntity.getUser_id());
             usersWithIdCache.put(transactionEntity.getUser_id(),username);
         }
+        result.setUsername(username);
 
         String category = categoriesWithIdCache.get(transactionEntity.getCategory_id());
-        if (category != null){
-            result.setCategory(category);
-        }else{
+        if (category == null){
             category=categoryDao.getName(transactionEntity.getCategory_id(),transactionEntity.getUser_id());
             categoriesWithIdCache.put(transactionEntity.getCategory_id(),category);
         }
+        result.setCategory(category);
 
         return result;
     }

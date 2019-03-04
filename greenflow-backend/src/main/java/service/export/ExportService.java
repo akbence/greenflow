@@ -1,7 +1,6 @@
 package service.export;
 
 import dao.transactions.TransactionDao;
-import rest.Input.ExportInput;
 import service.authentication.LoggedInService;
 import service.transaction.Transaction;
 

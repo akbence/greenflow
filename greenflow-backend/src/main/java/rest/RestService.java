@@ -6,6 +6,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.apache.commons.lang.math.RandomUtils;
 import rest.Input.CategoryInput;
 import rest.Input.ExportInput;
 import rest.Input.TransactionInput;
@@ -17,6 +18,12 @@ import service.authentication.Secured;
 import service.export.ExportService;
 import service.transaction.CategoryService;
 import service.transaction.TransactionService;
+
+import java.io.File;
+import java.net.URI;
+import java.nio.file.FileSystem;
+import java.util.Random;
+import java.util.RandomAccess;
 
 
 @Path("")
@@ -102,13 +109,27 @@ public class RestService {
     @GET
     @Secured
     @Path("/export")
+    @Produces(MediaType.TEXT_PLAIN)
     public Response exportAsCSV(){
         Response postCategoryResponse = null;
+        File file = null;
         try{
             exportService.export();
-            return Response.status(200).entity("postCategory success").build();
+            Random randomnumber = new Random();
+            file = new File(new URI("file:/tmp/"+  randomnumber.nextInt()+".csv"));
+            file.createNewFile();
+            Response.ResponseBuilder resp= Response.ok((Object)file);
+            System.out.println(file.getAbsolutePath());
+            //return Response.status(200)
+            resp.header("Content-Disposition","attachment; filename=\"test_file.csv\"");
+            return  resp.build();
         } catch (Exception e){
             e.printStackTrace();
+        }
+        finally {
+            if(file!=null){
+                //file.delete();
+            }
         }
         return Response.status(400).entity("testFail").build();
 

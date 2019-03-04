@@ -55,7 +55,8 @@ public class TransactionDao {
     public ArrayList<Transaction> getTransactions(String username) throws Exception{
         ArrayList <TransactionEntity> entityList= new ArrayList<>();
         try {
-            entityList= (ArrayList<TransactionEntity>) em.createNamedQuery(TransactionEntity.QUERY_TRANSACTION_GETALL_BY_USERNAME,TransactionEntity.class).setParameter("username",username).getResultList();
+            int user_id= userDao.getId(username);
+            entityList= (ArrayList<TransactionEntity>) em.createNamedQuery(TransactionEntity.QUERY_TRANSACTION_GETALL_BY_USERNAME,TransactionEntity.class).setParameter("user_id",user_id).getResultList();
 
         }
         catch (Exception e){
