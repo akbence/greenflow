@@ -107,19 +107,21 @@ public class RestService {
     }
 
     @GET
-    @Secured
+    //@Secured
     @Path("/export")
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces("txt/csv")
     public Response exportAsCSV(){
         Response postCategoryResponse = null;
         File file = null;
         try{
-            exportService.export();
+           // exportService.export();
             Random randomnumber = new Random();
-            file = new File(new URI("file:/tmp/"+  randomnumber.nextInt()+".csv"));
+            file = new File(new URI("file:/tmp/"+  "865599642"/*randomnumber.nextInt()*/+".csv"));
+
             file.createNewFile();
-            Response.ResponseBuilder resp= Response.ok((Object)file);
             System.out.println(file.getAbsolutePath());
+
+            Response.ResponseBuilder resp= Response.ok((Object)file);
             //return Response.status(200)
             resp.header("Content-Disposition","attachment; filename=\"test_file.csv\"");
             return  resp.build();

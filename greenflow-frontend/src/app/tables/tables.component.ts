@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient, HttpParams, HttpHeaderResponse, HttpHeaders } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+import { first } from 'rxjs/operators';
+import { saveAs } from 'file-saver';
+
 
 declare interface TableData {
     headerRow: string[];
@@ -13,8 +18,11 @@ declare interface TableData {
 export class TablesComponent implements OnInit {
     public tableData1: TableData;
     public tableData2: TableData;
+    public serverURL : string;
 
-  constructor() { }
+  constructor(private http: HttpClient ) {
+    this.serverURL = "api/"
+   }
 
   ngOnInit() {
       this.tableData1 = {
@@ -41,4 +49,22 @@ export class TablesComponent implements OnInit {
       };
   }
 
+
+  exportAll(){
+    console.log("clicked")
+    return this.http.get<Blob>(this.serverURL+"export",{responseType: 'csv' as 'json'})
+    .pipe(res =>{
+      return res
+    }).pipe()
+    .subscribe(
+      data =>{
+        console.log(data)
+        var blob = new Blob([data], { type: "text/csv" } );
+        saveAs(blob, "fileName.csv");
+      },
+      error => {
+          //this.error = error;
+          console.log("Error"+error);
+      });
+  }
 }
