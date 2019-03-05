@@ -1,12 +1,13 @@
 package service.authentication;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 
-@SessionScoped
+@ApplicationScoped
 @Named
 public class LoggedInService implements Serializable {
 

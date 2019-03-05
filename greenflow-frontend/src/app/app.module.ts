@@ -9,6 +9,7 @@ import { NavbarModule } from './shared/navbar/navbar.module';
 import { FooterModule } from './shared/footer/footer.module';
 import { SidebarModule } from './sidebar/sidebar.module';
 import { HttpClientModule} from '@angular/common/http';
+import {CookieService} from 'ngx-cookie-service'
 
 import { AppComponent } from './app.component';
 
@@ -37,7 +38,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     AuthorizationComponent,
     AdminLayoutComponent
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

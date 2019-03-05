@@ -33,6 +33,7 @@
     "file-saver": "^2.0.1",
     "googleapis": "33.0.0",
     "jquery": "3.3.1",
+    "ngx-cookie-service": "^2.1.0",
     "perfect-scrollbar": "^1.4.0",
     "rxjs": "~6.3.3",
     "rxjs-compat": "6.3.3",

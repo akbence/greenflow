@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpHeaderResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaderResponse, HttpHeaders, } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import {CookieService} from 'ngx-cookie-service'
 
 import { User } from '../model/user';
 
@@ -12,7 +13,7 @@ export class AuthenticationService {
 
     public serverURL : string;
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient,private cookie:CookieService) {
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
         this.currentUser = this.currentUserSubject.asObservable();
         //this.serverURL= "http://localhost:8080/greenflow/rest/";
@@ -38,12 +39,13 @@ export class AuthenticationService {
     }
 
     login(username: string, password: string) {
-        return this.http.post<any>(this.serverURL + "login", { username, password })
+        return this.http.post<any>(this.serverURL + "login", { username, password },{withCredentials: true})
             .pipe(map(response => {
                 // login successful if there's a jwt token in the response
                 if (response && response.token) {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
                    console.log(localStorage.setItem('currentUser', JSON.stringify(response)))
+                    this.cookie.set("JSESSIONID",response)
                    this.currentUserSubject.next(response);
                 }
                     console.log(response)

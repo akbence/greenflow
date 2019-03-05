@@ -51,8 +51,12 @@ export class TablesComponent implements OnInit {
 
 
   exportAll(){
+    console.log("start export")
+    var token=  JSON.parse(localStorage.getItem("currentUser")).token
+    const headers = new HttpHeaders()
+            .set("Authorization",token);
     console.log("clicked")
-    return this.http.get<Blob>(this.serverURL+"export",{responseType: 'csv' as 'json'})
+    return this.http.get<Blob>(this.serverURL+"export",{responseType: 'csv' as 'json', withCredentials: true ,headers},)
     .pipe(res =>{
       return res
     }).pipe()

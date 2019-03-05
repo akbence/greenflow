@@ -1,7 +1,8 @@
 {
     "/api/*": {
       "target": "http://localhost:8080/greenflow/rest/",
-      "secure": false,
+      "secure": true,
+      "changeOrigin" : true,
       "pathRewrite": {"^/api" : ""}
     }
   }
