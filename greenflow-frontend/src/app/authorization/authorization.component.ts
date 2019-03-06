@@ -41,6 +41,21 @@ import {AuthenticationService} from './services/authentication.service'
    // convenience getter for easy access to form fields
    get f() { return this.loginForm.controls; }
 
+   enterPressed() {
+       //TODO: Remove code duplication
+    this.authenticationService.login(this.f.username.value, this.f.password.value)
+    .pipe(first())
+    .subscribe(
+        data => {
+            this.router.navigate(["/dashboard"])
+        
+        },
+        error => {
+            //this.error = error;
+            this.loading = false;
+        });
+  }
+
    onSubmit() {
     var buttonName = document.activeElement.getAttribute("Name");
     this.submitted = true;
@@ -79,7 +94,7 @@ import {AuthenticationService} from './services/authentication.service'
                 });
             }
     
-}
+    }
 
   }
 
