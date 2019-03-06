@@ -4,13 +4,13 @@ import dao.transactions.CategoryDao;
 import dao.transactions.TransactionDao;
 import enums.Currency;
 import enums.PaymentType;
-import rest.Input.CategoryInput;
 import rest.Input.TransactionInput;
 import service.authentication.LoggedInService;
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 @Model
 public class TransactionService {
@@ -68,5 +68,9 @@ public class TransactionService {
 
     private Currency stringToCurrency(String currency){
         return Currency.valueOf(currency);
+    }
+
+    public ArrayList<Transaction> getTransactions() throws Exception {
+        return transactionDao.getTransactions(loggedInService.getCurrentUserName());
     }
 }

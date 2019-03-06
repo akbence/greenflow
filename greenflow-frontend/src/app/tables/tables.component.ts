@@ -3,6 +3,7 @@ import { HttpClient, HttpParams, HttpHeaderResponse, HttpHeaders } from '@angula
 import { map } from 'rxjs/operators';
 import { first } from 'rxjs/operators';
 import { saveAs } from 'file-saver';
+import { query } from '@angular/animations';
 
 
 declare interface TableData {
@@ -25,17 +26,11 @@ export class TablesComponent implements OnInit {
    }
 
   ngOnInit() {
+      this.queryAll();
       this.tableData1 = {
-          headerRow: [ 'ID', 'Name', 'Country', 'City', 'Salary'],
-          dataRows: [
-              ['1', 'Dakota Rice', 'Niger', 'Oud-Turnhout', '$36,738'],
-              ['2', 'Minerva Hooper', 'Curaçao', 'Sinaai-Waas', '$23,789'],
-              ['3', 'Sage Rodriguez', 'Netherlands', 'Baileux', '$56,142'],
-              ['4', 'Philip Chaney', 'Korea, South', 'Overland Park', '$38,735'],
-              ['5', 'Doris Greene', 'Malawi', 'Feldkirchen in Kärnten', '$63,542'],
-              ['6', 'Mason Porter', 'Chile', 'Gloucester', '$78,615']
-          ]
-      };
+        headerRow: ['Name', 'Amount', 'Currency', 'Category', 'PaymentType', 'Date', 'isExpense'],
+        dataRows: [[]]
+    };      
       this.tableData2 = {
           headerRow: [ 'ID', 'Name',  'Salary', 'Country', 'City' ],
           dataRows: [
@@ -48,6 +43,45 @@ export class TablesComponent implements OnInit {
           ]
       };
   }
+
+
+  queryAll(){
+    console.log("start query")
+    var token=  JSON.parse(localStorage.getItem("currentUser")).token
+    const headers = new HttpHeaders()
+            .set("Authorization",token);
+    return this.http.get<any>(this.serverURL+"transactions",{withCredentials: true ,headers},)
+    .pipe(res =>{
+      return res
+    }).pipe()
+    .subscribe(
+      data =>{
+        console.log(data)
+        
+        var iterator = 0
+        var transformedRows = []
+        data.forEach(element => {
+          var row : string[]
+          row=[element.name, element.ammount, element.currency, element.category, element.paymentType, element.date, element.expense.toString()]
+          console.log(row)
+          transformedRows[iterator++]=row;
+
+        });
+        this.tableData1 = {
+          headerRow: ['Name', 'Amount', 'Currency', 'Category', 'PaymentType', 'Date', 'isExpense'],
+          dataRows: transformedRows
+      };   
+
+       
+        console.log(transformedRows)
+        return transformedRows;
+      },
+      error => {
+          //this.error = error;
+          console.log("Error"+error);
+      });
+  }
+  
 
 
   exportAll(){

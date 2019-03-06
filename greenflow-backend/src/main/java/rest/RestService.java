@@ -17,11 +17,13 @@ import service.authentication.AuthService;
 import service.authentication.Secured;
 import service.export.ExportService;
 import service.transaction.CategoryService;
+import service.transaction.Transaction;
 import service.transaction.TransactionService;
 
 import java.io.File;
 import java.net.URI;
 import java.nio.file.FileSystem;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.RandomAccess;
 
@@ -129,6 +131,23 @@ public class RestService {
             }
         }
         return Response.status(400).entity("export failed").build();
+
+    }
+
+    @GET
+    @Secured
+    @Path("/transactions")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getTransactions(){
+        Response getTransactionsResponse = null;
+
+        try{
+            ArrayList<Transaction> ret = transactionService.getTransactions();
+            return Response.status(200).entity(ret).build();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return Response.status(400).entity("testFail").build();
 
     }
 
