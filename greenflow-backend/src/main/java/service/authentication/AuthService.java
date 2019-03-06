@@ -34,8 +34,8 @@ public class AuthService {
         User loginUser = new User();
         loginUser.setUsername(userAuthInput.getUsername());
         String passwordHash = userDao.getPasswordHash(loginUser);
-
-        String authHash = passwordHandler.createPasswordHash(userAuthInput.getPassword(), userDao.getCreationDate(loginUser));
+        loginUser.setRegistration_date(userDao.getCreationDate(loginUser));
+        String authHash = passwordHandler.createPasswordHash(userAuthInput.getPassword(), loginUser.getRegistration_date());
 
         if (passwordHash.isEmpty() || !passwordHash.equals(authHash)) {
             throw new Exception("Password incorrect");
@@ -46,6 +46,7 @@ public class AuthService {
             LoginResponse response = new LoginResponse();
             response.setToken(loginUser.getToken());
             response.setUsername(loginUser.getUsername());
+            response.setRegistrationDate(loginUser.getRegistration_date().toLocalDate());
             return  response;
         }
     }

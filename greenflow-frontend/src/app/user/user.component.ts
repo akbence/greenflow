@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { tokenKey } from '@angular/core/src/view';
 
 @Component({
   selector: 'app-user',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserComponent implements OnInit {
 
-  constructor() { }
+  private username : string
+  private registrationDate : Date
+
+  constructor() {
+    
+   }
 
   ngOnInit() {
+    this.username=JSON.parse(localStorage.getItem("currentUser")).username
+    this.registrationDate=JSON.parse(localStorage.getItem("currentUser")).registrationDate
   }
 
 }
