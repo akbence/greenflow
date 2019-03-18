@@ -12,11 +12,11 @@ declare interface TableData {
 }
 
 @Component({
-  selector: 'app-tables',
-  templateUrl: './tables.component.html',
-  styleUrls: ['./tables.component.css']
+  selector: 'history-tables',
+  templateUrl: './history.component.html',
+  styleUrls: ['./history.component.css']
 })
-export class TablesComponent implements OnInit {
+export class HistoryComponent implements OnInit {
     public tableData1: TableData;
     public tableData2: TableData;
     public serverURL : string;

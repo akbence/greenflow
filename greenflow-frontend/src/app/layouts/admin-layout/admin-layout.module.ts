@@ -10,7 +10,7 @@ import { AdminLayoutRoutes } from './admin-layout.routing';
 
 import { HomeComponent } from '../../home/home.component';
 import { UserComponent } from '../../user/user.component';
-import { TablesComponent } from '../../tables/tables.component';
+import { HistoryComponent } from '../../history/history.component';
 import { TypographyComponent } from '../../typography/typography.component';
 import { IconsComponent } from '../../icons/icons.component';
 import { MapsComponent } from '../../maps/maps.component';
@@ -29,7 +29,7 @@ import { UpgradeComponent } from '../../upgrade/upgrade.component';
   declarations: [
     HomeComponent,
     UserComponent,
-    TablesComponent,
+    HistoryComponent,
     TypographyComponent,
     IconsComponent,
     MapsComponent,
