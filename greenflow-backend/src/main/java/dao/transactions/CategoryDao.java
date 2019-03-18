@@ -8,6 +8,7 @@ import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 
 
 @Model
@@ -62,7 +63,20 @@ public class CategoryDao {
         }
 
         return result;
+    }
 
+    public ArrayList<String> getAllById(int user_id) {
+        ArrayList<String> result = null;
+        try {
+            result = (ArrayList<String>) em.createNamedQuery(CategoryEntity.QUERY_CATEGORY_GET_CATEGORIES_BY_IDS, String.class)
+                    .setParameter("user_id",user_id)
+                    .getResultList();
+        }
+        catch (Exception e ){
+            e.printStackTrace();
+        }
+
+        return result;
 
     }
 }

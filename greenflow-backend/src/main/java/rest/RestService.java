@@ -110,6 +110,21 @@ public class RestService {
 
     @GET
     @Secured
+    @Path("/categories")
+    @Produces (MediaType.APPLICATION_JSON)
+    public Response getCategories(){
+        try{
+            ArrayList<String>categoryResponse= categoryService.getAll();
+            return Response.status(200).entity(categoryResponse).build();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return Response.status(400).entity("testFail").build();
+    }
+
+
+    @GET
+    @Secured
     @Path("/export")
     @Produces("txt/csv")
     public Response exportAsCSV(){
