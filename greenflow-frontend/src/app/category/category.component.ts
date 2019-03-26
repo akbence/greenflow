@@ -82,6 +82,23 @@ export class CategoryComponent implements OnInit {
       });
   }
   
+  addRow(name){
+    console.log(name)
+    const req=JSON.stringify({name : name});
+    console.log("start query post with " + req)
+    var token=  JSON.parse(localStorage.getItem("currentUser")).token
+    const headers = new HttpHeaders()
+            .set("Authorization",token)
+            .append('Content-Type', 'application/json');
+    //const params = new HttpParams().set('name',row);
+    return this.http.request<any>('post',this.serverURL+"postCategory",{withCredentials: true ,headers, body : req, observe : 'response'})
+    .subscribe((res : any)=>{
+      this.queryAll();
+  });
+   }
+
+
+
   updateRow(row){
     console.log(row)
     const req=JSON.stringify({name : row.data, oldValue : row.oldData});
