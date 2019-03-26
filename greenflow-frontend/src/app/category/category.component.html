@@ -26,6 +26,13 @@
                                         <td> <button type="button" class="btn btn-warning" id="update" (click)="updateRow(row)">UPDATE</button> </td>
                                         <td> <button type="button" class="btn btn-danger" id="remove" (click)="deleteRow(row)">DELETE</button> </td>
                                     </tr>
+                                    <tr>
+                                        <td >
+                                           <input type="text" name="row" id="new_category_input" placeholder="New category..." 
+                                                    [(ngModel)]="addnew">
+                                             </td>
+                                             <button type="button" class="btn btn-success" id="add" (click)="addRow(addnew)">ADD</button>
+                                        </tr>
                                 </tbody>
                           </table>
 

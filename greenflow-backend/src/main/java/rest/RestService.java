@@ -96,12 +96,13 @@ public class RestService {
     @POST
     @Secured
     @Path("/postCategory")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response postCategory(CategoryInput categoryInput){
         Response postCategoryResponse = null;
 
         try{
             categoryService.post(categoryInput);
-            return Response.status(200).entity("postCategory success").build();
+            return Response.status(200).build();
         } catch (Exception e){
             e.printStackTrace();
         }

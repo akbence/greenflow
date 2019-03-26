@@ -24,17 +24,10 @@ public class CategoryService {
     private UserDao userDao;
 
     public void post(CategoryInput categoryInput) throws Exception {
-        if (loggedInService.isLoggedIn()) {
-            loggedInService.checkToken(categoryInput.getToken());
-
             Category category = new Category();
             category.setName(categoryInput.getName());
             category.setUsername(loggedInService.getCurrentUserName());
-
             categoryDao.post(category);
-
-        }
-
     }
 
     public ArrayList<String> getAll() {

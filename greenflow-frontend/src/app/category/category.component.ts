@@ -115,7 +115,7 @@ export class CategoryComponent implements OnInit {
    }
 
   deleteRow(row){
-    const req=JSON.stringify({name : row[0]});
+    const req=JSON.stringify({name : row.data});
     console.log("start query delete with " + req)
     var token=  JSON.parse(localStorage.getItem("currentUser")).token
     const headers = new HttpHeaders()
