@@ -79,4 +79,31 @@ public class CategoryDao {
         return result;
 
     }
+
+    @Transactional
+    public void delete(int userId, String category) {
+        CategoryEntity result = null;
+        try {
+            int categoryId = getID(category,userId);
+            CategoryEntity ce= em.find(CategoryEntity.class,categoryId);
+            em.remove(ce);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Transactional
+    public void modify(int userId, String category, String oldValue) {
+        CategoryEntity result = null;
+        try {
+            int categoryId = getID(oldValue,userId);
+            CategoryEntity ce= em.find(CategoryEntity.class,categoryId);
+            ce.setName(category);
+            em.merge(ce);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }

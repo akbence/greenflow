@@ -15,9 +15,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let row of tableData1.dataRows">
-                                        <td *ngFor="let cell of row">{{cell}}</td>
-                                        <td> <button id="remove" (click)="deleteRow(d.id)">DELETE ROW</button> </td>
+                                    <tr *ngFor="let row of tableData1.dataRows, let i = index">
+                                        <td >
+                                                <input type="text" name="row" id="input_{{i}}" value={{row.data}}
+                                                [(ngModel)]="row.data">
+                                         </td>
+                                        <td> <button type="button" class="btn btn-warning" id="update" (click)="updateRow(row)">UPDATE</button> </td>
+                                        <td> <button type="button" class="btn btn-danger" id="remove" (click)="deleteRow(row)">DELETE</button> </td>
                                     </tr>
                                 </tbody>
                           </table>

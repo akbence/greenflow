@@ -6,10 +6,22 @@ import { saveAs } from 'file-saver';
 import { query } from '@angular/animations';
 
 
-declare interface TableData {
+
+
+class TableData {
     headerRow: string[];
-    dataRows: string[][];
+    dataRows: TableRow[];
+    oldDataRows: string[][];
 }
+ class TableRow {
+  data : string
+  oldData: string
+
+  constructor(a,b){
+    this.data=a;
+    this.oldData=b;
+  }
+} 
 
 @Component({
   selector: 'category-tables',
@@ -28,8 +40,9 @@ export class CategoryComponent implements OnInit {
   ngOnInit() {
       this.queryAll();
       this.tableData1 = {
-        headerRow: ['Name', 'Delete'],
-        dataRows: [[]]
+        headerRow: ['Name', 'Update','Delete'],
+        dataRows: [],
+        oldDataRows: [[]]
     };      
   }
 
@@ -39,29 +52,27 @@ export class CategoryComponent implements OnInit {
     var token=  JSON.parse(localStorage.getItem("currentUser")).token
     const headers = new HttpHeaders()
             .set("Authorization",token);
-    return this.http.get<any>(this.serverURL+"categories",{withCredentials: true ,headers},)
-    .pipe(res =>{
-      return res
-    }).pipe()
+    return this.http.get<any>(this.serverURL+"categories",{withCredentials: true ,headers})
+    .pipe()
     .subscribe(
       data =>{
-        console.log(data)
-        
+        console.log(data)        
         var iterator = 0
         var transformedRows = []
         data.forEach(element => {
-          var row : string[]
-          row=[element]
+//          var row : string[]
+          var row = new TableRow(element,element)
+          //row.data=element
+          //row.oldData=element
           console.log(row)
-          transformedRows[iterator++]=row;
-
+          transformedRows.push(row)
+//          transformedRows[iterator++]=row;
         });
         this.tableData1 = {
-          headerRow: ['Name', 'Delete'],
-          dataRows: transformedRows
+          headerRow: ['Name', 'Update','Delete'],
+          dataRows: transformedRows,
+          oldDataRows: transformedRows
       };   
-
-       
         console.log(transformedRows)
         return transformedRows;
       },
@@ -71,27 +82,32 @@ export class CategoryComponent implements OnInit {
       });
   }
   
-
-
-  exportAll(){
-    console.log("start export")
+  updateRow(row){
+    console.log(row)
+    const req=JSON.stringify({name : row.data, oldValue : row.oldData});
+    console.log("start query post with " + req)
     var token=  JSON.parse(localStorage.getItem("currentUser")).token
     const headers = new HttpHeaders()
-            .set("Authorization",token);
-    console.log("clicked")
-    return this.http.get<Blob>(this.serverURL+"export",{responseType: 'csv' as 'json', withCredentials: true ,headers},)
-    .pipe(res =>{
-      return res
-    }).pipe()
-    .subscribe(
-      data =>{
-        console.log(data)
-        var blob = new Blob([data], { type: "text/csv" } );
-        saveAs(blob, "fileName.csv");
-      },
-      error => {
-          //this.error = error;
-          console.log("Error"+error);
-      });
-  }
+            .set("Authorization",token)
+            .append('Content-Type', 'application/json');
+    //const params = new HttpParams().set('name',row);
+    return this.http.request<any>('put',this.serverURL+"modfiyCategory",{withCredentials: true ,headers, body : req, observe : 'response'})
+    .subscribe((res : any)=>{
+      this.queryAll();
+  });
+   }
+
+  deleteRow(row){
+    const req=JSON.stringify({name : row[0]});
+    console.log("start query delete with " + req)
+    var token=  JSON.parse(localStorage.getItem("currentUser")).token
+    const headers = new HttpHeaders()
+            .set("Authorization",token)
+            .append('Content-Type', 'application/json');
+    //const params = new HttpParams().set('name',row);
+    return this.http.request<any>('delete',this.serverURL+"deleteCategory",{withCredentials: true ,headers, body : req, observe : 'response'})
+    .subscribe((res : any)=>{
+      this.queryAll();
+  });
+    }
 }

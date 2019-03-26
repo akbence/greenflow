@@ -1,5 +1,6 @@
 package entities.transactions;
 
+import javax.inject.Named;
 import javax.persistence.*;
 
 @Entity

@@ -41,4 +41,14 @@ public class CategoryService {
         int userId = userDao.getId(loggedInService.getCurrentUserName());
         return categoryDao.getAllById(userId);
     }
+
+    public void delete(CategoryInput categoryInput) {
+        int userId=userDao.getId(loggedInService.getCurrentUserName());
+        categoryDao.delete(userId,categoryInput.getName());
+    }
+
+    public void modify(CategoryInput categoryInput) {
+        int userId=userDao.getId(loggedInService.getCurrentUserName());
+        categoryDao.modify(userId,categoryInput.getName(),categoryInput.getOldValue());
+    }
 }

@@ -122,6 +122,37 @@ public class RestService {
         return Response.status(400).entity("testFail").build();
     }
 
+    @DELETE
+    @Secured
+    @Path("/deleteCategory")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteCategory(CategoryInput categoryInput){
+
+        try{
+            categoryService.delete(categoryInput);
+            return Response.status(200).build();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return Response.status(400).entity("testFail").build();
+    }
+
+    @PUT
+    @Secured
+    @Path("/modfiyCategory")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response modifyCategory(CategoryInput categoryInput){
+        Response postCategoryResponse = null;
+
+        try{
+            categoryService.modify(categoryInput);
+            return Response.status(201).build();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return Response.status(400).entity("testFail").build();
+    }
+
 
     @GET
     @Secured
