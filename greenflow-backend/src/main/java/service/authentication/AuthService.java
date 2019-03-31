@@ -22,6 +22,8 @@ public class AuthService {
 
     public void registerUser(UserAuthInput userAuthInput) throws Exception {
 
+        System.out.println("problem at Service");
+
         User newUser = new User();
         LocalDateTime creationDate = LocalDateTime.now();
         newUser.setRegistration_date(creationDate);

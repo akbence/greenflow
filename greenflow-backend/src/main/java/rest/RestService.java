@@ -48,13 +48,20 @@ public class RestService {
     @Path("/register")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response register(UserAuthInput userAuthInput) {
+        System.out.println("problem at REST");
         try {
             authService.registerUser(userAuthInput);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return Response.status(200).entity("").build();
+        return Response.status(200).entity("").header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Credentials", "true")
+                .header("Access-Control-Allow-Headers",
+                        "origin, content-type, accept, authorization")
+                .header("Access-Control-Allow-Methods",
+                        "GET, POST, PUT, DELETE, OPTIONS, HEAD")
+                .entity("").build();
     }
 
     @POST
