@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 import { first } from 'rxjs/operators';
 import { saveAs } from 'file-saver';
 import { query } from '@angular/animations';
+import { Globals } from '../globals';
 
 
 declare interface TableData {
@@ -21,8 +22,8 @@ export class HistoryComponent implements OnInit {
     public tableData2: TableData;
     public serverURL : string;
 
-  constructor(private http: HttpClient ) {
-    this.serverURL = "api/"
+  constructor(private http: HttpClient,globals : Globals ) {
+    this.serverURL = globals.getBaseUrl()
    }
 
   ngOnInit() {
@@ -50,7 +51,7 @@ export class HistoryComponent implements OnInit {
     var token=  JSON.parse(localStorage.getItem("currentUser")).token
     const headers = new HttpHeaders()
             .set("Authorization",token);
-    return this.http.get<any>(this.serverURL+"transactions",{withCredentials: true ,headers},)
+    return this.http.get<any>(this.serverURL+"transactions",{headers},)
     .pipe(res =>{
       return res
     }).pipe()
@@ -90,7 +91,7 @@ export class HistoryComponent implements OnInit {
     const headers = new HttpHeaders()
             .set("Authorization",token);
     console.log("clicked")
-    return this.http.get<Blob>(this.serverURL+"export",{responseType: 'csv' as 'json', withCredentials: true ,headers},)
+    return this.http.get<Blob>(this.serverURL+"export",{responseType: 'csv' as 'json' ,headers},)
     .pipe(res =>{
       return res
     }).pipe()

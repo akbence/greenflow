@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
+import { LocationStrategy, PlatformLocation, Location } from '@angular/common'
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  providers:[]
 })
 export class AppComponent implements OnInit {
 

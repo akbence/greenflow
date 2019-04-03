@@ -4,6 +4,8 @@ import { map } from 'rxjs/operators';
 import { first } from 'rxjs/operators';
 import { saveAs } from 'file-saver';
 import { query } from '@angular/animations';
+import { Globals } from '../globals';
+
 
 
 
@@ -33,8 +35,8 @@ export class CategoryComponent implements OnInit {
     public tableData2: TableData;
     public serverURL : string;
 
-  constructor(private http: HttpClient ) {
-    this.serverURL = "api/"
+  constructor(private http: HttpClient, globals : Globals) {
+    this.serverURL = globals.getBaseUrl()
    }
 
   ngOnInit() {
@@ -52,7 +54,7 @@ export class CategoryComponent implements OnInit {
     var token=  JSON.parse(localStorage.getItem("currentUser")).token
     const headers = new HttpHeaders()
             .set("Authorization",token);
-    return this.http.get<any>(this.serverURL+"categories",{withCredentials: true ,headers})
+    return this.http.get<any>(this.serverURL+"categories",{headers})
     .pipe()
     .subscribe(
       data =>{
@@ -91,7 +93,7 @@ export class CategoryComponent implements OnInit {
             .set("Authorization",token)
             .append('Content-Type', 'application/json');
     //const params = new HttpParams().set('name',row);
-    return this.http.request<any>('post',this.serverURL+"postCategory",{withCredentials: true ,headers, body : req, observe : 'response'})
+    return this.http.request<any>('post',this.serverURL+"postCategory",{headers, body : req, observe : 'response'})
     .subscribe((res : any)=>{
       this.queryAll();
   });
@@ -108,7 +110,7 @@ export class CategoryComponent implements OnInit {
             .set("Authorization",token)
             .append('Content-Type', 'application/json');
     //const params = new HttpParams().set('name',row);
-    return this.http.request<any>('put',this.serverURL+"modfiyCategory",{withCredentials: true ,headers, body : req, observe : 'response'})
+    return this.http.request<any>('put',this.serverURL+"modfiyCategory",{headers, body : req, observe : 'response'})
     .subscribe((res : any)=>{
       this.queryAll();
   });
@@ -122,7 +124,7 @@ export class CategoryComponent implements OnInit {
             .set("Authorization",token)
             .append('Content-Type', 'application/json');
     //const params = new HttpParams().set('name',row);
-    return this.http.request<any>('delete',this.serverURL+"deleteCategory",{withCredentials: true ,headers, body : req, observe : 'response'})
+    return this.http.request<any>('delete',this.serverURL+"deleteCategory",{ headers, body : req, observe : 'response'})
     .subscribe((res : any)=>{
       this.queryAll();
   });

@@ -18,6 +18,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { AuthorizationComponent } from './authorization/authorization.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import {Globals} from './globals'
 
 @NgModule({
   imports: [
@@ -38,7 +39,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     AuthorizationComponent,
     AdminLayoutComponent
   ],
-  providers: [CookieService],
+  providers: [CookieService,
+  Globals],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

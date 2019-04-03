@@ -4,20 +4,21 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {CookieService} from 'ngx-cookie-service'
 
+
 import { User } from '../model/user';
+import { Globals } from 'src/app/globals';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
     private currentUserSubject: BehaviorSubject<User>;
     public currentUser: Observable<User>;
+    public globals: Globals;
+    public serverURL :string;
 
-    public serverURL : string;
-
-    constructor(private http: HttpClient,private cookie:CookieService) {
+    constructor(private http: HttpClient,private cookie:CookieService, globals: Globals) {
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
         this.currentUser = this.currentUserSubject.asObservable();
-        //this.serverURL= "http://localhost:8080/greenflow/rest/";
-        this.serverURL = "api/";
+        this.serverURL = globals.getBaseUrl()
     }
 
     public get currentUserValue(): User {
@@ -25,23 +26,17 @@ export class AuthenticationService {
     }
 
     register(username: string, password: string){
-        let headers = new HttpHeaders().set("Content-Type","application/json")
-         .append("Access-Control-Allow-Origin", "http://127.0.0.1:4200")
-         .append('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT')
-//         .append('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
-         .append('Access-Control-Allow-Headers', 'accept, authorization, content-type, x-requested-with')
-         .append('Access-Control-Allow-Credentials', "true")
-        
         const data ={
             username : username,
             password : password
         }
-        console.log(headers.get("Access-Control-Allow-Origin"))
-        return this.http.post(/* this.serverURL */ "http://localhost:8080/greenflow/rest/" + "register",{headers,data});
+
+        return this.http.post( this.serverURL  + "register",{data});
     }
 
     login(username: string, password: string) {
-        return this.http.post<any>(/* this.serverURL */"http://localhost:8080/greenflow/rest/" + "login", { username, password })
+        
+        return this.http.post<any>(this.serverURL + "login", { username, password})
             .pipe(map(response => {
                 // login successful if there's a jwt token in the response
                 if (response && response.token) {
