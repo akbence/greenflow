@@ -55,13 +55,7 @@ public class RestService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return Response.status(200).entity("").header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Credentials", "true")
-                .header("Access-Control-Allow-Headers",
-                        "origin, content-type, accept, authorization")
-                .header("Access-Control-Allow-Methods",
-                        "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-                .entity("").build();
+        return Response.status(200).entity("").build();
     }
 
     @POST

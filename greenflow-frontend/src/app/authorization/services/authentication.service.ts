@@ -26,8 +26,8 @@ export class AuthenticationService {
 
     register(username: string, password: string){
         let headers = new HttpHeaders().set("Content-Type","application/json")
-         .append("Access-Control-Allow-Origin", "http://127.0.0.1:8080")
-         .append('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
+         .append("Access-Control-Allow-Origin", "http://127.0.0.1:4200")
+         .append('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT')
 //         .append('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
          .append('Access-Control-Allow-Headers', 'accept, authorization, content-type, x-requested-with')
          .append('Access-Control-Allow-Credentials', "true")
@@ -37,11 +37,11 @@ export class AuthenticationService {
             password : password
         }
         console.log(headers.get("Access-Control-Allow-Origin"))
-        return this.http.post(/* this.serverURL */ "http://localhost:8080/" + "register",{headers,data});
+        return this.http.post(/* this.serverURL */ "http://localhost:8080/greenflow/rest/" + "register",{headers,data});
     }
 
     login(username: string, password: string) {
-        return this.http.post<any>(/* this.serverURL */"http://localhost:8080/" + "login", { username, password },{withCredentials: true})
+        return this.http.post<any>(/* this.serverURL */"http://localhost:8080/greenflow/rest/" + "login", { username, password })
             .pipe(map(response => {
                 // login successful if there's a jwt token in the response
                 if (response && response.token) {
