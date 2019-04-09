@@ -10,6 +10,7 @@ import { AdminLayoutRoutes } from './admin-layout.routing';
 
 import { HomeComponent } from '../../home/home.component';
 import { UserComponent } from '../../user/user.component';
+import { TransactionComponent } from '../../transaction/transaction.component';
 import { HistoryComponent } from '../../history/history.component';
 import { CategoryComponent } from '../../category/category.component';
 import { TypographyComponent } from '../../typography/typography.component';
@@ -30,6 +31,7 @@ import { UpgradeComponent } from '../../upgrade/upgrade.component';
   declarations: [
     HomeComponent,
     UserComponent,
+    TransactionComponent,
     CategoryComponent,
     HistoryComponent,
     TypographyComponent,
