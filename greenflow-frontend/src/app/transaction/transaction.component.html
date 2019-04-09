@@ -20,7 +20,7 @@
                                 <div class="col-md-5">
                                     <div class="form-group">
                                         <label>Ammount</label>
-                                        <input type="number" class="form-control"  [(ngModel)]="ammount" placeholder="0" [ngModelOptions]="{standalone: true}">
+                                        <input type="number" class="form-control"  [(ngModel)]="transaction.ammount" placeholder="0" [ngModelOptions]="{standalone: true}">
                                     </div>
                                 </div>
                             </div>
@@ -28,7 +28,7 @@
                                 <div class="col-md-5">
                                     <div class="form-group">
                                         <label>Currency</label>
-                                        <input type="text" class="form-control"  [(ngModel)]="ammount" [ngModelOptions]="{standalone: true}">
+                                        <input type="text" class="form-control"  [(ngModel)]="transaction.currency" [ngModelOptions]="{standalone: true}">
                                     </div>
                                 </div>
                             </div>
@@ -36,7 +36,7 @@
                                 <div class="col-md-5">
                                     <div class="form-group">
                                         <label>Category</label>
-                                        <input type="text" class="form-control"  [(ngModel)]="category" [ngModelOptions]="{standalone: true}">
+                                        <input type="text" class="form-control"  [(ngModel)]="transaction.category" [ngModelOptions]="{standalone: true}">
                                     </div>
                                 </div>
                             </div>
@@ -44,7 +44,7 @@
                                 <div class="col-md-5">
                                     <div class="form-group">
                                         <label>Payment Type</label>
-                                        <input type="text" class="form-control"  [(ngModel)]="payment" placeholder="Username" [ngModelOptions]="{standalone: true}">
+                                        <input type="text" class="form-control"  [(ngModel)]="transaction.paymentType" placeholder="CASH" [ngModelOptions]="{standalone: true}">
                                     </div>
                                 </div>
                             </div>
@@ -52,7 +52,7 @@
                                 <div class="col-md-5">
                                     <div class="form-group">
                                         <label>Transaction date</label>
-                                        <input type="date" [(ngModel)]="transactionDate" class="form-control" [ngModelOptions]="{standalone: true}">
+                                        <input type="date" [(ngModel)]="transaction.transactionDate" id="transactionDate" class="form-control" name="transactionDate">
                                     </div>
                                 </div>
                             </div>
