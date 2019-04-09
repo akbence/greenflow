@@ -20,6 +20,7 @@ import { AuthorizationComponent } from './authorization/authorization.component'
 import { ReactiveFormsModule } from '@angular/forms';
 import {Globals} from './globals'
 
+
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -32,7 +33,7 @@ import {Globals} from './globals'
     SidebarModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   declarations: [
     AppComponent,
@@ -41,6 +42,7 @@ import {Globals} from './globals'
   ],
   providers: [CookieService,
   Globals],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+
 })
 export class AppModule { }

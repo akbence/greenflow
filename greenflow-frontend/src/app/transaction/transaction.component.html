@@ -52,11 +52,20 @@
                                 <div class="col-md-5">
                                     <div class="form-group">
                                         <label>Transaction date</label>
-                                        <input type="date" [(ngModel)]="transaction.transactionDate" id="transactionDate" class="form-control" name="transactionDate">
+                                        <div></div>
+                                        <!-- <input type="date" [(ngModel)]="transaction.transactionDate" id="transactionDate" class="form-control" name="transactionDate">
+ -->                                        <mat-form-field>
+                                            <input matInput [matDatepicker]="picker1" [formControl]="date">
+                                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker1></mat-datepicker>
+                                          </mat-form-field>
+                                          
+                                          
+
                                     </div>
                                 </div>
                             </div>
-                         </form>
+                         </form>  
                     </div>
                 </div>
             </div>
