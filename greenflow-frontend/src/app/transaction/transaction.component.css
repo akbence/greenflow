@@ -1,0 +1,23 @@
+.button-income {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .button-expense {
+    background-color: crimson; /* crimson */
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .divider{
+    width:5px;
+    height:auto;
+    display:inline-block;
+}

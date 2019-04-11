@@ -68,7 +68,11 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <button (click)="addExpense()">Add Transaction</button>
+                                <div class="col-md-8">
+                                    <button class="button-income" (click)="addIncome()">Add Income</button>
+                                    <div class="divider"></div>
+                                    <button class="button-expense" (click)="addExpense()">Add Expense</button>
+                                </div>
                             </div>
                          </form>  
                     </div>

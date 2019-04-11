@@ -46,13 +46,20 @@ export class TransactionComponent implements OnInit, Resolve<any> {
     console.log(this.categoryList[0])
   }
 
-
-
   addExpense(){
     this.transaction.isExpense = true
+    this.addTransaction()
+  }
+
+  addIncome(){
+    this.transaction.isExpense = false
+    this.addTransaction()
+  }
+
+  addTransaction(){
+    
     this.transaction.date = this.formatDate((<Date> this.date.value)).toString() 
     const req=JSON.stringify(this.transaction)
-    console.log(req)
     var token=  JSON.parse(localStorage.getItem("currentUser")).token
     const headers = new HttpHeaders()
             .set("Authorization",token)
