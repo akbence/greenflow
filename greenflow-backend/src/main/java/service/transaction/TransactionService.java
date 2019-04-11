@@ -26,14 +26,14 @@ public class TransactionService {
 
     public void post(TransactionInput transactionInput) throws Exception {
         if (loggedInService.isLoggedIn()) {
-            loggedInService.checkToken(transactionInput.getToken());
+//            loggedInService.checkToken(transactionInput.getToken());
 
             Transaction transaction = new Transaction();
             transaction.setAmmount(transactionInput.getAmount());
-            transaction.setExpense(transactionInput.isExpense());
+            transaction.setExpense(transactionInput.getIsExpense());
             transaction.setName(transactionInput.getName());
             transaction.setCategory(transactionInput.getCategory());
-            transaction.setUsername(transactionInput.getUsername());
+            transaction.setUsername(loggedInService.getCurrentUserName());
 
             transaction.setDate(stringToDate(transactionInput.getDate()));
             transaction.setPaymentType(stringToPayment(transactionInput.getPaymentType()));

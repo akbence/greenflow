@@ -19,8 +19,8 @@
                             <div class="row">
                                 <div class="col-md-5">
                                     <div class="form-group">
-                                        <label>Ammount</label>
-                                        <input type="number" class="form-control"  [(ngModel)]="transaction.ammount" placeholder="0" [ngModelOptions]="{standalone: true}">
+                                        <label>Amount</label>
+                                        <input type="number" class="form-control"  [(ngModel)]="transaction.amount" placeholder="0" [ngModelOptions]="{standalone: true}">
                                     </div>
                                 </div>
                             </div>
@@ -36,7 +36,10 @@
                                 <div class="col-md-5">
                                     <div class="form-group">
                                         <label>Category</label>
-                                        <input type="text" class="form-control"  [(ngModel)]="transaction.category" [ngModelOptions]="{standalone: true}">
+                                        <select name="category" type="text" class="form-control"  [(ngModel)]="transaction.category" [ngModelOptions]="{standalone: true}"
+                                        onselect="console.log(transaction.category)">
+                                            <option *ngFor="let element of categoryList">{{element}}</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -44,7 +47,9 @@
                                 <div class="col-md-5">
                                     <div class="form-group">
                                         <label>Payment Type</label>
-                                        <input type="text" class="form-control"  [(ngModel)]="transaction.paymentType" placeholder="CASH" [ngModelOptions]="{standalone: true}">
+                                        <select name="paymentType" type="text" class="form-control"  [(ngModel)]="transaction.paymentType" [ngModelOptions]="{standalone: true}">
+                                            <option *ngFor="let element of paymentTypes">{{element}}</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -54,16 +59,16 @@
                                         <label>Transaction date</label>
                                         <div></div>
                                         <!-- <input type="date" [(ngModel)]="transaction.transactionDate" id="transactionDate" class="form-control" name="transactionDate">
- -->                                        <mat-form-field>
+-->                                       <mat-form-field>
                                             <input matInput [matDatepicker]="picker1" [formControl]="date">
-                                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle> 
                                             <mat-datepicker #picker1></mat-datepicker>
                                           </mat-form-field>
-                                          
-                                          
-
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
+                                <button (click)="addExpense()">Add Transaction</button>
                             </div>
                          </form>  
                     </div>

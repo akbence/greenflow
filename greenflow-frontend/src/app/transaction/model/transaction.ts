@@ -1,9 +1,9 @@
 export class Transaction {
     name: string;
-    ammount : number
+    amount : number
     currency : string
     category : string
     paymentType : string
-    transactionDate : Date
+    date : string
     isExpense : boolean
 }

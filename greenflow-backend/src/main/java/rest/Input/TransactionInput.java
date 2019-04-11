@@ -44,11 +44,11 @@ public class TransactionInput {
         this.category = category;
     }
 
-    public boolean isExpense() {
+    public boolean getIsExpense() {
         return isExpense;
     }
 
-    public void setExpense(boolean expense) {
+    public void setIsExpense(boolean expense) {
         isExpense = expense;
     }
 

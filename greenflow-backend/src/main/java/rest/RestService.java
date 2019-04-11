@@ -76,14 +76,9 @@ public class RestService {
     @POST
     @Secured
     @Path("/postTransaction")
-    public Response postTransaction(TransactionInput transactionInput){
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response postTransaction( TransactionInput transactionInput){
         Response postTransactionResponse = null;
-
-        ///TEST
-        System.out.println(transactionInput.getCategory());
-        System.out.println(transactionInput.getUsername());
-        System.out.println(transactionInput.getCurrency());
-
 
         try{
             transactionService.post(transactionInput);
