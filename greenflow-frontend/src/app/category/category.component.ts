@@ -6,22 +6,17 @@ import { saveAs } from 'file-saver';
 import { query } from '@angular/animations';
 import { Globals } from '../globals';
 
-
-
-
-
 class TableData {
     headerRow: string[];
     dataRows: TableRow[];
-    oldDataRows: string[][];
 }
  class TableRow {
   data : string
-  oldData: string
+  id : number
 
   constructor(a,b){
     this.data=a;
-    this.oldData=b;
+    this.id=b;
   }
 } 
 
@@ -44,7 +39,6 @@ export class CategoryComponent implements OnInit {
       this.tableData1 = {
         headerRow: ['Name', 'Update','Delete'],
         dataRows: [],
-        oldDataRows: [[]]
     };      
   }
 
@@ -62,18 +56,13 @@ export class CategoryComponent implements OnInit {
         var iterator = 0
         var transformedRows = []
         data.forEach(element => {
-//          var row : string[]
-          var row = new TableRow(element,element)
-          //row.data=element
-          //row.oldData=element
+          var row = new TableRow(element.name,element.id)
           console.log(row)
           transformedRows.push(row)
-//          transformedRows[iterator++]=row;
         });
         this.tableData1 = {
           headerRow: ['Name', 'Update','Delete'],
           dataRows: transformedRows,
-          oldDataRows: transformedRows
       };   
         console.log(transformedRows)
         return transformedRows;
@@ -103,28 +92,27 @@ export class CategoryComponent implements OnInit {
 
   updateRow(row){
     console.log(row)
-    const req=JSON.stringify({name : row.data, oldValue : row.oldData});
+    const req=JSON.stringify({name : row.data});
     console.log("start query post with " + req)
     var token=  JSON.parse(localStorage.getItem("currentUser")).token
     const headers = new HttpHeaders()
             .set("Authorization",token)
             .append('Content-Type', 'application/json');
     //const params = new HttpParams().set('name',row);
-    return this.http.request<any>('put',this.serverURL+"modfiyCategory",{headers, body : req, observe : 'response'})
+    return this.http.request<any>('put',this.serverURL+"categories/"+ row.id,{headers, body : req, observe : 'response'})
     .subscribe((res : any)=>{
       this.queryAll();
   });
    }
 
   deleteRow(row){
-    const req=JSON.stringify({name : row.data});
-    console.log("start query delete with " + req)
+    console.log("start query delete with " + row)
     var token=  JSON.parse(localStorage.getItem("currentUser")).token
     const headers = new HttpHeaders()
             .set("Authorization",token)
             .append('Content-Type', 'application/json');
     //const params = new HttpParams().set('name',row);
-    return this.http.request<any>('delete',this.serverURL+"deleteCategory",{ headers, body : req, observe : 'response'})
+    return this.http.request<any>('delete',this.serverURL+"categories/" + row.id,{ headers, observe : 'response'})
     .subscribe((res : any)=>{
       this.queryAll();
   });

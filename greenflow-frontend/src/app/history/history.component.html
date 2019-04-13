@@ -18,6 +18,7 @@
                                 <tbody>
                                     <tr *ngFor="let row of tableData1.dataRows">
                                         <td *ngFor="let cell of row">{{cell}}</td>
+                                        <td><button type="button" class="btn btn-warning" id="delete" (click)="deleteRow(row)">DELETE</button> </td>
                                     </tr>
                                 </tbody>
                           </table>

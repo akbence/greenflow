@@ -32,19 +32,12 @@ export class HistoryComponent implements OnInit {
         headerRow: ['Name', 'Amount', 'Currency', 'Category', 'PaymentType', 'Date', 'isExpense'],
         dataRows: [[]]
     };      
-      this.tableData2 = {
-          headerRow: [ 'ID', 'Name',  'Salary', 'Country', 'City' ],
-          dataRows: [
-              ['1', 'Dakota Rice','$36,738', 'Niger', 'Oud-Turnhout' ],
-              ['2', 'Minerva Hooper', '$23,789', 'Curaçao', 'Sinaai-Waas'],
-              ['3', 'Sage Rodriguez', '$56,142', 'Netherlands', 'Baileux' ],
-              ['4', 'Philip Chaney', '$38,735', 'Korea, South', 'Overland Park' ],
-              ['5', 'Doris Greene', '$63,542', 'Malawi', 'Feldkirchen in Kärnten', ],
-              ['6', 'Mason Porter', '$78,615', 'Chile', 'Gloucester' ]
-          ]
-      };
   }
 
+
+  deleteRow(row){
+    console.log(row)
+  }
 
   queryAll(){
     console.log("start query")
@@ -69,7 +62,7 @@ export class HistoryComponent implements OnInit {
 
         });
         this.tableData1 = {
-          headerRow: ['Name', 'Amount', 'Currency', 'Category', 'PaymentType', 'Date', 'isExpense'],
+          headerRow: ['Name', 'Amount', 'Currency', 'Category', 'PaymentType', 'Date', 'isExpense', 'Delete?'],
           dataRows: transformedRows
       };   
 

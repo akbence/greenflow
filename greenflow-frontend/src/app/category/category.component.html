@@ -18,9 +18,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let row of tableData1.dataRows, let i = index">
+                                    <tr *ngFor="let row of tableData1.dataRows">
                                         <td >
-                                                <input type="text" name="row" id="input_{{i}}" value={{row.data}}
+                                                <input type="text" name="row" value={{row.data}}
                                                 [(ngModel)]="row.data">
                                          </td>
                                         <td> <button type="button" class="btn btn-warning" id="update" (click)="updateRow(row)">UPDATE</button> </td>

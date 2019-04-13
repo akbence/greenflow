@@ -67,11 +67,6 @@ export class TransactionComponent implements OnInit, Resolve<any> {
     return this.http.request<any>('post',this.serverURL+"postTransaction",{headers,body : req, observe : 'response'})
     .subscribe (
       (data : any) =>{
-/*         data.forEach(element => {
-          this.categoryList.push(element)
-          
-        }) 
- */        console.log(data)
       },
       error => {
           //this.error = error;
@@ -89,7 +84,7 @@ export class TransactionComponent implements OnInit, Resolve<any> {
     .subscribe(
       data =>{
         data.forEach(element => {
-          this.categoryList.push(element)
+          this.categoryList.push(element.name)
           
         })
         this.transaction.category=this.categoryList[0]

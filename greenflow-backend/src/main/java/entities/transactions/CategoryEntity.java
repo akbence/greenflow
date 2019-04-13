@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Entity
 @NamedQueries({ @NamedQuery(name = "Category.getID", query = "select c.id from CategoryEntity c where c.user_id = :user_id and c.name = :name"),
         @NamedQuery(name = "Category.getName", query = "select c.name from CategoryEntity c where c.user_id = :user_id and c.id = :category_id"),
-        @NamedQuery(name = "Category.getAllByID", query = "select c.name from CategoryEntity c where c.user_id = :user_id")})
+        @NamedQuery(name = "Category.getAllByID", query = "select c from CategoryEntity c where c.user_id = :user_id")})
 @Table(name = CategoryEntity.tableName)
 public class CategoryEntity {
 

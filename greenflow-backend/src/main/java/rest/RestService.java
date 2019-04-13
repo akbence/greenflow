@@ -11,6 +11,7 @@ import rest.Input.CategoryInput;
 import rest.Input.ExportInput;
 import rest.Input.TransactionInput;
 import rest.Input.UserAuthInput;
+import rest.Response.CategoryResponse;
 import rest.Response.LoginResponse;
 import service.authentication.LoggedInService;
 import service.authentication.AuthService;
@@ -111,7 +112,7 @@ public class RestService {
     @Produces (MediaType.APPLICATION_JSON)
     public Response getCategories(){
         try{
-            ArrayList<String>categoryResponse= categoryService.getAll();
+            ArrayList<CategoryResponse>categoryResponse= categoryService.getAll();
             return Response.status(200).entity(categoryResponse).build();
         } catch (Exception e){
             e.printStackTrace();
@@ -121,12 +122,12 @@ public class RestService {
 
     @DELETE
     @Secured
-    @Path("/deleteCategory")
+    @Path("/categories/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteCategory(CategoryInput categoryInput){
+    public Response deleteCategory(@PathParam("id") int id){
 
         try{
-            categoryService.delete(categoryInput);
+            categoryService.delete(id);
             return Response.status(200).build();
         } catch (Exception e){
             e.printStackTrace();
@@ -136,13 +137,13 @@ public class RestService {
 
     @PUT
     @Secured
-    @Path("/modfiyCategory")
+    @Path("/categories/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response modifyCategory(CategoryInput categoryInput){
+    public Response modifyCategory(@PathParam("id") int id, CategoryInput categoryInput){
         Response postCategoryResponse = null;
 
         try{
-            categoryService.modify(categoryInput);
+            categoryService.modify(id,categoryInput);
             return Response.status(201).build();
         } catch (Exception e){
             e.printStackTrace();

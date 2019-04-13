@@ -1,5 +1,6 @@
 package dao.transactions;
 
+import converters.CategoryConverter;
 import dao.UserDao;
 import entities.transactions.CategoryEntity;
 import service.transaction.Category;
@@ -19,6 +20,9 @@ public class CategoryDao {
 
     @Inject
     UserDao userDao;
+
+    @Inject
+    CategoryConverter categoryConverter;
 
     @Transactional
     public void post(Category category) {
@@ -65,10 +69,10 @@ public class CategoryDao {
         return result;
     }
 
-    public ArrayList<String> getAllById(int user_id) {
-        ArrayList<String> result = null;
+    public ArrayList<Category> getAllById(int user_id) {
+        ArrayList<CategoryEntity> result = null;
         try {
-            result = (ArrayList<String>) em.createNamedQuery(CategoryEntity.QUERY_CATEGORY_GET_CATEGORIES_BY_IDS, String.class)
+            result = (ArrayList<CategoryEntity>) em.createNamedQuery(CategoryEntity.QUERY_CATEGORY_GET_CATEGORIES_BY_IDS, CategoryEntity.class)
                     .setParameter("user_id",user_id)
                     .getResultList();
         }
@@ -76,17 +80,19 @@ public class CategoryDao {
             e.printStackTrace();
         }
 
-        return result;
-
+        return categoryConverter.daoToServiceList(result);
     }
 
     @Transactional
-    public void delete(int userId, String category) {
+    public void delete(int userId, int id) {
         CategoryEntity result = null;
         try {
-            int categoryId = getID(category,userId);
-            CategoryEntity ce= em.find(CategoryEntity.class,categoryId);
-            em.remove(ce);
+
+            CategoryEntity ce= em.find(CategoryEntity.class,id);
+            if(userId == ce.getUser_id()){
+                em.remove(ce);
+            }
+            else throw new Exception("unauthorized access");
         }
         catch (Exception e){
             e.printStackTrace();
@@ -94,10 +100,9 @@ public class CategoryDao {
     }
 
     @Transactional
-    public void modify(int userId, String category, String oldValue) {
+    public void modify(int userId, String category, int categoryId) {
         CategoryEntity result = null;
         try {
-            int categoryId = getID(oldValue,userId);
             CategoryEntity ce= em.find(CategoryEntity.class,categoryId);
             ce.setName(category);
             em.merge(ce);
