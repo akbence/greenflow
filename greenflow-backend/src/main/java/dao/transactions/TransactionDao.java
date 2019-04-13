@@ -2,6 +2,7 @@ package dao.transactions;
 
 import converters.TransactionConverter;
 import dao.UserDao;
+import entities.UserEntity;
 import entities.transactions.CategoryEntity;
 import entities.transactions.TransactionEntity;
 import service.transaction.Category;
@@ -54,14 +55,21 @@ public class TransactionDao {
     @Transactional
     public ArrayList<Transaction> getTransactions(String username) throws Exception{
         ArrayList <TransactionEntity> entityList= new ArrayList<>();
-        try {
+
             int user_id= userDao.getId(username);
             entityList= (ArrayList<TransactionEntity>) em.createNamedQuery(TransactionEntity.QUERY_TRANSACTION_GETALL_BY_USERNAME,TransactionEntity.class).setParameter("user_id",user_id).getResultList();
 
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+
         return transactionConverter.daoToServiceList(entityList);
+    }
+
+    @Transactional
+    public void delete(int id, String username) throws Exception{
+        TransactionEntity transactionEntity = em.find(TransactionEntity.class,id);
+        int userid = userDao.getId(username);
+        if(userid==transactionEntity.getUser_id()){
+            em.remove(transactionEntity);
+        }
+        else throw new Exception("unauthorized access");
     }
 }

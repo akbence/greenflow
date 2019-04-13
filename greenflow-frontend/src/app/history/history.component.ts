@@ -37,6 +37,15 @@ export class HistoryComponent implements OnInit {
 
   deleteRow(row){
     console.log(row)
+    var token=  JSON.parse(localStorage.getItem("currentUser")).token
+    const headers = new HttpHeaders()
+            .set("Authorization",token)
+            .append('Content-Type', 'application/json');
+    //const params = new HttpParams().set('name',row);
+    return this.http.delete(this.serverURL+"transactions/" + row[7],{ headers, observe : 'response'})
+    .subscribe((res : any)=>{
+      this.queryAll();
+  });
   }
 
   queryAll(){
@@ -56,7 +65,7 @@ export class HistoryComponent implements OnInit {
         var transformedRows = []
         data.forEach(element => {
           var row : string[]
-          row=[element.name, element.ammount, element.currency, element.category, element.paymentType, element.date, element.expense.toString()]
+          row=[element.name, element.ammount, element.currency, element.category, element.paymentType, element.date, element.expense.toString(),element.id]
           console.log(row)
           transformedRows[iterator++]=row;
 

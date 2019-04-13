@@ -73,4 +73,9 @@ public class TransactionService {
     public ArrayList<Transaction> getTransactions() throws Exception {
         return transactionDao.getTransactions(loggedInService.getCurrentUserName());
     }
+
+    public void delete(int id) throws Exception {
+        String username=loggedInService.getCurrentUserName();
+        transactionDao.delete(id,username);
+    }
 }

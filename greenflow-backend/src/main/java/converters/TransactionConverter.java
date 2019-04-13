@@ -40,6 +40,7 @@ public class TransactionConverter {
         result.setCurrency(transactionEntity.getCurrency());
         result.setAmmount(transactionEntity.getAmmount());
         result.setDate(transactionEntity.getDate());
+        result.setId(transactionEntity.getId());
 
         String username = usersWithIdCache.get(transactionEntity.getUser_id());
         if (username == null) {

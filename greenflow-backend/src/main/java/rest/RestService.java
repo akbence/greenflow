@@ -183,11 +183,24 @@ public class RestService {
     @Path("/transactions")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTransactions(){
-        Response getTransactionsResponse = null;
-
         try{
             ArrayList<Transaction> ret = transactionService.getTransactions();
             return Response.status(200).entity(ret).build();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return Response.status(400).entity("testFail").build();
+
+    }
+
+    @DELETE
+    @Secured
+    @Path("/transactions/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteTransaction(@PathParam("id") int id){
+        try{
+            transactionService.delete(id);
+            return Response.status(204).build();
         } catch (Exception e){
             e.printStackTrace();
         }

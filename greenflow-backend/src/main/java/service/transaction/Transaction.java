@@ -25,16 +25,7 @@ public class Transaction {
 
     private LocalDate date;
 
-    public Transaction(String username, String category, String name, boolean isExpense, int ammount, PaymentType paymentType, Currency currency, LocalDate date) {
-        this.username = username;
-        this.category = category;
-        this.name = name;
-        this.isExpense = isExpense;
-        this.ammount = ammount;
-        this.paymentType = paymentType;
-        this.currency = currency;
-        this.date = date;
-    }
+    private int id;
 
     public Transaction() {
 
@@ -102,6 +93,14 @@ public class Transaction {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
 
