@@ -66,6 +66,7 @@ export class LbdChartComponent implements OnInit, AfterViewInit {
 
     switch (this.chartType) {
       case ChartType.Pie:
+      console.log()
         new Chartist.Pie(`#${this.chartId}`, this.chartData, this.chartOptions, this.chartResponsive);
         break;
       case ChartType.Line:

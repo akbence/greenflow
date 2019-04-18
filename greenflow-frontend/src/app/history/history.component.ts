@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaderResponse, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { first } from 'rxjs/operators';
 import { saveAs } from 'file-saver';
 import { query } from '@angular/animations';
 import { Globals } from '../globals';
+import { MAT_DIALOG_DATA,MatDialogRef,MatDialog } from '@angular/material';
+import { Transaction } from '../transaction/model/transaction';
 
 
 declare interface TableData {
@@ -22,9 +24,33 @@ export class HistoryComponent implements OnInit {
     public tableData2: TableData;
     public serverURL : string;
 
-  constructor(private http: HttpClient,globals : Globals ) {
+  constructor(private http: HttpClient,globals : Globals, public dialog: MatDialog ) {
     this.serverURL = globals.getBaseUrl()
    }
+
+   updateRow(row): void {
+    console.log ( row)
+    var transaction = new Transaction()
+    transaction.name= row[0]
+    transaction.amount=row[1]
+    transaction.currency=row[2]
+    transaction.category =row[3]
+    transaction.paymentType = row[4]
+    transaction.date =row[5]
+    transaction.isExpense = row[6]
+    transaction.id = row[7]
+    const dialogRef = this.dialog.open(ModfiyTransactionDialog, {
+      //height: '400px',
+      width: '600px',
+      data: transaction
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      //this.animal = result;
+    });
+  }
+
 
   ngOnInit() {
       this.queryAll();
@@ -47,6 +73,7 @@ export class HistoryComponent implements OnInit {
       this.queryAll();
   });
   }
+
 
   queryAll(){
     console.log("start query")
@@ -71,7 +98,7 @@ export class HistoryComponent implements OnInit {
 
         });
         this.tableData1 = {
-          headerRow: ['Name', 'Amount', 'Currency', 'Category', 'PaymentType', 'Date', 'isExpense', 'Delete?'],
+          headerRow: ['Name', 'Amount', 'Currency', 'Category', 'PaymentType', 'Date', 'isExpense', 'Update', 'Delete'],
           dataRows: transformedRows
       };   
 
@@ -108,4 +135,22 @@ export class HistoryComponent implements OnInit {
           console.log("Error"+error);
       });
   }
+}
+
+@Component({
+  selector: 'modify-transaction-dialog',
+  templateUrl: './modify.transaction.dialog.html',
+})
+export class ModfiyTransactionDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<ModfiyTransactionDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: Transaction) {
+      console.log(data)
+    }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
 }

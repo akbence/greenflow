@@ -11,13 +11,14 @@ import { AdminLayoutRoutes } from './admin-layout.routing';
 import { HomeComponent } from '../../home/home.component';
 import { UserComponent } from '../../user/user.component';
 import { TransactionComponent } from '../../transaction/transaction.component';
-import { HistoryComponent } from '../../history/history.component';
+import { HistoryComponent, ModfiyTransactionDialog } from '../../history/history.component';
 import { CategoryComponent } from '../../category/category.component';
 import { TypographyComponent } from '../../typography/typography.component';
 import { IconsComponent } from '../../icons/icons.component';
 import { MapsComponent } from '../../maps/maps.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
+import { ChartsModule } from 'ng2-charts';
 
 import {MatCardModule,
   MatAutocompleteModule,
@@ -97,6 +98,8 @@ import {MatCardModule,
     MatTooltipModule,
     MatTreeModule,
 
+    
+    ChartsModule,
     CommonModule,
     RouterModule.forChild(AdminLayoutRoutes),
     FormsModule,
@@ -114,11 +117,18 @@ import {MatCardModule,
     IconsComponent,
     MapsComponent,
     NotificationsComponent,
-    UpgradeComponent
+    UpgradeComponent,
+    ModfiyTransactionDialog
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'hu-HU'},
+  ],
+
+  entryComponents : [
+    ModfiyTransactionDialog
   ]
+
+  
 })
 
 export class AdminLayoutModule {}

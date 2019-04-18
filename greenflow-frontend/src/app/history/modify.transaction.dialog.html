@@ -1,13 +1,7 @@
-<div class="main-content" >
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="header">
-                        <h4 class="title">New Transaction</h4>
-                    </div>
-                    <div class="content">
-                        <form>
+<h1 mat-dialog-title>Transaction update</h1>
+<div mat-dialog-content>
+  <p>Please update the transaction details</p>
+  <form>
                             <div class="row">
                                 <div class="col-md-5">
                                     <div class="form-group">
@@ -66,17 +60,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <button class="button-income" (click)="addIncome()">Add Income</button>
-                                    <div class="divider"></div>
-                                    <button class="button-expense" (click)="addExpense()">Add Expense</button>
-                                </div>
-                            </div>
-                         </form>  
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                         </form>
+
+<!--   <mat-form-field>
+    <input matInput [(ngModel)]="data.transaction">
+  </mat-form-field> -->
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>
 </div>

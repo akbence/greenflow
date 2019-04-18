@@ -9,9 +9,9 @@ import * as Chartist from 'chartist';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-    public emailChartType: ChartType;
-    public emailChartData: any;
-    public emailChartLegendItems: LegendItem[];
+    public incomeChartType: ChartType;
+    public incomeChartData: any;
+    public incomeChartLegendItems: LegendItem[];
 
     public hoursChartType: ChartType;
     public hoursChartData: any;
@@ -24,15 +24,26 @@ export class HomeComponent implements OnInit {
     public activityChartOptions: any;
     public activityChartResponsive: any[];
     public activityChartLegendItems: LegendItem[];
+
+
+    public pieChartLabels:string[] = ['Chrome', 'Safari', 'Firefox','Internet Explorer','Other'];
+    public pieChartData:number[] = [40, 20, 20 , 10,10];
+    public pieChartType:string = 'pie';
+    public pieChartTitle:string = "Title"
+
+    public chartOptions = {
+      maintainAspectRatio: false
+   };
+
   constructor() { }
 
   ngOnInit() {
-      this.emailChartType = ChartType.Pie;
-      this.emailChartData = {
-        labels: ['62%', '32%', '6%'],
-        series: [62, 32, 6]
+      this.incomeChartType = ChartType.Pie;
+      this.incomeChartData = {
+        labels: ['62%', '32%', '6%','asd', 'wasd'],
+        series: [62, 32, 6,23,45]
       };
-      this.emailChartLegendItems = [
+      this.incomeChartLegendItems = [
         { title: 'Open', imageClass: 'fa fa-circle text-info' },
         { title: 'Bounce', imageClass: 'fa fa-circle text-danger' },
         { title: 'Unsubscribe', imageClass: 'fa fa-circle text-warning' }

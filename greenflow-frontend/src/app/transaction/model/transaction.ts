@@ -6,4 +6,5 @@ export class Transaction {
     paymentType : string
     date : string
     isExpense : boolean
+    id : number
 }
