@@ -14,6 +14,17 @@ declare interface TableData {
     dataRows: string[][];
 }
 
+export class TransactionModify {
+  name: string;
+  amount : number
+  currency : string
+  category : string
+  paymentType : string
+  date : string
+  isExpense : boolean
+  id : number
+}
+
 @Component({
   selector: 'history-tables',
   templateUrl: './history.component.html',
@@ -30,7 +41,7 @@ export class HistoryComponent implements OnInit {
 
    updateRow(row): void {
     console.log ( row)
-    var transaction = new Transaction()
+    var transaction = new TransactionModify()
     transaction.name= row[0]
     transaction.amount=row[1]
     transaction.currency=row[2]
@@ -39,6 +50,7 @@ export class HistoryComponent implements OnInit {
     transaction.date =row[5]
     transaction.isExpense = row[6]
     transaction.id = row[7]
+    console.log(transaction)
     const dialogRef = this.dialog.open(ModfiyTransactionDialog, {
       //height: '400px',
       width: '600px',
@@ -145,8 +157,8 @@ export class ModfiyTransactionDialog {
 
   constructor(
     public dialogRef: MatDialogRef<ModfiyTransactionDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: Transaction) {
-      console.log(data)
+    @Inject(MAT_DIALOG_DATA) public data: TransactionModify) {
+      console.log("THIS IS DIALOG CTOR: " + data)
     }
 
   onNoClick(): void {

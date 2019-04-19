@@ -1,66 +1,66 @@
 <h1 mat-dialog-title>Transaction update</h1>
 <div mat-dialog-content>
   <p>Please update the transaction details</p>
-  <form>
-                            <div class="row">
-                                <div class="col-md-5">
-                                    <div class="form-group">
-                                        <label>Name of Transaction</label>
-                                        <input type="text" class="form-control"  [(ngModel)]="transaction.name" [ngModelOptions]="{standalone: true}" placeholder="Username">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-5">
-                                    <div class="form-group">
-                                        <label>Amount</label>
-                                        <input type="number" class="form-control"  [(ngModel)]="transaction.amount" placeholder="0" [ngModelOptions]="{standalone: true}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-5">
-                                    <div class="form-group">
-                                        <label>Currency</label>
-                                        <input type="text" class="form-control"  [(ngModel)]="transaction.currency" [ngModelOptions]="{standalone: true}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-5">
-                                    <div class="form-group">
-                                        <label>Category</label>
-                                        <select name="category" type="text" class="form-control"  [(ngModel)]="transaction.category" [ngModelOptions]="{standalone: true}"
-                                        onselect="console.log(transaction.category)">
-                                            <option *ngFor="let element of categoryList">{{element}}</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-5">
-                                    <div class="form-group">
-                                        <label>Payment Type</label>
-                                        <select name="paymentType" type="text" class="form-control"  [(ngModel)]="transaction.paymentType" [ngModelOptions]="{standalone: true}">
-                                            <option *ngFor="let element of paymentTypes">{{element}}</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-5">
-                                    <div class="form-group">
-                                        <label>Transaction date</label>
-                                        <div></div>
-                                        <mat-form-field>
-                                            <input matInput [matDatepicker]="picker1" [formControl]="date">
-                                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle> 
-                                            <mat-datepicker #picker1></mat-datepicker>
-                                        </mat-form-field>
-                                    </div>
-                                </div>
-                            </div>
-                         </form>
+  <mat-form-field>
+    <div class="row">
+
+            <div class="form-group">
+                <label>Name of Transaction</label>
+                <!--input type="text" class="form-control"  [(ngModel)]="transaction.name" [ngModelOptions]="{standalone: true}" placeholder="Username"-->
+            </div>
+
+    </div>
+    <!-- <div class="row">
+        <div class="col-md-5">
+            <div class="form-group">
+                <label>Amount</label>
+                <input type="number" class="form-control"  [(ngModel)]="transaction.amount" placeholder="0" [ngModelOptions]="{standalone: true}">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5">
+            <div class="form-group">
+                <label>Currency</label>
+                <input type="text" class="form-control"  [(ngModel)]="transaction.currency" [ngModelOptions]="{standalone: true}">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5">
+            <div class="form-group">
+                <label>Category</label>
+                <select name="category" type="text" class="form-control"  [(ngModel)]="transaction.category" [ngModelOptions]="{standalone: true}"
+                onselect="console.log(transaction.category)">
+                    <option *ngFor="let element of categoryList">{{element}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5">
+            <div class="form-group">
+                <label>Payment Type</label>
+                <select name="paymentType" type="text" class="form-control"  [(ngModel)]="transaction.paymentType" [ngModelOptions]="{standalone: true}">
+                    <option *ngFor="let element of paymentTypes">{{element}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5">
+            <div class="form-group">
+                <label>Transaction date</label>
+                <div></div>
+                <mat-form-field>
+                    <input matInput [matDatepicker]="picker1" [formControl]="date">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle> 
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+    </div> -->
+  </mat-form-field>
 
 <!--   <mat-form-field>
     <input matInput [(ngModel)]="data.transaction">
