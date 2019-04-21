@@ -9,13 +9,15 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@NamedQueries({ @NamedQuery(name = "Transaction.getAllforUser", query = "select t from TransactionEntity t where t.user_id = :user_id")})
+@NamedQueries({ @NamedQuery(name = "Transaction.getAllforUser", query = "select t from TransactionEntity t where t.user_id = :user_id"),
+        @NamedQuery(name = "Transaction.getMonthlyforUser", query = "select t from TransactionEntity t where t.user_id = :user_id and t.isExpense = :isExp and year (t.date)= :year and month(t.date)= :month ")})
 
 @Table(name = TransactionEntity.tableName)
 public class TransactionEntity {
 
     public static final String tableName = "Transaction";
     public static final String QUERY_TRANSACTION_GETALL_BY_USERNAME = "Transaction.getAllforUser";
+    public static final String QUERY_TRANSACTION_GETMONTHLY_BY_USERNAME = "Transaction.getMonthlyforUser";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

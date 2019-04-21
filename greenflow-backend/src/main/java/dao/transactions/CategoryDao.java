@@ -111,4 +111,9 @@ public class CategoryDao {
             e.printStackTrace();
         }
     }
+
+    public ArrayList<Category> getAllByUsername(String username) {
+        int id = userDao.getId(username);
+        return getAllById(id);
+    }
 }

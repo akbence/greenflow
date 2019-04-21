@@ -55,11 +55,8 @@ public class TransactionDao {
     @Transactional
     public ArrayList<Transaction> getTransactions(String username) throws Exception{
         ArrayList <TransactionEntity> entityList= new ArrayList<>();
-
             int user_id= userDao.getId(username);
             entityList= (ArrayList<TransactionEntity>) em.createNamedQuery(TransactionEntity.QUERY_TRANSACTION_GETALL_BY_USERNAME,TransactionEntity.class).setParameter("user_id",user_id).getResultList();
-
-
         return transactionConverter.daoToServiceList(entityList);
     }
 
@@ -71,5 +68,18 @@ public class TransactionDao {
             em.remove(transactionEntity);
         }
         else throw new Exception("unauthorized access");
+    }
+
+    public ArrayList<Transaction> getMonthlyTransactions(String username, int year, int month, boolean isExpense){
+        ArrayList <TransactionEntity> entityList= new ArrayList<>();
+        int user_id= userDao.getId(username);
+        entityList= (ArrayList<TransactionEntity>) em.createNamedQuery(TransactionEntity.QUERY_TRANSACTION_GETMONTHLY_BY_USERNAME,TransactionEntity.class)
+                .setParameter("user_id",user_id)
+                .setParameter("year",year)
+                .setParameter("month",month)
+                .setParameter("isExp",isExpense)
+                .getResultList();
+        return transactionConverter.daoToServiceList(entityList);
+
     }
 }

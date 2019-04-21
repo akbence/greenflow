@@ -42,14 +42,15 @@ export class HistoryComponent implements OnInit {
    updateRow(row): void {
     console.log ( row)
     var transaction = new TransactionModify()
-    transaction.name= row[0]
-    transaction.amount=row[1]
-    transaction.currency=row[2]
-    transaction.category =row[3]
-    transaction.paymentType = row[4]
-    transaction.date =row[5]
-    transaction.isExpense = row[6]
-    transaction.id = row[7]
+    var index=0;
+    transaction.name= row[index++]
+    transaction.amount=row[index++]
+    transaction.currency=row[index++]
+    transaction.category =row[index++]
+    transaction.paymentType = row[index++]
+    transaction.date =row[index++]
+    transaction.isExpense = row[index++]
+    transaction.id = row[index++]
     console.log(transaction)
     const dialogRef = this.dialog.open(ModfiyTransactionDialog, {
       //height: '400px',

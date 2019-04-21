@@ -9,6 +9,8 @@ import * as _moment from 'moment';
 import { Moment} from 'moment'
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { Globals } from '../globals';
 
 const moment = _moment;
 
@@ -36,16 +38,37 @@ export class HomeComponent implements OnInit {
     public pieChartLabels:string[] = ['Chrome', 'Safari', 'Firefox','Internet Explorer','Other'];
     public pieChartData:number[] = [60, 20, 20 , 10,10];
     public pieChartType:string = 'pie';
+    public serverURL : string;
 
     public chartOptions = {
       maintainAspectRatio: false
    };
 
-  constructor() { }
+   
+   constructor(private http: HttpClient,globals : Globals ) {
+    this.serverURL = globals.getBaseUrl()
+   }
 
   ngOnInit() {
-
+    this.getStats(moment().toDate())
     } 
+
+
+    getStats(date : Date){
+      console.log(date)
+      var token=  JSON.parse(localStorage.getItem("currentUser")).token
+      const headers = new HttpHeaders()
+              .set("Authorization",token)
+              .append('Content-Type', 'application/json');
+      //const params = new HttpParams().set('name',row);
+      return this.http.get(this.serverURL+"statistics/" + date.getFullYear()  +"/" + (date.getMonth()+1),{ headers, observe : 'response'})
+      .subscribe((res : any)=>{
+        console.log(res.body.labels)
+        this.pieChartLabels=res.body.labels
+        this.pieChartData=res.body.data
+    });
+    }
+
 
     date = new FormControl(moment());
 
@@ -60,6 +83,6 @@ export class HomeComponent implements OnInit {
       ctrlValue.month(normalizedMonth.month());
       this.date.setValue(ctrlValue);
       datepicker.close();
-      console.log(ctrlValue.month())
+      this.getStats(ctrlValue.toDate())
     }
 }

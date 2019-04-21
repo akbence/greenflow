@@ -16,9 +16,7 @@ export class TransactionComponent implements OnInit, Resolve<any> {
 
 
   resolve(route: import("@angular/router").ActivatedRouteSnapshot, state: import("@angular/router").RouterStateSnapshot) {
-    console.log("beforequery")
     this.queryAllCategories()
-    console.log("afterquery")
   }
 
   public transaction : Transaction

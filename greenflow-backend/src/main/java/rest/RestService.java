@@ -13,10 +13,12 @@ import rest.Input.TransactionInput;
 import rest.Input.UserAuthInput;
 import rest.Response.CategoryResponse;
 import rest.Response.LoginResponse;
+import rest.Response.StatisticPieResponse;
 import service.authentication.LoggedInService;
 import service.authentication.AuthService;
 import service.authentication.Secured;
 import service.export.ExportService;
+import service.statistics.StatisticService;
 import service.transaction.CategoryService;
 import service.transaction.Transaction;
 import service.transaction.TransactionService;
@@ -45,11 +47,13 @@ public class RestService {
     @Inject
     private ExportService exportService;
 
+    @Inject
+    private StatisticService statisticService;
+
     @POST
     @Path("/register")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response register(UserAuthInput userAuthInput) {
-        System.out.println("problem at REST");
         try {
             authService.registerUser(userAuthInput);
 
@@ -79,8 +83,6 @@ public class RestService {
     @Path("/postTransaction")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response postTransaction( TransactionInput transactionInput){
-        Response postTransactionResponse = null;
-
         try{
             transactionService.post(transactionInput);
             return Response.status(200).entity("postTransaction success").build();
@@ -201,6 +203,22 @@ public class RestService {
         try{
             transactionService.delete(id);
             return Response.status(204).build();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return Response.status(400).entity("testFail").build();
+
+    }
+
+    @GET
+    @Secured
+    @Path("/statistics/{year}/{month}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getIncomeStatistics(@PathParam("year") int year, @PathParam("month") int month){
+        System.out.println(year + "/"+ month);
+        try{
+            StatisticPieResponse ret = statisticService.getIncomePieStatistics(year, month);
+            return Response.status(200).entity(ret).build();
         } catch (Exception e){
             e.printStackTrace();
         }
