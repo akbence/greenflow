@@ -1,5 +1,26 @@
 <div class="main-content">
     <div class="container-fluid">
+         <div class="row" >
+            <div class="col-md-12">
+                <div class="card" >
+                    <div class="header">
+                        <h4 class="title">Month of the statistics</h4>
+                    </div>
+                    <div class="text-center"> 
+                        <mat-form-field>
+                            <input matInput [matDatepicker]="dp" placeholder="Month and Year" [formControl]="date">
+                            <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                            <mat-datepicker #dp
+                                            startView="multi-year"
+                                            (yearSelected)="chosenYearHandler($event)"
+                                            (monthSelected)="chosenMonthHandler($event, dp)"
+                                            panelClass="example-month-picker">
+                            </mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+         </div>
         <div class="row" >
             <div class="col-md-6">
                 <div class="card" >
