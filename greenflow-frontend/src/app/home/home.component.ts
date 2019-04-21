@@ -34,55 +34,81 @@ export const MY_FORMATS = {
                {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS}]
 })
 export class HomeComponent implements OnInit {
+  
+  public pieIncomeChartLabels:string[]=new Array()
+  public pieIncomeChartData:number[]=[]
+  public pieExpenseChartLabels:string[]=[]
+  public pieExpenseChartData:number[]=[]
+  public pieChartType:string = 'pie';
+  public serverURL : string;
 
-    public pieChartLabels:string[] = ['Chrome', 'Safari', 'Firefox','Internet Explorer','Other'];
-    public pieChartData:number[] = [60, 20, 20 , 10,10];
-    public pieChartType:string = 'pie';
-    public serverURL : string;
+  pieDataReady1 : Promise<boolean>
+  pieDataReady2 : Promise<boolean>
 
-    public chartOptions = {
-      maintainAspectRatio: false
+  public chartOptions = {
+    maintainAspectRatio: false
    };
 
    
-   constructor(private http: HttpClient,globals : Globals ) {
+  constructor(private http: HttpClient,globals : Globals ) {
     this.serverURL = globals.getBaseUrl()
-   }
+  }
 
   ngOnInit() {
     this.getStats(moment().toDate())
-    } 
+  } 
+
+  getStats(date :Date ){
+    this.getIncomeStats(date)
+    this.getExpenseStats(date)
+    
+    
+  }
 
 
-    getStats(date : Date){
-      console.log(date)
+  getIncomeStats(date : Date){
       var token=  JSON.parse(localStorage.getItem("currentUser")).token
       const headers = new HttpHeaders()
               .set("Authorization",token)
               .append('Content-Type', 'application/json');
       //const params = new HttpParams().set('name',row);
-      return this.http.get(this.serverURL+"statistics/" + date.getFullYear()  +"/" + (date.getMonth()+1),{ headers, observe : 'response'})
+      return this.http.get(this.serverURL+"statistics/pie/income/" + date.getFullYear()  +"/" + (date.getMonth()+1),{ headers, observe : 'response'})
       .subscribe((res : any)=>{
-        console.log(res.body.labels)
-        this.pieChartLabels=res.body.labels
-        this.pieChartData=res.body.data
+        this.pieIncomeChartLabels=res.body.labels
+        this.pieIncomeChartData=res.body.data
+        this.pieDataReady1=Promise.resolve(true)
+    });
+    }
+
+    getExpenseStats(date : Date){
+      var token=  JSON.parse(localStorage.getItem("currentUser")).token
+      const headers = new HttpHeaders()
+              .set("Authorization",token)
+              .append('Content-Type', 'application/json');
+      //const params = new HttpParams().set('name',row);
+      return this.http.get(this.serverURL+"statistics/pie/expense/" + date.getFullYear()  +"/" + (date.getMonth()+1),{ headers, observe : 'response'})
+      .subscribe((res : any)=>{
+        this.pieExpenseChartLabels=res.body.labels
+        this.pieExpenseChartData=res.body.data
+        this.pieDataReady2=Promise.resolve(true)
+
     });
     }
 
 
-    date = new FormControl(moment());
+  date = new FormControl(moment());
 
-    chosenYearHandler(normalizedYear: Moment) {
-      const ctrlValue = this.date.value;
-      ctrlValue.year(normalizedYear.year());
-      this.date.setValue(ctrlValue);
-    }
-  
-    chosenMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
-      const ctrlValue = this.date.value;
-      ctrlValue.month(normalizedMonth.month());
-      this.date.setValue(ctrlValue);
-      datepicker.close();
-      this.getStats(ctrlValue.toDate())
-    }
+  chosenYearHandler(normalizedYear: Moment) {
+    const ctrlValue = this.date.value;
+    ctrlValue.year(normalizedYear.year());
+    this.date.setValue(ctrlValue);
+  }
+
+  chosenMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
+    const ctrlValue = this.date.value;
+    ctrlValue.month(normalizedMonth.month());
+    this.date.setValue(ctrlValue);
+    datepicker.close();
+    this.getStats(ctrlValue.toDate())
+  }
 }

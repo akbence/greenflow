@@ -35,6 +35,14 @@ public class StatisticService {
         return getStatisticPieResponse(mappedValues);
     }
 
+    public StatisticPieResponse getExpensePieStatistics(int year, int month) {
+        String username=loggedInService.getCurrentUserName();
+        ArrayList<Transaction> transactions = transactionDao.getMonthlyTransactions(username, year, month, true);
+        ArrayList<Category> categories = categoryDao.getAllByUsername(username);
+        Map<String, Integer> mappedValues = getMappedValues(transactions, categories);
+        return getStatisticPieResponse(mappedValues);
+    }
+
     private Map<String, Integer> getMappedValues(ArrayList<Transaction> transactions, ArrayList<Category> categories) {
         Map<String,Integer> mappedValues= new HashMap<>();
         for (Category category : categories) {

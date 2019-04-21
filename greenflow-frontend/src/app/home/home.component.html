@@ -21,7 +21,7 @@
                 </div>
             </div>
          </div>
-        <div class="row" >
+        <div *ngIf="(pieDataReady1 && pieDataReady2) |async " class="row" >
             <div class="col-md-6">
                 <div class="card" >
                     <div class="header">
@@ -29,9 +29,8 @@
                     </div>
                     <div > 
                         <canvas baseChart 
-                        [title]= "pieChartTitle"
-                        [data]="pieChartData"
-                        [labels]="pieChartLabels"
+                        [data]="pieIncomeChartData"
+                        [labels]="pieIncomeChartLabels"
                         [chartType]="pieChartType"></canvas> 
                     </div>
                 </div>
@@ -43,9 +42,8 @@
                     </div>
                     <div > 
                         <canvas baseChart 
-                        [title]= "pieChartTitle"
-                        [data]="pieChartData"
-                        [labels]="pieChartLabels"
+                        [data]="pieExpenseChartData"
+                        [labels]="pieExpenseChartLabels"
                         [chartType]="pieChartType"></canvas> 
                     </div>
                 </div>
