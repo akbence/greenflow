@@ -44,7 +44,6 @@ export class CategoryComponent implements OnInit {
 
 
   queryAll(){
-    console.log("start query")
     var token=  JSON.parse(localStorage.getItem("currentUser")).token
     const headers = new HttpHeaders()
             .set("Authorization",token);
@@ -52,19 +51,17 @@ export class CategoryComponent implements OnInit {
     .pipe()
     .subscribe(
       data =>{
-        console.log(data)        
+
         var iterator = 0
         var transformedRows = []
         data.forEach(element => {
           var row = new TableRow(element.name,element.id)
-          console.log(row)
           transformedRows.push(row)
         });
         this.tableData1 = {
           headerRow: ['Name', 'Update','Delete'],
           dataRows: transformedRows,
       };   
-        console.log(transformedRows)
         return transformedRows;
       },
       error => {

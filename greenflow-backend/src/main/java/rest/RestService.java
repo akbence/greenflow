@@ -195,6 +195,20 @@ public class RestService {
 
     }
 
+    @PUT
+    @Secured
+    @Path("/transactions/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response modifyTransaction(@PathParam("id") int id,TransactionInput transactionInput){
+        try{
+            transactionService.modifyTransaction(id,transactionInput);
+            return Response.status(201).build();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return Response.status(400).entity("testFail").build();
+
+    }
     @DELETE
     @Secured
     @Path("/transactions/{id}")

@@ -1,72 +1,76 @@
 <h1 mat-dialog-title>Transaction update</h1>
-<div mat-dialog-content>
+<div mat-dialog-content [formGroup]="form">
   <p>Please update the transaction details</p>
-  <mat-form-field>
-    <div class="row">
 
-            <div class="form-group">
-                <label>Name of Transaction</label>
-                <!--input type="text" class="form-control"  [(ngModel)]="transaction.name" [ngModelOptions]="{standalone: true}" placeholder="Username"-->
-            </div>
+    <div class="row">
+        <div class="col-md-6">
+            <mat-form-field>
+                <mat-label>Name</mat-label>
+                <input matInput formControlName="name">
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field>
+                <mat-label>Amount</mat-label>
+                <input matInput formControlName="amount">
+            </mat-form-field>
+        </div>
+    </div>
 
-    </div>
-    <!-- <div class="row">
-        <div class="col-md-5">
-            <div class="form-group">
-                <label>Amount</label>
-                <input type="number" class="form-control"  [(ngModel)]="transaction.amount" placeholder="0" [ngModelOptions]="{standalone: true}">
-            </div>
+    <div class="row">
+        <div class="col-md-6">
+            <mat-form-field>
+                <mat-label>Currency</mat-label>
+                <input matInput formControlName="currency">
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field>
+                <mat-label>Category</mat-label>
+                <mat-select formControlName="category">
+                        <mat-option *ngFor="let element of categoryPool" [value]="element">
+                                {{element}}
+                        </mat-option>
+                </mat-select>
+            </mat-form-field>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-5">
-            <div class="form-group">
-                <label>Currency</label>
-                <input type="text" class="form-control"  [(ngModel)]="transaction.currency" [ngModelOptions]="{standalone: true}">
-            </div>
+        <div class="col-md-6">
+            <mat-form-field>
+                <mat-label>Payment Type</mat-label>
+                <mat-select formControlName="paymentType">
+                    <mat-option value="CASH">CASH</mat-option>
+                    <mat-option value="CARD">CARD</mat-option>
+                </mat-select>
+            </mat-form-field>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-5">
-            <div class="form-group">
-                <label>Category</label>
-                <select name="category" type="text" class="form-control"  [(ngModel)]="transaction.category" [ngModelOptions]="{standalone: true}"
-                onselect="console.log(transaction.category)">
-                    <option *ngFor="let element of categoryList">{{element}}</option>
-                </select>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-5">
-            <div class="form-group">
-                <label>Payment Type</label>
-                <select name="paymentType" type="text" class="form-control"  [(ngModel)]="transaction.paymentType" [ngModelOptions]="{standalone: true}">
-                    <option *ngFor="let element of paymentTypes">{{element}}</option>
-                </select>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-5">
-            <div class="form-group">
-                <label>Transaction date</label>
-                <div></div>
+        <div class="col-md-6">
                 <mat-form-field>
-                    <input matInput [matDatepicker]="picker1" [formControl]="date">
+                    <mat-label>Transaction date</mat-label>
+                    <input matInput [matDatepicker]="picker1" formControlName="date">
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle> 
                     <mat-datepicker #picker1></mat-datepicker>
                 </mat-form-field>
-            </div>
         </div>
-    </div> -->
-  </mat-form-field>
-
-<!--   <mat-form-field>
-    <input matInput [(ngModel)]="data.transaction">
-  </mat-form-field> -->
+    </div>
+    <div class="row">
+            <div class="col-md-1">
+                <mat-radio-group formControlName="isExpense">
+                        <mat-radio-button value="true">Expense </mat-radio-button>
+                        <mat-radio-button value="false">Income </mat-radio-button>
+                    </mat-radio-group>
+            </div>
+    </div>    
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Cancel</button>
-  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>
+        <button class="mat-raised-button"
+        (click)="close()">
+    Close
+</button>
+
+<button class="mat-raised-button mat-primary"
+        (click)="save()">
+    Save
+</button>
 </div>

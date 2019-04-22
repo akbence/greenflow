@@ -7,6 +7,7 @@ import { query } from '@angular/animations';
 import { Globals } from '../globals';
 import { MAT_DIALOG_DATA,MatDialogRef,MatDialog } from '@angular/material';
 import { Transaction } from '../transaction/model/transaction';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 
 declare interface TableData {
@@ -51,7 +52,6 @@ export class HistoryComponent implements OnInit {
     transaction.date =row[index++]
     transaction.isExpense = row[index++]
     transaction.id = row[index++]
-    console.log(transaction)
     const dialogRef = this.dialog.open(ModfiyTransactionDialog, {
       //height: '400px',
       width: '600px',
@@ -59,8 +59,7 @@ export class HistoryComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      //this.animal = result;
+      this.queryAll()
     });
   }
 
@@ -87,9 +86,7 @@ export class HistoryComponent implements OnInit {
   });
   }
 
-
   queryAll(){
-    console.log("start query")
     var token=  JSON.parse(localStorage.getItem("currentUser")).token
     const headers = new HttpHeaders()
             .set("Authorization",token);
@@ -99,8 +96,6 @@ export class HistoryComponent implements OnInit {
     }).pipe()
     .subscribe(
       data =>{
-        console.log(data)
-        
         var iterator = 0
         var transformedRows = []
         data.forEach(element => {
@@ -150,20 +145,84 @@ export class HistoryComponent implements OnInit {
   }
 }
 
+///DIALOG COMPONENT///
 @Component({
   selector: 'modify-transaction-dialog',
   templateUrl: './modify.transaction.dialog.html',
 })
 export class ModfiyTransactionDialog {
 
-  constructor(
+  transaction : TransactionModify
+  form: FormGroup
+  serverURL : string
+  categoryPool : string []
+  selected : number
+
+  constructor(private http: HttpClient,globals : Globals,
+    private fb: FormBuilder,
     public dialogRef: MatDialogRef<ModfiyTransactionDialog>,
     @Inject(MAT_DIALOG_DATA) public data: TransactionModify) {
-      console.log("THIS IS DIALOG CTOR: " + data)
+      this.transaction = data
+      this.serverURL = globals.getBaseUrl()
+      
     }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
+  save() {
+    console.log(this.form.value)
+    this.updateRow(this.form.value,this.transaction.id)
+    this.dialogRef.close(this.form.value);
+}
+
+  close() {
+      this.dialogRef.close();
+}
+
+  ngOnInit() {
+    this.selected=-1
+    this.queryCategories()
+    this.form = this.fb.group({
+      name : [this.transaction.name],
+      amount : [this.transaction.amount],
+      currency : [this.transaction.currency],
+      category : [this.transaction.category],
+      paymentType : [this.transaction.paymentType],
+      date : [this.transaction.date],
+      isExpense : [this.transaction.isExpense]
+    });
+    console.log(this.transaction)
+}
+ 
+queryCategories(){
+  var token=  JSON.parse(localStorage.getItem("currentUser")).token
+  const headers = new HttpHeaders()
+          .set("Authorization",token);
+  return this.http.get<any>(this.serverURL+"categories",{headers})
+  .pipe()
+  .subscribe(
+    data =>{
+      var rows = []
+      data.forEach(element => {
+        rows.push(element.name)
+      });
+      this.categoryPool=rows
+    },
+    error => {
+        //this.error = error;
+        console.log("Error"+error);
+    });
+}
+
+updateRow(transaction : TransactionModify, id : number){
+  var token=  JSON.parse(localStorage.getItem("currentUser")).token
+  const headers = new HttpHeaders()
+          .set("Authorization",token)
+          .append('Content-Type', 'application/json');
+  return this.http.put(this.serverURL+"transactions/" + id,transaction,{ headers, observe : 'response'})
+  .subscribe((res : any)=>{
+});
+}
 
 }

@@ -3,10 +3,15 @@ package converters;
 import dao.UserDao;
 import dao.transactions.CategoryDao;
 import entities.transactions.TransactionEntity;
+import enums.Currency;
+import enums.PaymentType;
+import rest.Input.TransactionInput;
 import service.transaction.Transaction;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -57,5 +62,53 @@ public class TransactionConverter {
         result.setCategory(category);
 
         return result;
+    }
+
+    public Transaction restInputToService(TransactionInput transactionInput,String username) throws Exception {
+        Transaction transaction = new Transaction();
+        transaction.setAmmount(transactionInput.getAmount());
+        transaction.setExpense(transactionInput.getIsExpense());
+        transaction.setName(transactionInput.getName());
+        transaction.setCategory(transactionInput.getCategory());
+        transaction.setUsername(username);
+
+        transaction.setDate(stringToDate(transactionInput.getDate()));
+        transaction.setPaymentType(stringToPayment(transactionInput.getPaymentType()));
+        transaction.setCurrency(stringToCurrency(transactionInput.getCurrency()));
+        return transaction;
+    }
+    private PaymentType stringToPayment(String paymentType) throws Exception {
+
+        if (paymentType.equals("CASH")) {
+            return PaymentType.CASH;
+        } else if (paymentType.equals("CARD")) {
+            return PaymentType.CARD;
+        } else {
+            throw new Exception("payment type invalid");
+        }
+    }
+
+    private LocalDate stringToDate(String date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate localDate = LocalDate.parse(date, formatter);
+        return localDate;
+    }
+
+    private Currency stringToCurrency(String currency){
+        return Currency.valueOf(currency);
+    }
+
+    public TransactionEntity serviceToDao(Transaction transaction, int user_id, int category_id) {
+        TransactionEntity transactionEntity = new TransactionEntity();
+        transactionEntity.setId(transaction.getId());
+        transactionEntity.setAmmount(transaction.getAmmount());
+        transactionEntity.setCategory_id(category_id);
+        transactionEntity.setCurrency(transaction.getCurrency());
+        transactionEntity.setDate(transaction.getDate());
+        transactionEntity.setExpense(transaction.isExpense());
+        transactionEntity.setName(transaction.getName());
+        transactionEntity.setPaymentType(transaction.getPaymentType());
+        transactionEntity.setUser_id(user_id);
+        return transactionEntity;
     }
 }

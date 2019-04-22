@@ -23,7 +23,12 @@
                                         <td>{{row[3]}}</td>
                                         <td>{{row[4]}}</td>
                                         <td>{{row[5]}}</td>
-                                        <td>{{row[6]}}</td>
+                                        <td *ngIf="row[6]=='true'">
+                                                <mat-chip color="warn" selected>Expense</mat-chip>
+                                        </td>
+                                        <td *ngIf="row[6]=='false'">
+                                                <mat-chip color="primary" selected>Income</mat-chip>
+                                        </td>
                                         <td><button type="button" class="btn btn-warning" id="update" (click)="updateRow(row)">UPDATE</button></td>
                                         <td><button type="button" class="btn btn-danger" id="delete" (click)="deleteRow(row)">DELETE</button> </td>
                                     </tr>

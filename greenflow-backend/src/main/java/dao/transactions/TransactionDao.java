@@ -82,4 +82,15 @@ public class TransactionDao {
         return transactionConverter.daoToServiceList(entityList);
 
     }
+
+    @Transactional
+    public void modify(Transaction transaction) throws Exception{
+        TransactionEntity transactionEntity = em.find(TransactionEntity.class,transaction.getId());
+        int userid = userDao.getId(transaction.getUsername());
+        if(userid==transactionEntity.getUser_id()){
+            TransactionEntity replace = transactionConverter.serviceToDao(transaction,transactionEntity.getUser_id(),transactionEntity.getCategory_id());
+            em.merge(replace);
+        }
+        else throw new Exception("unauthorized access");
+    }
 }

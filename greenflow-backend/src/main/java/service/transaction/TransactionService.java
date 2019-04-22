@@ -1,5 +1,6 @@
 package service.transaction;
 
+import converters.TransactionConverter;
 import dao.transactions.CategoryDao;
 import dao.transactions.TransactionDao;
 import enums.Currency;
@@ -22,53 +23,18 @@ public class TransactionService {
     private TransactionDao transactionDao;
 
     @Inject
-    CategoryDao categoryDao;
+    private CategoryDao categoryDao;
+
+    @Inject
+    private TransactionConverter transactionConverter;
 
     public void post(TransactionInput transactionInput) throws Exception {
         if (loggedInService.isLoggedIn()) {
-//            loggedInService.checkToken(transactionInput.getToken());
-
-            Transaction transaction = new Transaction();
-            transaction.setAmmount(transactionInput.getAmount());
-            transaction.setExpense(transactionInput.getIsExpense());
-            transaction.setName(transactionInput.getName());
-            transaction.setCategory(transactionInput.getCategory());
-            transaction.setUsername(loggedInService.getCurrentUserName());
-
-            transaction.setDate(stringToDate(transactionInput.getDate()));
-            transaction.setPaymentType(stringToPayment(transactionInput.getPaymentType()));
-            transaction.setCurrency(stringToCurrency(transactionInput.getCurrency()));
-
-            transactionDao.post(transaction);
-
-            // TODO: implement the rest of the service
-            System.out.println("user logged in");
-            System.out.println(loggedInService.getCurrentUserName());
-
-        }
-
-    }
-
-    private PaymentType stringToPayment(String paymentType) throws Exception {
-
-        if (paymentType.equals("CASH")) {
-            return PaymentType.CASH;
-        } else if (paymentType.equals("CARD")) {
-            return PaymentType.CARD;
-        } else {
-            throw new Exception("payment type invalid");
+            transactionDao.post(transactionConverter.restInputToService(transactionInput,loggedInService.getCurrentUserName()));
         }
     }
 
-    private LocalDate stringToDate(String date) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate localDate = LocalDate.parse(date, formatter);
-        return localDate;
-    }
 
-    private Currency stringToCurrency(String currency){
-        return Currency.valueOf(currency);
-    }
 
     public ArrayList<Transaction> getTransactions() throws Exception {
         return transactionDao.getTransactions(loggedInService.getCurrentUserName());
@@ -77,5 +43,12 @@ public class TransactionService {
     public void delete(int id) throws Exception {
         String username=loggedInService.getCurrentUserName();
         transactionDao.delete(id,username);
+    }
+
+    public void modifyTransaction(int id, TransactionInput transactionInput) throws Exception {
+        String username=loggedInService.getCurrentUserName();
+        Transaction transaction = transactionConverter.restInputToService(transactionInput,loggedInService.getCurrentUserName());
+        transaction.setId(id);
+        transactionDao.modify(transaction);
     }
 }
