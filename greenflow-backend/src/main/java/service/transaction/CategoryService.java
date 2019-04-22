@@ -7,7 +7,6 @@ import converters.CategoryConverter;
 import dao.UserDao;
 import dao.transactions.CategoryDao;
 import rest.Input.CategoryInput;
-import rest.Input.UserAuthInput;
 import rest.Response.CategoryResponse;
 import service.authentication.LoggedInService;
 
@@ -32,7 +31,7 @@ public class CategoryService {
             Category category = new Category();
             category.setName(categoryInput.getName());
             category.setUsername(loggedInService.getCurrentUserName());
-            categoryDao.post(category);
+            categoryDao.addCategory(category);
     }
 
     public ArrayList<CategoryResponse> getAll() {

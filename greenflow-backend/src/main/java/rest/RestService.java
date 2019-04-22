@@ -6,17 +6,13 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.apache.commons.lang.math.RandomUtils;
-import rest.Input.CategoryInput;
-import rest.Input.ExportInput;
-import rest.Input.TransactionInput;
-import rest.Input.UserAuthInput;
+import rest.Input.*;
 import rest.Response.CategoryResponse;
 import rest.Response.LoginResponse;
 import rest.Response.StatisticPieResponse;
-import service.authentication.LoggedInService;
 import service.authentication.AuthService;
 import service.authentication.Secured;
+import service.budget.BudgetService;
 import service.export.ExportService;
 import service.statistics.StatisticService;
 import service.transaction.CategoryService;
@@ -24,11 +20,7 @@ import service.transaction.Transaction;
 import service.transaction.TransactionService;
 
 import java.io.File;
-import java.net.URI;
-import java.nio.file.FileSystem;
 import java.util.ArrayList;
-import java.util.Random;
-import java.util.RandomAccess;
 
 
 @Path("")
@@ -49,6 +41,9 @@ public class RestService {
 
     @Inject
     private StatisticService statisticService;
+
+    @Inject
+    private BudgetService budgetService;
 
     @POST
     @Path("/register")
@@ -97,8 +92,6 @@ public class RestService {
     @Path("/postCategory")
     @Produces(MediaType.APPLICATION_JSON)
     public Response postCategory(CategoryInput categoryInput){
-        Response postCategoryResponse = null;
-
         try{
             categoryService.post(categoryInput);
             return Response.status(200).build();
@@ -248,6 +241,21 @@ public class RestService {
         try{
             StatisticPieResponse ret = statisticService.getExpensePieStatistics(year, month);
             return Response.status(200).entity(ret).build();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return Response.status(400).entity("testFail").build();
+    }
+
+
+    @POST
+    @Secured
+    @Path("/budget")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response postBudget(BudgetInput budgetInput){
+        try{
+            budgetService.addBudget(budgetInput);
+            return Response.status(200).build();
         } catch (Exception e){
             e.printStackTrace();
         }

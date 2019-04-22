@@ -19,7 +19,7 @@ import java.util.Random;
 public class ExportService {
 
     private static final String WINDOWS = "windows";
-    private static final String UNIX_LINUX = "linux or unnix";
+    private static final String UNIX_LINUX = "linux or unix";
 
     @Inject
     TransactionDao transactionDao;

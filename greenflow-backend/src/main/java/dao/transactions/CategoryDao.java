@@ -25,7 +25,7 @@ public class CategoryDao {
     CategoryConverter categoryConverter;
 
     @Transactional
-    public void post(Category category) {
+    public void addCategory(Category category) {
         CategoryEntity categoryEntity = new CategoryEntity();
         categoryEntity.setName(category.getName());
         categoryEntity.setUser_id(userDao.getId(category.getUsername()));
