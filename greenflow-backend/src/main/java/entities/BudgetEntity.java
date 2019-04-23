@@ -1,13 +1,17 @@
-package entities.transactions;
+package entities;
 
 import javax.persistence.*;
+
 import java.time.LocalDate;
 
 @Entity
+@NamedQueries({@NamedQuery(name = "Budget.getIdByCurrencyPaymentTypePeriodUserId", query = "select c.id from BudgetEntity c where c.user_id = :user_id and c.currency = :currency " +
+        "and c.paymenttype = :paymentType and  month(c.period) = :month and year(c.period = :year)" )})
 @Table(name = BudgetEntity.tableName)
 public class BudgetEntity {
 
     public static final String tableName= "Budget";
+    public static final String QUERY_CATEGORY_GET_BY_CURR_PTYPE_PERIOD_USERID= "Budget.getIdByCurrencyPaymentTypePeriodUserId";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +23,14 @@ public class BudgetEntity {
     @Column
     private LocalDate period;
 
-    @Column int limit;
+    @Column
+    private int limitation;
+
+    @Column
+    private String currency;
+
+    @Column
+    private String paymentType;
 
     public int getId() {
         return id;
@@ -45,11 +56,27 @@ public class BudgetEntity {
         this.period = period;
     }
 
-    public int getLimit() {
-        return limit;
+    public int getLimitation() {
+        return limitation;
     }
 
-    public void setLimit(int limit) {
-        this.limit = limit;
+    public void setLimitation(int limitation) {
+        this.limitation = limitation;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public String getPaymentType() {
+        return paymentType;
+    }
+
+    public void setPaymentType(String paymentType) {
+        this.paymentType = paymentType;
     }
 }

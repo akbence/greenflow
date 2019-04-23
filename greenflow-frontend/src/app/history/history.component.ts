@@ -53,7 +53,6 @@ export class HistoryComponent implements OnInit {
     transaction.isExpense = row[index++]
     transaction.id = row[index++]
     const dialogRef = this.dialog.open(ModfiyTransactionDialog, {
-      //height: '400px',
       width: '600px',
       data: transaction
     });

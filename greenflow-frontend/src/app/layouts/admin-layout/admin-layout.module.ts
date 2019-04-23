@@ -13,6 +13,7 @@ import { UserComponent } from '../../user/user.component';
 import { TransactionComponent } from '../../transaction/transaction.component';
 import { HistoryComponent, ModfiyTransactionDialog } from '../../history/history.component';
 import { CategoryComponent } from '../../category/category.component';
+import { BudgetComponent, BudgetEditorDialog } from '../../budget/budget.component'
 import { TypographyComponent } from '../../typography/typography.component';
 import { IconsComponent } from '../../icons/icons.component';
 import { MapsComponent } from '../../maps/maps.component';
@@ -113,19 +114,22 @@ import {MatCardModule,
     TransactionComponent,
     CategoryComponent,
     HistoryComponent,
+    BudgetComponent,
     TypographyComponent,
     IconsComponent,
     MapsComponent,
     NotificationsComponent,
     UpgradeComponent,
-    ModfiyTransactionDialog
+    ModfiyTransactionDialog,
+    BudgetEditorDialog
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'hu-HU'},
   ],
 
   entryComponents : [
-    ModfiyTransactionDialog
+    ModfiyTransactionDialog,
+    BudgetEditorDialog
   ]
 
   

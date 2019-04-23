@@ -10,6 +10,7 @@ import { MapsComponent } from '../../maps/maps.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { TransactionComponent } from 'src/app/transaction/transaction.component';
+import { BudgetComponent } from '../../budget/budget.component'
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: HomeComponent },
@@ -17,6 +18,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'transaction',    component: TransactionComponent },
     { path: 'category',       component: CategoryComponent },
     { path: 'history',        component: HistoryComponent },
+    { path: 'budget',         component: BudgetComponent },
     { path: 'typography',     component: TypographyComponent },
     { path: 'icons',          component: IconsComponent },
     { path: 'maps',           component: MapsComponent },
