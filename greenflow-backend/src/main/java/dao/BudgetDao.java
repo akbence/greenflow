@@ -7,6 +7,7 @@ import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Model
 public class BudgetDao {
@@ -27,17 +28,19 @@ public class BudgetDao {
         budgetEntity.setPaymentType(budget.getPaymentType().toString());
 
         try {
-            BudgetEntity result= em.createNamedQuery(BudgetEntity.QUERY_CATEGORY_GET_BY_CURR_PTYPE_PERIOD_USERID, BudgetEntity.class)
-                    .setParameter("currency",budgetEntity.getCurrency())
-                    .setParameter("paymentType",budgetEntity.getPaymentType())
-                    .setParameter("period",budgetEntity.getPeriod())
-                    .setParameter("user_id",budgetEntity.getUser_id())
-                    .getSingleResult();
-            if(result==null){
+            List<BudgetEntity> result = em.createNamedQuery(BudgetEntity.QUERY_CATEGORY_GET_BY_CURR_PTYPE_PERIOD_USERID, BudgetEntity.class)
+                    .setParameter("currency", budgetEntity.getCurrency())
+                    .setParameter("paymentType", budgetEntity.getPaymentType())
+                    .setParameter("month", budgetEntity.getPeriod().getMonthValue())
+                    .setParameter("year", budgetEntity.getPeriod().getYear())
+                    .setParameter("user_id", budgetEntity.getUser_id())
+                    .getResultList();
+            if(result.isEmpty()){
                 em.persist(budgetEntity);
             }else throw new Exception("cant add, actual_monthly exists");
         }
         catch (Exception e){
+            System.out.println(e.getMessage());
             System.out.println("add budget problem");
         }
     }

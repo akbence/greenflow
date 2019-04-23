@@ -5,8 +5,8 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@NamedQueries({@NamedQuery(name = "Budget.getIdByCurrencyPaymentTypePeriodUserId", query = "select c.id from BudgetEntity c where c.user_id = :user_id and c.currency = :currency " +
-        "and c.paymenttype = :paymentType and  month(c.period) = :month and year(c.period = :year)" )})
+@NamedQueries({@NamedQuery(name = "Budget.getIdByCurrencyPaymentTypePeriodUserId", query = "select c from BudgetEntity c where c.user_id = :user_id and c.currency = :currency " +
+        "and c.paymentType = :paymentType and  function('month',c.period) = :month and function('year',c.period) = :year" )})
 @Table(name = BudgetEntity.tableName)
 public class BudgetEntity {
 
