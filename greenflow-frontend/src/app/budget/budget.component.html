@@ -35,8 +35,6 @@
                                 </div>
                             </div>
                         </div>
-
-
                         <div class="row">
                             <div class="col-md-4">
                                 <label>Currency</label>
@@ -45,12 +43,17 @@
                         </div>
                         <div class="row">
                             <div class="col-md-4">
-
                                 <label>Payment Type</label>
                                 <p><b>{{budgetDetail.paymentType}}</b></p>
-
                             </div>
                         </div>
+                        <div class="row">
+                                <div class="col-md-4">
+                                        <button type="button" class="btn btn-error" id="remove"
+                                        (click)="removeBudget(i,budgetDetail.id)">Remove</button>
+                                </div>
+                            </div>
+    
                     </div>
 
                 </div>

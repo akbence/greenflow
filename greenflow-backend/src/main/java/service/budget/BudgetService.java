@@ -45,4 +45,10 @@ public class BudgetService {
         String username = loggedInService.getCurrentUserName();
         budgetDao.modifyBudget(id,limit,username);
     }
+
+    public void deleteBudget(int id) {
+        String username = loggedInService.getCurrentUserName();
+        budgetDao.deleteBudget(id,username);
+
+    }
 }

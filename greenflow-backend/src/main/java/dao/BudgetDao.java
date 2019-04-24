@@ -80,4 +80,19 @@ public class BudgetDao {
             throw e;
         }
     }
+
+    public void deleteBudget(int id, String username) {
+        int userId= userDao.getId(username);
+        try{
+            BudgetEntity budgetEntity =em.createNamedQuery(BudgetEntity.QUERY_BUDGET_BY_ID_USERID,BudgetEntity.class)
+                    .setParameter("user_id", userId)
+                    .setParameter("id",id)
+                    .getSingleResult();
+            em.remove(budgetEntity);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            System.out.println("remove budget problem, unathorized access");
+            throw e;
+        }
+    }
 }

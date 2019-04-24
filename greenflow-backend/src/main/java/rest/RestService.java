@@ -292,6 +292,19 @@ public class RestService {
         return Response.status(400).entity("testFail").build();
     }
 
+    @DELETE
+    @Secured
+    @Path("/budget/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response modifyBudget(@PathParam("id") int id){
+        try{
+            budgetService.deleteBudget(id);
+            return Response.status(200).build();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return Response.status(400).entity("testFail").build();
+    }
 
 
 }
