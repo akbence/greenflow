@@ -64,6 +64,7 @@ public class BudgetDao {
         }
     }
 
+    @Transactional
     public void modifyBudget(int id, int limit, String username) {
         int userId= userDao.getId(username);
         try{

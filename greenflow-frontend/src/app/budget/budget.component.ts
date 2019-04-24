@@ -45,12 +45,14 @@ export class BudgetComponent implements OnInit {
             .set("Authorization",token)
             .append('Content-Type', 'application/json');
     
-    return this.http.put<any>(this.serverURL+"budget/"+ id + "/"+ this.editedLimit[index],{headers, observe : 'response'})
+    return this.http.put(this.serverURL+"budget/"+ id, this.editedLimit[index], {headers, observe : 'response'})
     .subscribe (
       data =>{
 
       },
       error => {
+        //Update locally if success
+        this.editedLimit[index]=this.editedLimit[index]
           console.log("Error"+error);
       });
     

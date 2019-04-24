@@ -280,9 +280,9 @@ public class RestService {
 
     @PUT
     @Secured
-    @Path("/budget/{id}/{limit}")
+    @Path("/budget/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response modifyBudget(@PathParam("id") int id, @PathParam("limit") int limit){
+    public Response modifyBudget(@PathParam("id") int id, int limit){
         try{
             budgetService.modifyBudget(id,limit);
             return Response.status(200).build();
