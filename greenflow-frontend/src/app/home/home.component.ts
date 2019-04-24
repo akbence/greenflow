@@ -72,7 +72,7 @@ export class HomeComponent implements OnInit {
               .set("Authorization",token)
               .append('Content-Type', 'application/json');
       //const params = new HttpParams().set('name',row);
-      return this.http.get(this.serverURL+"statistics/pie/income/" + date.getFullYear()  +"/" + (date.getMonth()+1),{ headers, observe : 'response'})
+      return this.http.get(this.serverURL+"statistics/pie/income/" + date.getFullYear()  +"/" + (date.getMonth()+1),{ headers, observe : 'response',withCredentials : true})
       .subscribe((res : any)=>{
         this.pieIncomeChartLabels=res.body.labels
         this.pieIncomeChartData=res.body.data
@@ -86,7 +86,7 @@ export class HomeComponent implements OnInit {
               .set("Authorization",token)
               .append('Content-Type', 'application/json');
       //const params = new HttpParams().set('name',row);
-      return this.http.get(this.serverURL+"statistics/pie/expense/" + date.getFullYear()  +"/" + (date.getMonth()+1),{ headers, observe : 'response'})
+      return this.http.get(this.serverURL+"statistics/pie/expense/" + date.getFullYear()  +"/" + (date.getMonth()+1),{ headers, observe : 'response',withCredentials : true})
       .subscribe((res : any)=>{
         this.pieExpenseChartLabels=res.body.labels
         this.pieExpenseChartData=res.body.data

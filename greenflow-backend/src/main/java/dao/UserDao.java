@@ -4,13 +4,16 @@ import service.authentication.User;
 import entities.UserEntity;
 
 import javax.ejb.Local;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 
-@Model
+@Named
+@RequestScoped
 public class UserDao {
 
     @Inject

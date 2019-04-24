@@ -54,12 +54,12 @@
             <version>${common.codec.version}</version>
         </dependency>
 
-        <dependency>
+<!--        <dependency>
             <groupId>com.airhacks</groupId>
             <artifactId>jaxrs-cors</artifactId>
             <version>0.0.2</version>
             <scope>compile</scope>
-        </dependency>
+        </dependency>-->
 
     </dependencies>
 

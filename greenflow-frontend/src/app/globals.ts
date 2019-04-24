@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler } from '@angular/common/http';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 
 @Injectable()
@@ -7,7 +8,7 @@ export class Globals implements HttpInterceptor{
     public baseUrl: string = 'http://localhost:8080/greenflow/rest/'
     
     constructor() {}
-    intercept(req: HttpRequest<any>, next: HttpHandler) {
+    intercept(req: HttpRequest<any>, next: HttpHandler) :Observable<HttpEvent<any>> {
     // Get the auth token from the service. 
     // Clone the request and replace the original headers with
     // cloned headers, updated with the authorization.
@@ -16,9 +17,12 @@ export class Globals implements HttpInterceptor{
       .append("Access-Control-Allow-Origin", "http://127.0.0.1:4200")
       .append('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT')
 //         .append('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
-      .append('Access-Control-Allow-Headers', 'accept, authorization, content-type, x-requested-with')
-      .append('Access-Control-Allow-Credentials', "true")
+      .append('Access-Control-Allow-Headers', 'accept, authorization, content-type, x-requested-with, set-cookie')
+      .append('Access-Control-Allow-Credentials', "true"),
+      withCredentials : true
     });
+    console.log(req.url.valueOf() + ": cred val: " + corsReq.withCredentials.valueOf())
+    
  
     // send cloned request with header to the next handler.
     return next.handle(corsReq);

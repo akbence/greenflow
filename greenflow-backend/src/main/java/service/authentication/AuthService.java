@@ -4,12 +4,14 @@ import dao.UserDao;
 import rest.Input.UserAuthInput;
 import rest.Response.LoginResponse;
 
+import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@Model
-public class AuthService {
+@SessionScoped
+public class AuthService implements Serializable {
 
     @Inject
     UserDao userDao;

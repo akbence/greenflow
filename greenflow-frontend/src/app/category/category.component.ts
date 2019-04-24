@@ -47,7 +47,7 @@ export class CategoryComponent implements OnInit {
     var token=  JSON.parse(localStorage.getItem("currentUser")).token
     const headers = new HttpHeaders()
             .set("Authorization",token);
-    return this.http.get<any>(this.serverURL+"categories",{headers})
+    return this.http.get<any>(this.serverURL+"categories",{headers, withCredentials : true})
     .pipe()
     .subscribe(
       data =>{

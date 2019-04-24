@@ -1,6 +1,8 @@
 package rest;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -26,7 +28,6 @@ import java.util.List;
 
 
 @Path("")
-@ApplicationScoped
 public class RestService {
 
     @Inject

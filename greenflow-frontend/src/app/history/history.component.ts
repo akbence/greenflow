@@ -89,7 +89,7 @@ export class HistoryComponent implements OnInit {
     var token=  JSON.parse(localStorage.getItem("currentUser")).token
     const headers = new HttpHeaders()
             .set("Authorization",token);
-    return this.http.get<any>(this.serverURL+"transactions",{headers},)
+    return this.http.get<any>(this.serverURL+"transactions",{headers,withCredentials:true})
     .pipe(res =>{
       return res
     }).pipe()

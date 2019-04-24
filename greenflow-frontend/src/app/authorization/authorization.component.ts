@@ -47,6 +47,7 @@ import {AuthenticationService} from './services/authentication.service'
     .pipe(first())
     .subscribe(
         data => {
+            console.log(data)
             this.router.navigate(["/dashboard"])
         
         },

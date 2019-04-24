@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 
-@ApplicationScoped
+@SessionScoped
 @Named
 public class LoggedInService implements Serializable {
 
