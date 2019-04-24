@@ -81,6 +81,7 @@ public class BudgetDao {
         }
     }
 
+    @Transactional
     public void deleteBudget(int id, String username) {
         int userId= userDao.getId(username);
         try{

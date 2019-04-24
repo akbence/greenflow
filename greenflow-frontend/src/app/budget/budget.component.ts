@@ -13,7 +13,7 @@ export class BudgetComponent implements OnInit {
   private username : string
   private registrationDate : Date
   public serverURL : string;
-  public actualBudgets : []
+  public actualBudgets : any[]
   public editing : boolean[]
   public editedLimit : number[]
 
@@ -35,7 +35,7 @@ export class BudgetComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log("dialog closed")
+      this.listActualBudgets()
     });
   }
   updateBudget(index,id){
@@ -48,15 +48,31 @@ export class BudgetComponent implements OnInit {
     return this.http.put(this.serverURL+"budget/"+ id, this.editedLimit[index], {headers, observe : 'response'})
     .subscribe (
       data =>{
-
+        this.actualBudgets[index].limit= this.editedLimit[index]
       },
       error => {
         //Update locally if success
-        this.editedLimit[index]=this.editedLimit[index]
           console.log("Error"+error);
-      });
-    
+      });  
   }
+
+  removeBudget(id){
+    var token=  JSON.parse(localStorage.getItem("currentUser")).token
+    const headers = new HttpHeaders()
+            .set("Authorization",token)
+            .append('Content-Type', 'application/json');
+    
+    return this.http.delete(this.serverURL+"budget/"+ id, {headers, observe : 'response'})
+    .subscribe (
+      data =>{
+        this.listActualBudgets()
+      },
+      error => {
+        //Update locally if success
+          console.log("Error"+error);
+      });  
+  }
+
   listActualBudgets(){
     var token=  JSON.parse(localStorage.getItem("currentUser")).token
     const headers = new HttpHeaders()
