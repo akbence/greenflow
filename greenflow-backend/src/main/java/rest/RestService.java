@@ -7,6 +7,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import rest.Input.*;
+import rest.Response.BudgetResponse;
 import rest.Response.CategoryResponse;
 import rest.Response.LoginResponse;
 import rest.Response.StatisticPieResponse;
@@ -21,6 +22,7 @@ import service.transaction.TransactionService;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 
 @Path("")
@@ -261,6 +263,35 @@ public class RestService {
         }
         return Response.status(400).entity("testFail").build();
     }
+
+    @GET
+    @Secured
+    @Path("/budget")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getAllBudget(){
+        try{
+            List<BudgetResponse> response= budgetService.getAllBudget();
+            return Response.status(200).entity(response).build();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return Response.status(400).entity("testFail").build();
+    }
+
+    @PUT
+    @Secured
+    @Path("/budget/{id}/{limit}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response modifyBudget(@PathParam("id") int id, @PathParam("limit") int limit){
+        try{
+            budgetService.modifyBudget(id,limit);
+            return Response.status(200).build();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return Response.status(400).entity("testFail").build();
+    }
+
 
 
 }

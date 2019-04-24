@@ -13,16 +13,21 @@ export class BudgetComponent implements OnInit {
   private username : string
   private registrationDate : Date
   public serverURL : string;
+  public actualBudgets : []
+  public editing : boolean[]
+  public editedLimit : number[]
 
   constructor(private http: HttpClient,globals : Globals, public dialog: MatDialog ) {
     this.serverURL = globals.getBaseUrl()
    }
 
   ngOnInit() {
+    this.listActualBudgets()
+    this.editing=new Array()
+    this.editedLimit = new Array()
   }
 
   addBudget() {
-    console.log("click")
     const dialogRef = this.dialog.open(BudgetEditorDialog, {
       //height: '400px',
       width: '600px',
@@ -33,6 +38,43 @@ export class BudgetComponent implements OnInit {
       console.log("dialog closed")
     });
   }
+  updateBudget(index,id){
+    this.editing[index]=false
+    var token=  JSON.parse(localStorage.getItem("currentUser")).token
+    const headers = new HttpHeaders()
+            .set("Authorization",token)
+            .append('Content-Type', 'application/json');
+    
+    return this.http.put<any>(this.serverURL+"budget/"+ id + "/"+ this.editedLimit[index],{headers, observe : 'response'})
+    .subscribe (
+      data =>{
+
+      },
+      error => {
+          console.log("Error"+error);
+      });
+    
+  }
+  listActualBudgets(){
+    var token=  JSON.parse(localStorage.getItem("currentUser")).token
+    const headers = new HttpHeaders()
+            .set("Authorization",token)
+            .append('Content-Type', 'application/json');
+    return this.http.get<any>(this.serverURL+"budget",{headers, observe : 'response'})
+    .subscribe (
+      data =>{
+        this.actualBudgets = <any> data.body
+        let index=0
+        this.actualBudgets.forEach((element:any)  => {
+          this.editedLimit[index] =  element.limit
+          this.editing[index++] = false
+        });
+      },
+      error => {
+          console.log("Error"+error);
+      });
+  }
+
 }
 
 ///BUDGET EDITOR DIALOG///
@@ -62,10 +104,11 @@ export class BudgetEditorDialog {
       this.addBudget(this.form.value)
     }
     this.dialogRef.close(this.form.value);
-}
+  }
+
   close() {
       this.dialogRef.close();
-}
+  }
 
   ngOnInit() {
     this.form = this.fb.group({
@@ -73,19 +116,19 @@ export class BudgetEditorDialog {
       currency : [],
       paymentType :[]
     });
-}
-addBudget(budget){
-  var token=  JSON.parse(localStorage.getItem("currentUser")).token
-  const headers = new HttpHeaders()
-          .set("Authorization",token)
-          .append('Content-Type', 'application/json');
-  return this.http.request<any>('post',this.serverURL+"budget",{headers,body : budget, observe : 'response'})
-  .subscribe (
-    (data : any) =>{
-    },
-    error => {
-        console.log("Error"+error);
-    });
-}
+  }
+  addBudget(budget){
+    var token=  JSON.parse(localStorage.getItem("currentUser")).token
+    const headers = new HttpHeaders()
+            .set("Authorization",token)
+            .append('Content-Type', 'application/json');
+    return this.http.request<any>('post',this.serverURL+"budget",{headers,body : budget, observe : 'response'})
+    .subscribe (
+      (data : any) =>{
+      },
+      error => {
+          console.log("Error"+error);
+      });
+  }
 
 }

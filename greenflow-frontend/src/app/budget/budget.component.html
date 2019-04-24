@@ -1,52 +1,62 @@
-<div class="main-content" >
+<div class="main-content">
     <div class="container-fluid">
         <div class="row">
-                <div class="card">
-                    <div class="header">
-                        <h4 class="title">Actual Monthly Budget</h4>
-                    </div>
-                    <div class="content">
-                        <div class="row">
-                            <div class="col-md-8"> There can be one valid budget for the actual month, from every currency-payment type combination</div>
-                            <div class="col-md-2"><button type="button" class="btn btn-info" id="add" (click)="addBudget()">Add Budget</button></div>
-                        </div>
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">Actual Monthly Budget</h4>
+                </div>
+                <div class="content">
+                    <div class="row">
+                        <div class="col-md-8"> There can be one valid budget for the actual month, from every
+                            currency-payment type combination</div>
+                        <div class="col-md-2"><button type="button" class="btn btn-info" id="add"
+                                (click)="addBudget()">Add Budget</button></div>
                     </div>
                 </div>
-            
+            </div>
+
         </div>
         <div class="row">
-        <div class="card">
-            <div class="content">
-            <form>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Limit</label>
-                            <input type="text" class="form-control" name="username" [(ngModel)]="username" placeholder="Username" value="(setUsername())" readonly>
+            <div class="col-md-2" *ngFor="let budgetDetail of actualBudgets; let i = index">
+                <div class="card">
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Limit</label>
+                                <div *ngIf="editing[i]===false">
+                                    <p><b>{{budgetDetail.limit}}</b></p>
+                                    <button type="button" class="btn btn-warning" id="modify"
+                                        (click)="editing[i]=!editing[i]">Modify</button>
+                                </div>
+                                <div *ngIf="editing[i]===true">
+                                    <input type="number" [(ngModel)]="editedLimit[i]">
+                                    <button type="button" class="btn btn-primary" id="modify"
+                                        (click)="updateBudget(i,budgetDetail.id)">Modify</button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Currency</label>
+                                <p><b>{{budgetDetail.currency}}</b></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+
+                                <label>Payment Type</label>
+                                <p><b>{{budgetDetail.paymentType}}</b></p>
+
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Currency</label>
-                                <input type="text" class="form-control" name="username" [(ngModel)]="username" placeholder="Username" value="(setUsername())" readonly>
-                            </div>
-                        </div>
-                </div>
-                <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Payment Type</label>
-                                <input type="text" class="form-control" name="username" [(ngModel)]="username" placeholder="Username" value="(setUsername())" readonly>
-                            </div>
-                        </div>
-                </div>
 
-            </form>
+                </div>
+            </div>
+
         </div>
-    </div>
-</div>
-            
+
     </div>
 </div>

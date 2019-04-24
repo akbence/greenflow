@@ -17,7 +17,7 @@ public class CategoryConverter {
         return category;
     }
 
-    public ArrayList<Category> daoToServiceList(ArrayList<CategoryEntity> categoryEntities){
+    public  ArrayList<Category> daoToServiceList(ArrayList<CategoryEntity> categoryEntities){
         ArrayList<Category> categories = new ArrayList<>();
         categoryEntities.forEach(categoryEntity -> categories.add(daoToService(categoryEntity)));
         return categories;

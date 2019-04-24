@@ -1,17 +1,13 @@
-package service.budget;
+package rest.Response;
 
 import enums.Currency;
 import enums.PaymentType;
 
-import java.time.LocalDate;
+public class BudgetResponse {
 
-public class Budget {
-
-    private String username;
-    private int limit;
-    private LocalDate period;
     private PaymentType paymentType;
     private Currency currency;
+    private int limit;
     private int id;
 
     public int getId() {
@@ -38,27 +34,11 @@ public class Budget {
         this.currency = currency;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public int getLimit() {
         return limit;
     }
 
     public void setLimit(int limit) {
         this.limit = limit;
-    }
-
-    public LocalDate getPeriod() {
-        return period;
-    }
-
-    public void setPeriod(LocalDate period) {
-        this.period = period;
     }
 }

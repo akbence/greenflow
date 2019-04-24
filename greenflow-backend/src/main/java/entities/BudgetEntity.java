@@ -6,12 +6,16 @@ import java.time.LocalDate;
 
 @Entity
 @NamedQueries({@NamedQuery(name = "Budget.getIdByCurrencyPaymentTypePeriodUserId", query = "select c from BudgetEntity c where c.user_id = :user_id and c.currency = :currency " +
-        "and c.paymentType = :paymentType and  function('month',c.period) = :month and function('year',c.period) = :year" )})
+        "and c.paymentType = :paymentType and  function('month',c.period) = :month and function('year',c.period) = :year" ),
+        @NamedQuery(name = "Budget.getAllByUserId", query = "select c from BudgetEntity c where c.user_id = :user_id" ),
+        @NamedQuery(name = "Budget.getByIdUserId", query = "select c from BudgetEntity c where c.user_id = :user_id and c.id= :id" )})
 @Table(name = BudgetEntity.tableName)
 public class BudgetEntity {
 
     public static final String tableName= "Budget";
-    public static final String QUERY_CATEGORY_GET_BY_CURR_PTYPE_PERIOD_USERID= "Budget.getIdByCurrencyPaymentTypePeriodUserId";
+    public static final String QUERY_BUDGET_GET_BY_CURR_PTYPE_PERIOD_USERID = "Budget.getIdByCurrencyPaymentTypePeriodUserId";
+    public static final String QUERY_BUDGET_GET_ALL_BY_ID = "Budget.getAllByUserId";
+    public static final String QUERY_BUDGET_BY_ID_USERID = "Budget.getByIdUserId";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
