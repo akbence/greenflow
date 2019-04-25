@@ -11,7 +11,7 @@
                         <div class="col-md-4" *ngIf="ignoreDates === false">
                             <label>From:</label>
                             <mat-form-field >
-                                <input matInput [matDatepicker]="picker1" [value]="fromDate.value">
+                                <input matInput [matDatepicker]="picker1" [formControl]="fromDate">
                                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                 <mat-datepicker #picker1></mat-datepicker>
                             </mat-form-field>
@@ -19,7 +19,7 @@
                         <div class="col-md-4" *ngIf="ignoreDates === false">
                             <label>Until: </label>
                             <mat-form-field>
-                                <input matInput [matDatepicker]="picker2" [value]="toDate.value">
+                                <input matInput [matDatepicker]="picker2" [formControl]="toDate">
                                 <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                                 <mat-datepicker #picker2></mat-datepicker>
                             </mat-form-field>

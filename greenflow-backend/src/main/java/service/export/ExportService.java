@@ -1,7 +1,7 @@
 package service.export;
 
-import com.sun.jndi.toolkit.url.Uri;
 import dao.transactions.TransactionDao;
+import org.apache.commons.lang.StringUtils;
 import service.authentication.LoggedInService;
 import service.transaction.Transaction;
 
@@ -12,6 +12,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -27,10 +29,19 @@ public class ExportService {
     @Inject
     LoggedInService loggedInService;
 
-    public File export() throws Exception {
+
+    public File export(String from, String to) throws Exception {
         File file;
         try {
-            ArrayList<Transaction> transactions = transactionDao.getTransactions(loggedInService.getCurrentUserName());
+            ArrayList<Transaction> transactions;
+            if(from==null || to==null){
+            transactions= transactionDao.getEntireTransactionHistory(loggedInService.getCurrentUserName());
+            }else{
+                DateTimeFormatter DATEFORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                LocalDate fromDate = LocalDate.parse(from, DATEFORMATTER);
+                LocalDate toDate = LocalDate.parse(to,DATEFORMATTER);
+                transactions = transactionDao.getGivenPeriodTransactionHistory(loggedInService.getCurrentUserName(),fromDate,toDate);
+            }
             file = new File(getTemporaryFileURI());
             file.createNewFile();
             return createCSV(file, transactions);

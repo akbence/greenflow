@@ -157,12 +157,10 @@ public class RestService {
     public Response exportAsCSV(@QueryParam("from")  String from,
                                 @QueryParam("to") String to){
 
-        System.out.println(from + " ----- " + to);
-        Response postCategoryResponse = null;
         File file = null;
         try{
 
-            file = exportService.export();
+            file = exportService.export(from,to);
 
             Response.ResponseBuilder resp= Response.ok((Object)file);
             resp.header("Content-Disposition","attachment; filename=\"test_file.csv\"");
