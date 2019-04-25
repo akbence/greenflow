@@ -17,11 +17,9 @@ export class Globals implements HttpInterceptor{
       .append("Access-Control-Allow-Origin", "http://127.0.0.1:4200")
       .append('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT')
 //         .append('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
-      .append('Access-Control-Allow-Headers', 'accept, authorization, content-type, x-requested-with, set-cookie')
-      .append('Access-Control-Allow-Credentials', "true"),
-      withCredentials : true
+      .append('Access-Control-Allow-Headers', 'accept, authorization, content-type, x-requested-with, set-cookie,cookie')
+      .append('Access-Control-Allow-Credentials', "true")
     });
-    console.log(req.url.valueOf() + ": cred val: " + corsReq.withCredentials.valueOf())
     
  
     // send cloned request with header to the next handler.

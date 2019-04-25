@@ -79,7 +79,7 @@ export class CategoryComponent implements OnInit {
             .set("Authorization",token)
             .append('Content-Type', 'application/json');
     //const params = new HttpParams().set('name',row);
-    return this.http.request<any>('post',this.serverURL+"postCategory",{headers, body : req, observe : 'response'})
+    return this.http.request<any>('post',this.serverURL+"postCategory",{headers, body : req, observe : 'response',withCredentials : true})
     .subscribe((res : any)=>{
       this.queryAll();
   });
@@ -96,7 +96,7 @@ export class CategoryComponent implements OnInit {
             .set("Authorization",token)
             .append('Content-Type', 'application/json');
     //const params = new HttpParams().set('name',row);
-    return this.http.request<any>('put',this.serverURL+"categories/"+ row.id,{headers, body : req, observe : 'response'})
+    return this.http.request<any>('put',this.serverURL+"categories/"+ row.id,{headers, body : req, observe : 'response',withCredentials : true})
     .subscribe((res : any)=>{
       this.queryAll();
   });
@@ -109,7 +109,7 @@ export class CategoryComponent implements OnInit {
             .set("Authorization",token)
             .append('Content-Type', 'application/json');
     //const params = new HttpParams().set('name',row);
-    return this.http.request<any>('delete',this.serverURL+"categories/" + row.id,{ headers, observe : 'response'})
+    return this.http.request<any>('delete',this.serverURL+"categories/" + row.id,{ headers, observe : 'response',withCredentials : true})
     .subscribe((res : any)=>{
       this.queryAll();
   });

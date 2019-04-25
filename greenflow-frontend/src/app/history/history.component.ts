@@ -79,7 +79,7 @@ export class HistoryComponent implements OnInit {
             .set("Authorization",token)
             .append('Content-Type', 'application/json');
     //const params = new HttpParams().set('name',row);
-    return this.http.delete(this.serverURL+"transactions/" + row[7],{ headers, observe : 'response'})
+    return this.http.delete(this.serverURL+"transactions/" + row[7],{ headers, observe : 'response',withCredentials : true})
     .subscribe((res : any)=>{
       this.queryAll();
   });
@@ -127,7 +127,7 @@ export class HistoryComponent implements OnInit {
     const headers = new HttpHeaders()
             .set("Authorization",token);
     console.log("clicked")
-    return this.http.get<Blob>(this.serverURL+"export",{responseType: 'csv' as 'json' ,headers},)
+    return this.http.get<Blob>(this.serverURL+"export",{responseType: 'csv' as 'json' ,headers,withCredentials : true},)
     .pipe(res =>{
       return res
     }).pipe()
@@ -198,7 +198,7 @@ queryCategories(){
   var token=  JSON.parse(localStorage.getItem("currentUser")).token
   const headers = new HttpHeaders()
           .set("Authorization",token);
-  return this.http.get<any>(this.serverURL+"categories",{headers})
+  return this.http.get<any>(this.serverURL+"categories",{headers,withCredentials : true})
   .pipe()
   .subscribe(
     data =>{
@@ -219,7 +219,7 @@ updateRow(transaction : TransactionModify, id : number){
   const headers = new HttpHeaders()
           .set("Authorization",token)
           .append('Content-Type', 'application/json');
-  return this.http.put(this.serverURL+"transactions/" + id,transaction,{ headers, observe : 'response'})
+  return this.http.put(this.serverURL+"transactions/" + id,transaction,{ headers, observe : 'response',withCredentials : true})
   .subscribe((res : any)=>{
 });
 }

@@ -62,7 +62,7 @@ export class TransactionComponent implements OnInit, Resolve<any> {
     const headers = new HttpHeaders()
             .set("Authorization",token)
             .append('Content-Type', 'application/json')
-    return this.http.request<any>('post',this.serverURL+"postTransaction",{headers,body : req, observe : 'response'})
+    return this.http.request<any>('post',this.serverURL+"postTransaction",{headers,body : req, observe : 'response',withCredentials : true})
     .subscribe (
       (data : any) =>{
       },
@@ -77,7 +77,7 @@ export class TransactionComponent implements OnInit, Resolve<any> {
     var token=  JSON.parse(localStorage.getItem("currentUser")).token
     const headers = new HttpHeaders()
             .set("Authorization",token);
-    return this.http.get<any>(this.serverURL+"categories",{headers})
+    return this.http.get<any>(this.serverURL+"categories",{headers,withCredentials : true})
     .pipe()
     .subscribe(
       data =>{
