@@ -5,9 +5,9 @@ import { first } from 'rxjs/operators';
 import { saveAs } from 'file-saver';
 import { query } from '@angular/animations';
 import { Globals } from '../globals';
-import { MAT_DIALOG_DATA,MatDialogRef,MatDialog } from '@angular/material';
+import { MAT_DIALOG_DATA,MatDialogRef,MatDialog, MatInput, MatDatepicker } from '@angular/material';
 import { Transaction } from '../transaction/model/transaction';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 
 
 declare interface TableData {
@@ -35,9 +35,16 @@ export class HistoryComponent implements OnInit {
     public tableData1: TableData;
     public tableData2: TableData;
     public serverURL : string;
+    public fromDate = new FormControl(new Date());
+    public toDate = new FormControl(new Date());
+    public ignoreDates= false;
 
   constructor(private http: HttpClient,globals : Globals, public dialog: MatDialog ) {
     this.serverURL = globals.getBaseUrl()
+   }
+
+   changeIgnoreDates(){
+    this.ignoreDates=!this.ignoreDates
    }
 
    updateRow(row): void {
@@ -127,7 +134,17 @@ export class HistoryComponent implements OnInit {
     const headers = new HttpHeaders()
             .set("Authorization",token);
     console.log("clicked")
-    return this.http.get<Blob>(this.serverURL+"export",{responseType: 'csv' as 'json' ,headers,withCredentials : true},)
+    var fromDate
+    var toDate
+    if(this.ignoreDates==false){
+      fromDate=this.formatDate((<Date> this.fromDate.value)).toString()
+      toDate=this.formatDate((<Date> this.toDate.value)).toString()
+    }else if(this.ignoreDates==true){
+      fromDate=null;
+      toDate=null;
+    }
+
+    return this.http.get<Blob>(this.serverURL+"export",{params: {from : fromDate, to: toDate},responseType: 'csv' as 'json' ,headers,withCredentials : true})
     .pipe(res =>{
       return res
     }).pipe()
@@ -142,6 +159,18 @@ export class HistoryComponent implements OnInit {
           console.log("Error"+error);
       });
   }
+
+  private formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
+}
 }
 
 ///DIALOG COMPONENT///

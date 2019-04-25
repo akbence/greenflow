@@ -154,7 +154,10 @@ public class RestService {
     @Secured
     @Path("/export")
     @Produces("txt/csv")
-    public Response exportAsCSV(){
+    public Response exportAsCSV(@QueryParam("from")  String from,
+                                @QueryParam("to") String to){
+
+        System.out.println(from + " ----- " + to);
         Response postCategoryResponse = null;
         File file = null;
         try{
