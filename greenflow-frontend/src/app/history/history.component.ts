@@ -56,9 +56,10 @@ export class HistoryComponent implements OnInit {
     transaction.currency=row[index++]
     transaction.category =row[index++]
     transaction.paymentType = row[index++]
-    transaction.date =row[index++]
+    transaction.date = row[index++]
     transaction.isExpense = row[index++]
     transaction.id = row[index++]
+ 
     const dialogRef = this.dialog.open(ModfiyTransactionDialog, {
       width: '600px',
       data: transaction
@@ -139,12 +140,23 @@ export class HistoryComponent implements OnInit {
     if(this.ignoreDates==false){
       fromDate=this.formatDate((<Date> this.fromDate.value)).toString()
       toDate=this.formatDate((<Date> this.toDate.value)).toString()
+      return this.http.get<Blob>(this.serverURL+"export",{params: {from : fromDate, to: toDate},responseType: 'csv' as 'json' ,headers,withCredentials : true})
+      .pipe(res =>{
+        return res
+      }).pipe()
+      .subscribe(
+        data =>{
+          console.log(data)
+          var blob = new Blob([data], { type: "text/csv" } );
+          saveAs(blob, "fileName.csv");
+        },
+        error => {
+            //this.error = error;
+            console.log("Error"+error);
+        });
+  
     }else if(this.ignoreDates==true){
-      fromDate=null;
-      toDate=null;
-    }
-
-    return this.http.get<Blob>(this.serverURL+"export",{params: {from : fromDate, to: toDate},responseType: 'csv' as 'json' ,headers,withCredentials : true})
+    return this.http.get<Blob>(this.serverURL+"export",{responseType: 'csv' as 'json' ,headers,withCredentials : true})
     .pipe(res =>{
       return res
     }).pipe()
@@ -158,7 +170,8 @@ export class HistoryComponent implements OnInit {
           //this.error = error;
           console.log("Error"+error);
       });
-  }
+      }
+    }
 
   private formatDate(date) {
     var d = new Date(date),
@@ -243,14 +256,28 @@ queryCategories(){
     });
 }
 
-updateRow(transaction : TransactionModify, id : number){
+updateRow(transaction, id : number){
   var token=  JSON.parse(localStorage.getItem("currentUser")).token
+  transaction.date= this.formatDate((<Date> transaction.date)).toString()
+
   const headers = new HttpHeaders()
           .set("Authorization",token)
           .append('Content-Type', 'application/json');
   return this.http.put(this.serverURL+"transactions/" + id,transaction,{ headers, observe : 'response',withCredentials : true})
   .subscribe((res : any)=>{
 });
+}
+
+  private formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
 }
 
 }

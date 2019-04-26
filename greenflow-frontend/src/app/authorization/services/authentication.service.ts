@@ -31,7 +31,7 @@ export class AuthenticationService {
             password : password
         }
 
-        return this.http.post( this.serverURL  + "register",{data});
+        return this.http.post( this.serverURL  + "register",{ username, password});
     }
 
     login(username: string, password: string) {

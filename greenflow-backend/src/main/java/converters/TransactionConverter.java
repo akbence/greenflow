@@ -71,7 +71,7 @@ public class TransactionConverter {
         transaction.setName(transactionInput.getName());
         transaction.setCategory(transactionInput.getCategory());
         transaction.setUsername(username);
-
+//TODO: Valamiért nem müködik
         transaction.setDate(stringToDate(transactionInput.getDate()));
         transaction.setPaymentType(stringToPayment(transactionInput.getPaymentType()));
         transaction.setCurrency(stringToCurrency(transactionInput.getCurrency()));
