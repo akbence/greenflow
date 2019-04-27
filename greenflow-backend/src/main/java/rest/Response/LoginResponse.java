@@ -1,7 +1,6 @@
 package rest.Response;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class LoginResponse {
     private String username;
@@ -9,6 +8,8 @@ public class LoginResponse {
     private String token;
 
     private LocalDate registrationDate;
+
+    private String email;
 
     public String getToken() {
         return token;
@@ -33,5 +34,13 @@ public class LoginResponse {
 
     public void setRegistrationDate(LocalDate registrationDate) {
         this.registrationDate = registrationDate;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

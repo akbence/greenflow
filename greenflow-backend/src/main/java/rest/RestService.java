@@ -62,6 +62,19 @@ public class RestService {
     }
 
     @POST
+    @Path("/email")
+    @Secured
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addEmail(UserAuthInput userAuthInput){
+        try {
+            authService.addEmail(userAuthInput.getEmail());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Response.status(200).entity("").build();
+    }
+
+    @POST
     @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)

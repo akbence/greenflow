@@ -46,12 +46,19 @@ public class AuthService implements Serializable {
         } else {
             //TODO: Need to implement a good auth token here. E.g. JWT_AUTH_TOKEN
             loginUser.setToken(loginUser.getUsername()+"_"+System.currentTimeMillis());
+            loginUser.setEmail(userDao.getEmail(loginUser));
             loggedInService.login(loginUser);
             LoginResponse response = new LoginResponse();
             response.setToken(loginUser.getToken());
             response.setUsername(loginUser.getUsername());
             response.setRegistrationDate(loginUser.getRegistration_date().toLocalDate());
+            response.setEmail(loginUser.getEmail());
             return  response;
         }
+    }
+
+    public void addEmail(String email) {
+        String username = loggedInService.getCurrentUserName();
+        userDao.addEmail(username,email);
     }
 }

@@ -80,4 +80,29 @@ public class UserDao {
         }
         return result;
     }
+
+    @Transactional
+    public void addEmail(String username, String email) {
+        try {
+            UserEntity result = em.createNamedQuery(UserEntity.QUERY_USER_GET_BY_USERNAME, UserEntity.class)
+                    .setParameter("username", username)
+                    .getSingleResult();
+            result.setEmail(email);
+            em.merge(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getEmail(User loginUser) {
+        String result = null;
+        String username = loginUser.getUsername();
+        try {
+            result = em.createNamedQuery(UserEntity.QUERY_USER_GET_EMAIL_BY_USERNAME, String.class).setParameter("username",username).getSingleResult();
+        }
+        catch (Exception e ){
+            e.printStackTrace();
+        }
+        return result;
+    }
 }
