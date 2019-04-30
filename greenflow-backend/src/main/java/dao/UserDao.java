@@ -105,4 +105,17 @@ public class UserDao {
         }
         return result;
     }
+
+    @Transactional
+    public void deleteEmail(String username) {
+        try {
+            UserEntity result = em.createNamedQuery(UserEntity.QUERY_USER_GET_BY_USERNAME, UserEntity.class)
+                    .setParameter("username", username)
+                    .getSingleResult();
+            result.setEmail(null);
+            em.merge(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

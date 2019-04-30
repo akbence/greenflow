@@ -32,14 +32,37 @@ export class UserComponent implements OnInit {
   }
 
   emailUpdate(){
-    //TODO: implement HTTP POST/PUT email
     var token=  JSON.parse(localStorage.getItem("currentUser")).token
-    
+    console.log(this.email)
     const headers = new HttpHeaders()
           .set("Authorization",token)
-          .append('Content-Type', 'application/json');
-    return this.http.request('post', this.serverURL+"email",{ body: [this.email], headers, observe : 'response',withCredentials : true})
+          .append('Content-Type', 'application/json')
+    var storage = JSON.parse(localStorage.getItem('currentUser'))
+    if(this.email.length == 0){
+      this.emailRemove()
+      return
+    }
+    return this.http.request(storage.email ? 'put' : 'post', this.serverURL+"email",{ body: {email : this.email}, headers, observe : 'response',withCredentials : true})
       .subscribe((res : any)=>{
+        
+        storage.email=this.email
+        localStorage.setItem('currentUser',JSON.stringify(storage))
 });
+  }
+
+  emailRemove(){
+    var token=  JSON.parse(localStorage.getItem("currentUser")).token
+    console.log(this.email)
+    const headers = new HttpHeaders()
+          .set("Authorization",token)
+          .append('Content-Type', 'application/json')
+    var storage = JSON.parse(localStorage.getItem('currentUser'))
+    return this.http.delete( this.serverURL+"email",{  headers, observe : 'response',withCredentials : true})
+      .subscribe((res : any)=>{
+        this.email=""
+        storage.email=null
+        localStorage.setItem('currentUser',JSON.stringify(storage))
+});
+
   }
 }

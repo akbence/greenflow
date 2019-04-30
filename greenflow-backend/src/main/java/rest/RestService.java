@@ -1,8 +1,5 @@
 package rest;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -67,12 +64,39 @@ public class RestService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addEmail(UserAuthInput userAuthInput){
         try {
-            authService.addEmail(userAuthInput.getEmail());
+            authService.setEmail(userAuthInput.getEmail());
         } catch (Exception e) {
             e.printStackTrace();
         }
         return Response.status(200).entity("").build();
     }
+
+    @PUT
+    @Path("/email")
+    @Secured
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateEmail(UserAuthInput userAuthInput){
+        try {
+            authService.setEmail(userAuthInput.getEmail());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Response.status(200).entity("").build();
+    }
+
+    @DELETE
+    @Path("/email")
+    @Secured
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response deleteEmail(){
+        try {
+            authService.deleteEmail();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Response.status(200).entity("").build();
+    }
+
 
     @POST
     @Path("/login")

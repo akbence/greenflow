@@ -36,6 +36,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <button *ngIf='isEmailEditing===false' class="btn btn-warn" (click)="isEmailEditing=true">Edit</button>
+                                <button *ngIf='isEmailEditing===false && email ' class="btn btn-danger" (click)="emailRemove()">Remove</button>
                                 <button *ngIf='isEmailEditing===true' class="btn btn-info" (click)="isEmailEditing=false">Cancel</button>
                                 <button *ngIf='isEmailEditing===true' class="btn btn-success" (click)="isEmailEditing=false; emailUpdate()">Done</button>
                             </div>

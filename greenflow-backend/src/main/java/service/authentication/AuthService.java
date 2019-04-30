@@ -57,8 +57,13 @@ public class AuthService implements Serializable {
         }
     }
 
-    public void addEmail(String email) {
+    public void setEmail(String email) {
         String username = loggedInService.getCurrentUserName();
         userDao.addEmail(username,email);
+    }
+
+    public void deleteEmail() {
+        String username = loggedInService.getCurrentUserName();
+        userDao.deleteEmail(username);
     }
 }
