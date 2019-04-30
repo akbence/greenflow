@@ -14,6 +14,7 @@ import { TransactionComponent } from '../../transaction/transaction.component';
 import { HistoryComponent, ModfiyTransactionDialog } from '../../history/history.component';
 import { CategoryComponent } from '../../category/category.component';
 import { BudgetComponent, BudgetEditorDialog } from '../../budget/budget.component'
+import { EmaileventsComponent} from '../../emailevents/emailevents.component'
 import { TypographyComponent } from '../../typography/typography.component';
 import { IconsComponent } from '../../icons/icons.component';
 import { MapsComponent } from '../../maps/maps.component';
@@ -121,7 +122,8 @@ import {MatCardModule,
     NotificationsComponent,
     UpgradeComponent,
     ModfiyTransactionDialog,
-    BudgetEditorDialog
+    BudgetEditorDialog,
+    EmaileventsComponent
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'hu-HU'},
@@ -131,8 +133,6 @@ import {MatCardModule,
     ModfiyTransactionDialog,
     BudgetEditorDialog
   ]
-
-  
 })
 
 export class AdminLayoutModule {}

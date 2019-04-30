@@ -14,6 +14,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/category', title: 'Categories',  icon:'pe-7s-keypad', class: '' },
     { path: '/history', title: 'Transaction History',  icon:'pe-7s-note2', class: '' },
     { path: '/budget', title: 'Budget',  icon:'pe-7s-wallet', class: '' },
+    { path: '/emailevents', title: 'Events',  icon:'pe-7s-mail', class: '' },
     { path: '/typography', title: 'Typography',  icon:'pe-7s-news-paper', class: '' },
     { path: '/icons', title: 'Icons',  icon:'pe-7s-science', class: '' },
     { path: '/maps', title: 'Maps',  icon:'pe-7s-map-marker', class: '' },
