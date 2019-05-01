@@ -75,10 +75,12 @@ export class BudgetComponent implements OnInit {
 
   listActualBudgets(){
     var token=  JSON.parse(localStorage.getItem("currentUser")).token
+    var year = new Date().getFullYear().toString()
+    var month = (new Date().getMonth()+1).toString()
     const headers = new HttpHeaders()
             .set("Authorization",token)
             .append('Content-Type', 'application/json');
-    return this.http.get<any>(this.serverURL+"budget",{headers, observe : 'response',withCredentials : true})
+    return this.http.get<any>(this.serverURL+"budget",{headers, params: {year : year, month : month},observe : 'response',withCredentials : true})
     .subscribe (
       data =>{
         this.actualBudgets = <any> data.body

@@ -8,6 +8,7 @@ import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.List;
 
 @Model
@@ -51,7 +52,6 @@ public class BudgetDao {
 
     public List<Budget> getAllBudget(String currentUserName) {
         int userId= userDao.getId(currentUserName);
-
         try{
             List<BudgetEntity> budgetEntities=em.createNamedQuery(BudgetEntity.QUERY_BUDGET_GET_ALL_BY_ID,BudgetEntity.class)
                     .setParameter("user_id", userId)
@@ -93,6 +93,22 @@ public class BudgetDao {
         }catch (Exception e){
             System.out.println(e.getMessage());
             System.out.println("remove budget problem, unathorized access");
+            throw e;
+        }
+    }
+
+    public List<Budget> getMonthlyBudget(String currentUserName, LocalDate period) {
+        int userId= userDao.getId(currentUserName);
+        try{
+            List<BudgetEntity> budgetEntities=em.createNamedQuery(BudgetEntity.QUERY_BUDGET_GET_ALL_BY_PERIOD,BudgetEntity.class)
+                    .setParameter("user_id", userId)
+                    .setParameter("month", period.getMonthValue())
+                    .setParameter("year", period.getYear())
+                    .getResultList();
+            return budgetConverter.daoToServiceList(budgetEntities);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            System.out.println("add budget problem");
             throw e;
         }
     }

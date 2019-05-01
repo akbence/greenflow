@@ -51,7 +51,6 @@ public class RestService {
     public Response register(UserAuthInput userAuthInput) {
         try {
             authService.registerUser(userAuthInput);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -304,9 +303,9 @@ public class RestService {
     @Secured
     @Path("/budget")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response getAllBudget(){
+    public Response getAllBudget(@QueryParam("month") String month,@QueryParam("year") String year){
         try{
-            List<BudgetResponse> response= budgetService.getAllBudget();
+            List<BudgetResponse> response= budgetService.getAllBudget(year,month);
             return Response.status(200).entity(response).build();
         } catch (Exception e){
             e.printStackTrace();

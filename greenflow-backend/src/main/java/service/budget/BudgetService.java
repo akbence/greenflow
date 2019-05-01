@@ -36,8 +36,14 @@ public class BudgetService {
         budgetDao.addBudget(budget);
     }
 
-    public List<BudgetResponse> getAllBudget() {
-        List<Budget> budgetList = budgetDao.getAllBudget(loggedInService.getCurrentUserName());
+    public List<BudgetResponse> getAllBudget(String year,String month) {
+        List<Budget> budgetList;
+        if(month==null ||year == null){
+            budgetList = budgetDao.getAllBudget(loggedInService.getCurrentUserName());
+        }else{
+            LocalDate period= LocalDate.of(Integer.parseInt(year),Integer.parseInt(month),1);
+            budgetList = budgetDao.getMonthlyBudget(loggedInService.getCurrentUserName(),period);
+        }
         return budgetConverter.serviceToRestList(budgetList);
     }
 
