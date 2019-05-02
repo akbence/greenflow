@@ -6,10 +6,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import rest.Input.*;
-import rest.Response.BudgetResponse;
-import rest.Response.CategoryResponse;
-import rest.Response.LoginResponse;
-import rest.Response.StatisticPieResponse;
+import rest.Response.*;
 import service.authentication.AuthService;
 import service.authentication.Secured;
 import service.budget.BudgetService;
@@ -359,6 +356,18 @@ public class RestService {
         return Response.status(400).entity("testFail").build();
     }
 
+    @GET
+    @Secured
+    @Path("/events")
+    public Response eventsUpdate(){
+        try {
+            EventResponse eventResponse = eventService.eventsGet();
+            return  Response.status(200).entity(eventResponse).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Response.status(400).build();
+    }
 
     @PUT
     @Secured

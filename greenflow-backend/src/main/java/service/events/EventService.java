@@ -3,6 +3,7 @@ package service.events;
 import dao.EventsDao;
 import dao.UserDao;
 import rest.Input.EventsInput;
+import rest.Response.EventResponse;
 import service.authentication.LoggedIn;
 import service.authentication.LoggedInService;
 
@@ -42,5 +43,14 @@ public class EventService {
 
     public void eventsCreate(String username) {
         eventsDao.createEvents(username);
+    }
+
+    public EventResponse eventsGet() {
+        String username = loggedInService.getCurrentUserName();
+        EventResponse eventResponse= new EventResponse();
+        Event event=eventsDao.getEvents(username);
+        eventResponse.setMonthly(event.isMonthly());
+        eventResponse.setWarning(event.isWarning());
+        return eventResponse;
     }
 }

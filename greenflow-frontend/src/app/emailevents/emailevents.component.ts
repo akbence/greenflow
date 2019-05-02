@@ -24,6 +24,7 @@ export class EmaileventsComponent implements OnInit {
   ngOnInit() {
     this.monthly = false
     this.warning = false
+    this.queryEvents()
   }
 
   updateEvents(){
@@ -31,13 +32,21 @@ export class EmaileventsComponent implements OnInit {
     const headers = new HttpHeaders()
           .set("Authorization",token)
           .append('Content-Type', 'application/json')
-    var storage = JSON.parse(localStorage.getItem('currentUser'))
     return this.http.put(this.serverURL+"events",{monthlyreport : this.monthly, warningreport: this.warning },{  headers, observe : 'response',withCredentials : true})
       .subscribe((res : any)=>{
 });
   }
-  
 
- 
+  queryEvents(){
+    var token=  JSON.parse(localStorage.getItem("currentUser")).token
+    const headers = new HttpHeaders()
+          .set("Authorization",token)
+          .append('Content-Type', 'application/json')
+    return this.http.get(this.serverURL+"events",{  headers, observe : 'response',withCredentials : true})
+      .subscribe((res : any)=>{
+        this.monthly=res.body.monthly
+        this.warning = res.body.warning
+});
+  }
   
 }

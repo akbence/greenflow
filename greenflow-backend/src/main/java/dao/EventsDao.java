@@ -1,6 +1,7 @@
 package dao;
 
 import entities.EventsEntity;
+import service.events.Event;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
@@ -54,6 +55,22 @@ public class EventsDao {
         }catch (Exception e){
             System.out.println(e.getMessage());
             System.out.println("modify events problem, unathorized access");
+            throw e;
+        }
+    }
+
+    public Event getEvents(String username) {
+        int userId=userDao.getId(username);
+        try{
+            EventsEntity eventsEntity = em.createNamedQuery(EventsEntity.QUERY_EVENTS_BY_ID,EventsEntity.class)
+                    .setParameter("user_id", userId)
+                    .getSingleResult();
+            Event ret=new Event();
+            ret.setMonthly(eventsEntity.IsMonthlyReports());
+            ret.setWarning(eventsEntity.IsWarningReports());
+            return ret;
+        }catch (Exception e){
+            System.out.println("getEvents problem");
             throw e;
         }
     }
