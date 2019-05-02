@@ -13,11 +13,16 @@
                     </div>
                 </div>
                 <div class="row">
-                        <div class="col-md-8">
-                            Do you want a warning message, whenever a budget limit passes the "warning-limit"?
-                            <mat-checkbox [(ngModel)]="warning" labelPosition='before'></mat-checkbox>
-                        </div>
+                    <div class="col-md-8">
+                        Do you want a warning message, whenever a budget limit passes the "warning-limit"?
+                        <mat-checkbox [(ngModel)]="warning" labelPosition='before'></mat-checkbox>
                     </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <button  class="btn btn-info" (click)="updateEvents()">Save Changes</button>
+                    </div>
+                </div>
 
             </div>
         </div>

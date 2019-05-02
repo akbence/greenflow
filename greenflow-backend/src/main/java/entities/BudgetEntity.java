@@ -40,6 +40,9 @@ public class BudgetEntity {
     @Column
     private String paymentType;
 
+    @Column
+    int warning;
+
     public int getWarning() {
         return warning;
     }
@@ -47,8 +50,6 @@ public class BudgetEntity {
     public void setWarning(int warning) {
         this.warning = warning;
     }
-
-    @Column int warning;
 
 
 

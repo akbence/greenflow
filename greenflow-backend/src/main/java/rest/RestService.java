@@ -13,6 +13,7 @@ import rest.Response.StatisticPieResponse;
 import service.authentication.AuthService;
 import service.authentication.Secured;
 import service.budget.BudgetService;
+import service.events.EventService;
 import service.export.ExportService;
 import service.statistics.StatisticService;
 import service.transaction.CategoryService;
@@ -44,6 +45,9 @@ public class RestService {
 
     @Inject
     private BudgetService budgetService;
+
+    @Inject
+    private EventService eventService;
 
     @POST
     @Path("/register")
@@ -354,6 +358,20 @@ public class RestService {
         }
         return Response.status(400).entity("testFail").build();
     }
+
+
+    @PUT
+    @Secured
+    @Path("/events")
+    public Response eventsUpdate(EventsInput eventsInput){
+        try {
+            eventService.eventsUpdate(eventsInput);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Response.status(200).entity("").build();
+    }
+
 
 
 }
