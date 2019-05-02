@@ -10,6 +10,8 @@ public class BudgetInput {
     private PaymentType paymentType;
     private Currency currency;
     private int limit;
+    private int warning;
+
 
     public PaymentType getPaymentType() {
         return paymentType;
@@ -35,4 +37,11 @@ public class BudgetInput {
         this.limit = limit;
     }
 
+    public int getWarning() {
+        return warning;
+    }
+
+    public void setWarning(int warning) {
+        this.warning = warning;
+    }
 }

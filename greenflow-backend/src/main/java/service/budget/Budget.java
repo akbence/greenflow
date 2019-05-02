@@ -9,6 +9,7 @@ public class Budget {
 
     private String username;
     private int limit;
+    private int warning;
     private LocalDate period;
     private PaymentType paymentType;
     private Currency currency;
@@ -60,5 +61,13 @@ public class Budget {
 
     public void setPeriod(LocalDate period) {
         this.period = period;
+    }
+
+    public int getWarning() {
+        return warning;
+    }
+
+    public void setWarning(int warning) {
+        this.warning = warning;
     }
 }

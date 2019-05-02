@@ -315,11 +315,25 @@ public class RestService {
 
     @PUT
     @Secured
-    @Path("/budget/{id}")
+    @Path("/budget/limit/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response modifyBudget(@PathParam("id") int id, int limit){
+    public Response modifyBudgetLimit(@PathParam("id") int id, int limit){
         try{
-            budgetService.modifyBudget(id,limit);
+            budgetService.modifyBudgetLimit(id,limit);
+            return Response.status(200).build();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return Response.status(400).entity("testFail").build();
+    }
+
+    @PUT
+    @Secured
+    @Path("/budget/warning/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response modifyBudgetWarning(@PathParam("id") int id, int warningLimit){
+        try{
+            budgetService.modifyBudgetWarning(id,warningLimit);
             return Response.status(200).build();
         } catch (Exception e){
             e.printStackTrace();

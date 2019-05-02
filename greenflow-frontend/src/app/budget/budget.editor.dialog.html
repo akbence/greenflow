@@ -10,13 +10,10 @@
             </mat-form-field>
         </div>
         <div class="col-md-6">
-                <mat-form-field>
-                    <mat-label>Currency</mat-label>
-                    <mat-select formControlName="currency">
-                            <mat-option value="HUF">HUF</mat-option>
-                            <mat-option value="EUR">EUR</mat-option>
-                        </mat-select>
-                </mat-form-field>
+            <mat-form-field>
+                <mat-label>Warning limit</mat-label>
+                <input matInput formControlName="warning">
+            </mat-form-field>
         </div>
     </div>
     <div class="row">
@@ -29,6 +26,15 @@
                 </mat-select>
             </mat-form-field>
         </div>
+        <div class="col-md-6">
+            <mat-form-field>
+                <mat-label>Currency</mat-label>
+                <mat-select formControlName="currency">
+                        <mat-option value="HUF">HUF</mat-option>
+                        <mat-option value="EUR">EUR</mat-option>
+                    </mat-select>
+            </mat-form-field>
+    </div>
     </div>
 </div>
 <div mat-dialog-actions>

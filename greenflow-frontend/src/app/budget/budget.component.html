@@ -8,7 +8,8 @@
                 <div class="content">
                     <div class="row">
                         <div class="col-md-8"> There can be one valid budget for the actual month, from every
-                            currency-payment type combination</div>
+                            currency-payment type combination. When the monthly expense reaches the warning limit,
+                        an email will be sent, if it is enabled on the events panel.</div>
                         <div class="col-md-2"><button type="button" class="btn btn-info" id="add"
                                 (click)="addBudget()">Add Budget</button></div>
                     </div>
@@ -23,15 +24,30 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <label>Limit</label>
-                                <div *ngIf="editing[i]===false">
+                                <div *ngIf="editingLimit[i]===false">
                                     <p><b>{{budgetDetail.limit}}</b></p>
-                                    <button type="button" class="btn btn-warning" id="modify"
-                                        (click)="editing[i]=!editing[i]">Modify</button>
+                                    <button type="button" class="btn btn-warning" 
+                                        (click)="editingLimit[i]=!editingLimit[i]">Modify</button>
                                 </div>
-                                <div *ngIf="editing[i]===true">
+                                <div *ngIf="editingLimit[i]===true">
                                     <input type="number" [(ngModel)]="editedLimit[i]">
-                                    <button type="button" class="btn btn-primary" id="modify"
-                                        (click)="updateBudget(i,budgetDetail.id)">Modify</button>
+                                    <button type="button" class="btn btn-primary" 
+                                        (click)="updateLimit(i,budgetDetail.id)">Modify</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Warning Limit</label>
+                                <div *ngIf="editingWarning[i]===false">
+                                    <p><b>{{budgetDetail.warning}}</b></p>
+                                    <button type="button" class="btn btn-warning" 
+                                        (click)="editingWarning[i]=!editingWarning[i]">Modify</button>
+                                </div>
+                                <div *ngIf="editingWarning[i]===true">
+                                    <input type="number" [(ngModel)]="editedWarning[i]">
+                                    <button type="button" class="btn btn-primary" 
+                                        (click)="updateWarning(i,budgetDetail.id)">Modify</button>
                                 </div>
                             </div>
                         </div>

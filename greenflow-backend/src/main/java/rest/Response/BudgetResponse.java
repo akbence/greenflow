@@ -8,6 +8,7 @@ public class BudgetResponse {
     private PaymentType paymentType;
     private Currency currency;
     private int limit;
+    private int warning;
     private int id;
 
     public int getId() {
@@ -40,5 +41,13 @@ public class BudgetResponse {
 
     public void setLimit(int limit) {
         this.limit = limit;
+    }
+
+    public int getWarning() {
+        return warning;
+    }
+
+    public void setWarning(int warning) {
+        this.warning = warning;
     }
 }

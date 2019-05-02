@@ -14,8 +14,10 @@ export class BudgetComponent implements OnInit {
   private registrationDate : Date
   public serverURL : string;
   public actualBudgets : any[]
-  public editing : boolean[]
+  public editingLimit : boolean[]
+  public editingWarning : boolean[]
   public editedLimit : number[]
+  public editedWarning : number []
 
   constructor(private http: HttpClient,globals : Globals, public dialog: MatDialog ) {
     this.serverURL = globals.getBaseUrl()
@@ -23,8 +25,10 @@ export class BudgetComponent implements OnInit {
 
   ngOnInit() {
     this.listActualBudgets()
-    this.editing=new Array()
+    this.editingWarning=new Array()
+    this.editingLimit=new Array()
     this.editedLimit = new Array()
+    this.editedWarning = new Array()
   }
 
   addBudget() {
@@ -38,17 +42,26 @@ export class BudgetComponent implements OnInit {
       this.listActualBudgets()
     });
   }
-  updateBudget(index,id){
-    this.editing[index]=false
+  updateLimit(index,id){
+    this.editingLimit[index]=false
+    this.updateBudget(index,id, this.editedLimit[index],"limit/")
+    this.actualBudgets[index].limit= this.editedLimit[index]
+  }
+  updateWarning(index,id){
+    this.editingWarning[index]=false
+    this.updateBudget(index,id,this.editedWarning[index],"warning/")
+    this.actualBudgets[index].warning= this.editedWarning[index]
+  }
+
+  updateBudget(index: number,id : number, body,url){
     var token=  JSON.parse(localStorage.getItem("currentUser")).token
     const headers = new HttpHeaders()
             .set("Authorization",token)
             .append('Content-Type', 'application/json');
     
-    return this.http.put(this.serverURL+"budget/"+ id, this.editedLimit[index], {headers, observe : 'response',withCredentials : true})
+    return this.http.put(this.serverURL+"budget/"+url + id, body, {headers, observe : 'response',withCredentials : true})
     .subscribe (
       data =>{
-        this.actualBudgets[index].limit= this.editedLimit[index]
       },
       error => {
         //Update locally if success
@@ -87,7 +100,11 @@ export class BudgetComponent implements OnInit {
         let index=0
         this.actualBudgets.forEach((element:any)  => {
           this.editedLimit[index] =  element.limit
-          this.editing[index++] = false
+          this.editedWarning[index] =  element.limit
+          this.editingLimit[index] = false
+          this.editingWarning[index] = false
+          index++;
+          
         });
       },
       error => {
@@ -133,6 +150,7 @@ export class BudgetEditorDialog {
   ngOnInit() {
     this.form = this.fb.group({
       limit : [],
+      warning: [],
       currency : [],
       paymentType :[]
     });

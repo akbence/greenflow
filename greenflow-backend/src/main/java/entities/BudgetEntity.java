@@ -40,6 +40,18 @@ public class BudgetEntity {
     @Column
     private String paymentType;
 
+    public int getWarning() {
+        return warning;
+    }
+
+    public void setWarning(int warning) {
+        this.warning = warning;
+    }
+
+    @Column int warning;
+
+
+
     public int getId() {
         return id;
     }

@@ -29,6 +29,7 @@ public class BudgetConverter {
         temp.setLimit(budget.getLimit());
         temp.setPaymentType(budget.getPaymentType());
         temp.setId(budget.getId());
+        temp.setWarning(budget.getWarning());
         return temp;
     }
 
@@ -45,6 +46,7 @@ public class BudgetConverter {
         temp.setLimit(budget.getLimitation());
         temp.setPaymentType(stringToPaymenType(budget.getPaymentType()));
         temp.setId(budget.getId());
+        temp.setWarning(budget.getWarning());
         return temp;
     }
 

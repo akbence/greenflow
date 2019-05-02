@@ -47,14 +47,20 @@ public class BudgetService {
         return budgetConverter.serviceToRestList(budgetList);
     }
 
-    public void modifyBudget(int id,int limit) {
-        String username = loggedInService.getCurrentUserName();
-        budgetDao.modifyBudget(id,limit,username);
-    }
 
     public void deleteBudget(int id) {
         String username = loggedInService.getCurrentUserName();
         budgetDao.deleteBudget(id,username);
 
+    }
+
+    public void modifyBudgetLimit(int id, int limit) {
+        String username = loggedInService.getCurrentUserName();
+        budgetDao.modifyBudgetLimit(id,limit,username);
+    }
+
+    public void modifyBudgetWarning(int id, int warningLimit) {
+        String username = loggedInService.getCurrentUserName();
+        budgetDao.modifyBudgetWarning(id,warningLimit,username);
     }
 }
