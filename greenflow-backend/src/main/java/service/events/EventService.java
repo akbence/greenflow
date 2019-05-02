@@ -37,6 +37,7 @@ public class EventService {
     public void eventsUpdate(EventsInput eventsInput) {
         String name = loggedInService.getCurrentUserName();
         eventsDao.updateMonthly(name,eventsInput.isMonthlyreport());
+        eventsDao.updateWarning(name,eventsInput.isWarningreport());
     }
 
     public void eventsCreate(String username) {

@@ -41,4 +41,20 @@ public class EventsDao {
             throw e;
         }
     }
+
+    @Transactional
+    public void updateWarning(String name, boolean value) {
+        int userId = userDao.getId(name);
+        try{
+            EventsEntity eventsEntity = em.createNamedQuery(EventsEntity.QUERY_EVENTS_BY_ID,EventsEntity.class)
+                    .setParameter("user_id", userId)
+                    .getSingleResult();
+            eventsEntity.setWarningReports(value);
+            em.merge(eventsEntity);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            System.out.println("modify events problem, unathorized access");
+            throw e;
+        }
+    }
 }
