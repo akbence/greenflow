@@ -1,57 +1,54 @@
 <div class="main-content">
     <div class="container-fluid">
-         <div class="row" >
+        <div class="row">
             <div class="col-md-12">
-                <div class="card" >
+                <div class="card">
                     <div class="header">
                         <h4 class="title">Month of the statistics</h4>
                     </div>
-                    <div class="text-center"> 
+                    <div class="text-center">
                         <mat-form-field>
                             <input matInput [matDatepicker]="dp" placeholder="Month and Year" [formControl]="date">
                             <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
-                            <mat-datepicker #dp
-                                            startView="multi-year"
-                                            (yearSelected)="chosenYearHandler($event)"
-                                            (monthSelected)="chosenMonthHandler($event, dp)"
-                                            panelClass="example-month-picker">
+                            <mat-datepicker #dp startView="multi-year" (yearSelected)="chosenYearHandler($event)"
+                                (monthSelected)="chosenMonthHandler($event, dp)" panelClass="example-month-picker">
                             </mat-datepicker>
                         </mat-form-field>
                     </div>
                 </div>
             </div>
-         </div>
-        <div *ngIf="(pieDataReady1 && pieDataReady2) |async " class="row" >
-            <div class="col-md-6">
-                <div class="card" >
-                    <div class="header">
-                        <h4 class="title">Income</h4>
+        </div>
+        <div *ngIf="(pieDataReady1 && pieDataReady2) |async " class="row">
+            <div *ngFor="let pieData of pieIncomeDatas" class="col-md-6">
+                <ng-template [ngIf]="pieData.relevant == true">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">Income {{pieData.currency}} {{pieData.paymentType}}</h4>
+                        </div>
+                        <div>
+                            <canvas baseChart [data]="pieData.data" [labels]="pieData.labels"
+                                [chartType]="pieChartType"></canvas>
+                        </div>
                     </div>
-                    <div > 
-                        <canvas baseChart 
-                        [data]="pieIncomeChartData"
-                        [labels]="pieIncomeChartLabels"
-                        [chartType]="pieChartType"></canvas> 
-                    </div>
-                </div>
+                </ng-template>
             </div>
-            <div class="col-md-6">
-                <div class="card" >
-                    <div class="header">
-                        <h4 class="title">Expense</h4>
+            <div *ngFor="let pieData of pieExpenseDatas" class="col-md-6">
+                <ng-template [ngIf]="pieData.relevant == true">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">Expense {{pieData.currency}} {{pieData.paymentType}}</h4>
+                        </div>
+                        <div>
+                            <canvas baseChart [data]="pieData.data" [labels]="pieData.labels"
+                                [chartType]="pieChartType"></canvas>
+                        </div>
                     </div>
-                    <div > 
-                        <canvas baseChart 
-                        [data]="pieExpenseChartData"
-                        [labels]="pieExpenseChartLabels"
-                        [chartType]="pieChartType"></canvas> 
-                    </div>
-                </div>
-            </div>        
+                </ng-template>
+            </div>
 
-        
-                    
-                      
+
+
+
         </div>
         <!-- <div class="row">
             <div class="col-md-6">

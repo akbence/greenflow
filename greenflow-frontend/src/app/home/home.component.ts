@@ -11,6 +11,7 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Globals } from '../globals';
+import { forEach } from '@angular/router/src/utils/collection';
 
 const moment = _moment;
 
@@ -39,6 +40,8 @@ export class HomeComponent implements OnInit {
   public pieIncomeChartData:number[]=[]
   public pieExpenseChartLabels:string[]=[]
   public pieExpenseChartData:number[]=[]
+  public pieIncomeDatas : any[]
+  public pieExpenseDatas : any[]
   public pieChartType:string = 'pie';
   public serverURL : string;
 
@@ -74,8 +77,7 @@ export class HomeComponent implements OnInit {
       //const params = new HttpParams().set('name',row);
       return this.http.get(this.serverURL+"statistics/pie/income/" + date.getFullYear()  +"/" + (date.getMonth()+1),{ headers, observe : 'response',withCredentials : true})
       .subscribe((res : any)=>{
-        this.pieIncomeChartLabels=res.body.labels
-        this.pieIncomeChartData=res.body.data
+        this.pieIncomeDatas = res.body
         this.pieDataReady1=Promise.resolve(true)
     });
     }
@@ -88,11 +90,14 @@ export class HomeComponent implements OnInit {
       //const params = new HttpParams().set('name',row);
       return this.http.get(this.serverURL+"statistics/pie/expense/" + date.getFullYear()  +"/" + (date.getMonth()+1),{ headers, observe : 'response',withCredentials : true})
       .subscribe((res : any)=>{
-        this.pieExpenseChartLabels=res.body.labels
-        this.pieExpenseChartData=res.body.data
+        this.pieExpenseDatas = res.body
         this.pieDataReady2=Promise.resolve(true)
 
     });
+    }
+
+    check(piedata : any){
+      console.log(piedata);
     }
 
 

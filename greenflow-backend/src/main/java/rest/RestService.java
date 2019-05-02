@@ -262,7 +262,7 @@ public class RestService {
     public Response getPieIncomeStatistics(@PathParam("year") int year, @PathParam("month") int month){
         System.out.println(year + "/"+ month);
         try{
-            StatisticPieResponse ret = statisticService.getIncomePieStatistics(year, month);
+            ArrayList<StatisticPieResponse> ret = (ArrayList<StatisticPieResponse>) statisticService.getIncomePieStatistics(year, month);
             return Response.status(200).entity(ret).build();
         } catch (Exception e){
             e.printStackTrace();
@@ -277,7 +277,7 @@ public class RestService {
     public Response getPieExpenseStatistics(@PathParam("year") int year, @PathParam("month") int month){
         System.out.println(year + "/"+ month);
         try{
-            StatisticPieResponse ret = statisticService.getExpensePieStatistics(year, month);
+            ArrayList<StatisticPieResponse> ret = (ArrayList<StatisticPieResponse>) statisticService.getExpensePieStatistics(year, month);
             return Response.status(200).entity(ret).build();
         } catch (Exception e){
             e.printStackTrace();
