@@ -3,6 +3,7 @@ package service.authentication;
 import dao.UserDao;
 import rest.Input.UserAuthInput;
 import rest.Response.LoginResponse;
+import service.events.EventService;
 
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Model;
@@ -10,7 +11,7 @@ import javax.inject.Inject;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@SessionScoped
+@Model
 public class AuthService implements Serializable {
 
     @Inject
@@ -22,6 +23,9 @@ public class AuthService implements Serializable {
     @Inject
     LoggedInService loggedInService;
 
+    @Inject
+    EventService eventsService;
+
     public void registerUser(UserAuthInput userAuthInput) throws Exception {
 
         System.out.println("problem at Service");
@@ -32,6 +36,8 @@ public class AuthService implements Serializable {
         newUser.setUsername(userAuthInput.getUsername());
         newUser.setPasswordHash(passwordHandler.createPasswordHash(userAuthInput.getPassword(), creationDate));
         userDao.registerUser(newUser);
+        eventsService.eventsCreate(newUser.getUsername());
+
     }
 
     public LoginResponse loginUser(UserAuthInput userAuthInput) throws Exception {
