@@ -43,9 +43,10 @@
                                     exchange rate </h4>
                             </div>
                             <div class="col-md-4">
-                                    <h5>Exhchange rates provider: </h5><h5>https://exchangeratesapi.io/</h5>
-                                </div>
-                            
+                                <h5>Exhchange rates provider: </h5>
+                                <h5>https://exchangeratesapi.io/</h5>
+                            </div>
+
                         </div>
 
                     </div>
@@ -97,25 +98,33 @@
                     </div>
                 </ng-template>
             </div>
-            <div class="row">
-                    <div class="col-md-12">
+            <div class="row" *ngIf="barDataReady |async ">
+                <div class="col-md-12">
 
-                            <div class="card">
-                                <div class="header">
-                                    <h3 class="title">Recent income and expense </h3>
-                                </div>
-                                <div>
-                                        <canvas baseChart
-                                        [datasets]="barChartData"
-                                        [labels]="barChartLabels"
-                                        [legend]="barChartLegend"
-                                        [chartType]="barChartType">
-                                      </canvas>
-                                </div>
+                    <div class="card">
+                        <div class="header">
+                            <h3 class="title">Recent income and expense </h3>
+                            <div class="col-md-4">
+                                <mat-form-field>
+                                    <mat-select [(value)]="selectedMonths"
+                                        (selectionChange)="selectedMonthsChanged($event.value)">
+                                        <mat-option *ngFor="let num of monthsPool" [value]="num">{{num}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
                             </div>
+                        </div>
 
+                        <div class="row">
+                            <div class="col-md-12">
+                                <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels"
+                                    [legend]="barChartLegend" [chartType]="barChartType">
+                                </canvas>
+                            </div>
+                        </div>
                     </div>
 
+                </div>
+
+            </div>
         </div>
     </div>
-</div>

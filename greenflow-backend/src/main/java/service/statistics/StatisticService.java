@@ -4,6 +4,7 @@ import dao.transactions.CategoryDao;
 import dao.transactions.TransactionDao;
 import enums.Currency;
 import enums.PaymentType;
+import rest.Response.StatisticBarResponse;
 import rest.Response.StatisticPieResponse;
 import rest.Response.StatisticsBalanceResponse;
 import service.authentication.LoggedInService;
@@ -12,6 +13,8 @@ import service.transaction.Transaction;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
+import java.lang.reflect.Array;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -86,6 +89,41 @@ public class StatisticService {
         return ret;
     }
 
+    public StatisticBarResponse getBarStatistics(int months) {
+        String username = loggedInService.getCurrentUserName();
+        StatisticBarResponse statisticBarResponse = new StatisticBarResponse();
+        statisticBarResponse.setExpenseData(getBarData(username,months,true));
+        statisticBarResponse.setIncomeData(getBarData(username,months,false));
+        statisticBarResponse.setLabels(getBarLabels(months));
+        return statisticBarResponse;
+    }
+
+    private List<String> getBarLabels(int months) {
+        ArrayList<String> ret = new ArrayList<>();
+        for (int i = 0; i < months ; i++) {
+            LocalDate date = LocalDate.now().minusMonths(i);
+            String temp = date.getYear() + "-" + date.getMonthValue();
+            ret.add(temp);
+        }
+        Collections.reverse(ret);
+        return ret;
+    }
+
+    private List<Integer> getBarData(String username, int months, boolean isExpense) {
+        ArrayList <Integer> ret= new ArrayList<>();
+        for (int i = 0; i < months; i++) {
+            LocalDate date = LocalDate.now().minusMonths(i);
+            int sum=0;
+            ArrayList<Transaction> transactions = transactionDao.getMonthlyTransactions(username, date.getYear(), date.getMonthValue(), isExpense);
+            for (Transaction transaction : transactions) {
+                sum+=transaction.getAmmount();
+            }
+            ret.add(sum);
+        }
+        Collections.reverse(ret);
+        return ret;
+    }
+
     private void orderingByCurrencyPaymentType(ArrayList<StatisticPieResponse> ret, ArrayList<Transaction> transactions, ArrayList<Category> categories) {
         for (PaymentType ptype : PaymentType.values()
         ) {
@@ -128,4 +166,6 @@ public class StatisticService {
         }
         return statisticPieResponse;
     }
+
+
 }

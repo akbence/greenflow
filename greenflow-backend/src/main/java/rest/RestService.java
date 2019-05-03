@@ -297,6 +297,21 @@ public class RestService {
         return Response.status(400).entity("testFail").build();
     }
 
+
+    @GET
+    @Secured
+    @Path("/statistics/bar")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getBarStatistics(@QueryParam("months") int month){
+        try{
+            StatisticBarResponse ret =  statisticService.getBarStatistics( month);
+            return Response.status(200).entity(ret).build();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return Response.status(400).entity("testFail").build();
+    }
+
     @POST
     @Secured
     @Path("/budget")

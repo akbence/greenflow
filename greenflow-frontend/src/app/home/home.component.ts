@@ -51,18 +51,18 @@ export class HomeComponent implements OnInit {
   public balance : Balance
 
 
-  public barChartLabels: string[] = ['2006', '2007', '2008'];
-  public barChartType: string  = 'bar';
-  public barChartLegend = true;
-  public barChartData = [
-    { data: [65, 59, 80], label: 'Income' },
-    { data: [28, 48, 40], label: 'Expense' }
-  ];
+  public barChartLabels: string[] 
+  public barChartType: string  = 'bar'
+  public barChartLegend = true
+  public barChartData = []
+  public selectedMonths : number
+  public monthsPool : string
 
 
 
   pieDataReady1: Promise<boolean>
   pieDataReady2: Promise<boolean>
+  barDataReady: Promise<boolean>
 
   public chartOptions = {
     maintainAspectRatio: false
@@ -74,11 +74,14 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.monthsPool = (Array.apply(null, {length: 12}).map(Number.call, Number)).map(function(val){return ++val;})
+    this.selectedMonths= 3
     this.selectedBalance= 'TOTAL'
     this.balance= new Balance()
     this.getExchangeRateEurToHuf()
     this.getStats(moment().toDate())
     this.getBalance()
+    this.getBarStats()
   }
 
   getStats(date: Date) {
@@ -147,8 +150,27 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  check(piedata: any) {
-    console.log(piedata);
+  getBarStats() {
+    var token = JSON.parse(localStorage.getItem("currentUser")).token
+    const headers = new HttpHeaders()
+      .set("Authorization", token)
+      .append('Content-Type', 'application/json');
+    var months=this.selectedMonths
+    return this.http.get(this.serverURL + "statistics/bar",{params: {months : months}, headers, observe: 'response', withCredentials: true })
+      .subscribe((res: any) => {
+        console.log(res.body)
+        this.barChartLabels=res.body.labels
+        this.barChartData = [
+          { data: res.body.expenseData, label: 'Expense' },
+          { data: res.body.incomeData, label: 'Income' }
+        ];
+        this.barDataReady = Promise.resolve(true)
+        
+      });
+  }
+
+  selectedMonthsChanged(value){
+    this.getBarStats(this.selectedMonths)
   }
 
 
