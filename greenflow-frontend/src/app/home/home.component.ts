@@ -12,6 +12,7 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Globals } from '../globals';
 import { forEach } from '@angular/router/src/utils/collection';
+import { Balance } from './model/Balance';
 
 const moment = _moment;
 
@@ -26,6 +27,7 @@ export const MY_FORMATS = {
     monthYearA11yLabel: 'MMMM YYYY',
   },
 };
+
 
 @Component({
   selector: 'app-home',
@@ -45,6 +47,10 @@ export class HomeComponent implements OnInit {
   public pieChartType: string = 'pie';
   public serverURL: string;
 
+  public selectedBalance
+  public balance : Balance
+
+
   pieDataReady1: Promise<boolean>
   pieDataReady2: Promise<boolean>
 
@@ -58,6 +64,8 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.selectedBalance= 'TOTAL'
+    this.balance= new Balance()
     this.getStats(moment().toDate())
     this.getBalance()
   }
@@ -65,8 +73,6 @@ export class HomeComponent implements OnInit {
   getStats(date: Date) {
     this.getIncomeStats(date)
     this.getExpenseStats(date)
-
-
   }
 
   getBalance(){
@@ -77,9 +83,21 @@ export class HomeComponent implements OnInit {
     return this.http.get(this.serverURL + "statistics/balance", { headers, observe: 'response', withCredentials: true })
       .subscribe((res: any) => {
         console.log(res.body)
+        this.balance.set(res.body)
       });
   }
 
+  selectedBalanceChanged(value){
+    if(value=="CASH"){
+      this.balance.showCash()
+    }
+    if(value=="CARD"){
+      this.balance.showCard()
+    }
+    if(value=="TOTAL"){
+      this.balance.showTotal()
+    }
+  }
 
   getIncomeStats(date: Date) {
     var token = JSON.parse(localStorage.getItem("currentUser")).token

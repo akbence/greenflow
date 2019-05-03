@@ -4,10 +4,27 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="header">
-                            <h4 class="title">Actual Balance</h4>
+                        <h3 class="title">Actual Balance</h3>
+                        <mat-form-field>
+                            <mat-select [(value)]="selectedBalance" (selectionChange)="selectedBalanceChanged($event.value)">
+                                <mat-option value="CARD">Card</mat-option>
+                                <mat-option value="CASH">Cash</mat-option>
+                                <mat-option value="TOTAL">Total</mat-option>
+                            </mat-select>
+                        </mat-form-field>
                     </div>
                     <div class="content">
-                        Content
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h4>{{balance.hufShow}} Hungarian Forint</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h4> {{balance.eurShow}} Euro</h4>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -16,7 +33,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="header">
-                        <h4 class="title">Month of the statistics</h4>
+                        <h3 class="title">Month of the statistics</h3>
                     </div>
                     <div class="text-center">
                         <mat-form-field>
@@ -35,7 +52,7 @@
                 <ng-template [ngIf]="pieData.relevant == true">
                     <div class="card">
                         <div class="header">
-                            <h4 class="title">Income {{pieData.currency}} {{pieData.paymentType}}</h4>
+                            <h3 class="title">Income {{pieData.currency}} {{pieData.paymentType}}</h3>
                         </div>
                         <div>
                             <canvas baseChart [data]="pieData.data" [labels]="pieData.labels"
@@ -48,7 +65,7 @@
                 <ng-template [ngIf]="pieData.relevant == true">
                     <div class="card">
                         <div class="header">
-                            <h4 class="title">Expense {{pieData.currency}} {{pieData.paymentType}}</h4>
+                            <h3 class="title">Expense {{pieData.currency}} {{pieData.paymentType}}</h3>
                         </div>
                         <div>
                             <canvas baseChart [data]="pieData.data" [labels]="pieData.labels"
