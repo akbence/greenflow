@@ -260,7 +260,6 @@ public class RestService {
     @Path("/statistics/pie/income/{year}/{month}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getPieIncomeStatistics(@PathParam("year") int year, @PathParam("month") int month){
-        System.out.println(year + "/"+ month);
         try{
             ArrayList<StatisticPieResponse> ret = (ArrayList<StatisticPieResponse>) statisticService.getIncomePieStatistics(year, month);
             return Response.status(200).entity(ret).build();
@@ -275,7 +274,6 @@ public class RestService {
     @Path("/statistics/pie/expense/{year}/{month}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getPieExpenseStatistics(@PathParam("year") int year, @PathParam("month") int month){
-        System.out.println(year + "/"+ month);
         try{
             ArrayList<StatisticPieResponse> ret = (ArrayList<StatisticPieResponse>) statisticService.getExpensePieStatistics(year, month);
             return Response.status(200).entity(ret).build();
@@ -285,6 +283,19 @@ public class RestService {
         return Response.status(400).entity("testFail").build();
     }
 
+    @GET
+    @Secured
+    @Path("/statistics/balance")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getBalance(){
+        try{
+            ArrayList<StatisticsBalanceResponse> ret = (ArrayList<StatisticsBalanceResponse>) statisticService.getBalance();
+            return Response.status(200).entity(ret).build();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return Response.status(400).entity("testFail").build();
+    }
 
     @POST
     @Secured

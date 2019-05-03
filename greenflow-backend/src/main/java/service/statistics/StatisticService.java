@@ -5,6 +5,7 @@ import dao.transactions.TransactionDao;
 import enums.Currency;
 import enums.PaymentType;
 import rest.Response.StatisticPieResponse;
+import rest.Response.StatisticsBalanceResponse;
 import service.authentication.LoggedInService;
 import service.transaction.Category;
 import service.transaction.Transaction;
@@ -47,6 +48,44 @@ public class StatisticService {
         return ret;
     }
 
+    public List<StatisticsBalanceResponse> getBalance() throws Exception {
+        String username = loggedInService.getCurrentUserName();
+        ArrayList<StatisticsBalanceResponse> ret = new ArrayList<>();
+        ArrayList<Transaction> transactions = transactionDao.getEntireTransactionHistory(username);
+        for (Currency currency : Currency.values()
+        ) {
+            int sumCard = 0;
+            int sumCash = 0;
+            boolean asd=false;
+            for (Transaction transaction : transactions
+            ) {
+                if (transaction.getCurrency().equals(currency)) {
+                    if (transaction.getPaymentType().equals(PaymentType.CARD)) {
+                        if ((transaction.isExpense()) == true) {
+                            sumCard-=transaction.getAmmount();
+                        } else {
+                            sumCard+=transaction.getAmmount();
+                        }
+                    }
+                    if (transaction.getPaymentType().equals(PaymentType.CASH)) {
+                        if ((transaction.isExpense()) == true) {
+                            sumCash-=transaction.getAmmount();
+                        } else {
+                            sumCash+=transaction.getAmmount();
+                        }
+                    }
+                }
+            }
+            StatisticsBalanceResponse element = new StatisticsBalanceResponse();
+            element.setCurrency(currency);
+            element.setCurrentCardBalance(sumCard);
+            element.setCurrentCashBalance(sumCash);
+            element.setCurrentTotalBalance(sumCard + sumCash);
+            ret.add(element);
+        }
+        return ret;
+    }
+
     private void orderingByCurrencyPaymentType(ArrayList<StatisticPieResponse> ret, ArrayList<Transaction> transactions, ArrayList<Category> categories) {
         for (PaymentType ptype : PaymentType.values()
         ) {
@@ -82,9 +121,9 @@ public class StatisticService {
         statisticPieResponse.setData(listofvalues);
         statisticPieResponse.setCurrency(currency);
         statisticPieResponse.setPaymentType(ptype);
-        if(mappedValues.values().stream().mapToInt(Integer::intValue).sum() == 0){
+        if (mappedValues.values().stream().mapToInt(Integer::intValue).sum() == 0) {
             statisticPieResponse.setRelevant(false);
-        }else {
+        } else {
             statisticPieResponse.setRelevant(true);
         }
         return statisticPieResponse;
