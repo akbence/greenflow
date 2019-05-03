@@ -51,6 +51,16 @@ export class HomeComponent implements OnInit {
   public balance : Balance
 
 
+  public barChartLabels: string[] = ['2006', '2007', '2008'];
+  public barChartType: string  = 'bar';
+  public barChartLegend = true;
+  public barChartData = [
+    { data: [65, 59, 80], label: 'Income' },
+    { data: [28, 48, 40], label: 'Expense' }
+  ];
+
+
+
   pieDataReady1: Promise<boolean>
   pieDataReady2: Promise<boolean>
 
