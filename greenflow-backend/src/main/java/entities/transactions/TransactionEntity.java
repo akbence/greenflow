@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Entity
 @NamedQueries({ @NamedQuery(name = "Transaction.getAllforUser", query = "select t from TransactionEntity t where t.user_id = :user_id"),
         @NamedQuery(name = "Transaction.getMonthlyforUser", query = "select t from TransactionEntity t where t.user_id = :user_id and t.isExpense = :isExp and year (t.date)= :year and month(t.date)= :month "),
+        @NamedQuery(name = "Transaction.getMonthlyforUserCurrency", query = "select t from TransactionEntity t where t.user_id = :user_id and t.isExpense = :isExp and year (t.date)= :year and month(t.date)= :month and t.currency = :currency"),
         @NamedQuery(name = "Transaction.getGivenPeriodforUser", query = "select t from TransactionEntity t where t.user_id = :user_id and t.date>= :fromDate and t.date< :toDate")})
 
 @Table(name = TransactionEntity.tableName)
@@ -20,6 +21,7 @@ public class TransactionEntity {
     public static final String QUERY_TRANSACTION_GETALL_BY_USERNAME = "Transaction.getAllforUser";
     public static final String QUERY_TRANSACTION_GETMONTHLY_BY_USERNAME = "Transaction.getMonthlyforUser";
     public static final String QUERY_TRANSACTION_GET_GIVEN_PERIOD_BY_USERNAME = "Transaction.getGivenPeriodforUser";
+    public static final String QUERY_TRANSACTION_GETMONTHLY_BY_USERNAME_CURRENCY = "Transaction.getMonthlyforUserCurrency";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

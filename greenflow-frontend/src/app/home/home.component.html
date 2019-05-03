@@ -107,8 +107,17 @@
                             <div class="col-md-4">
                                 <mat-form-field>
                                     <mat-select [(value)]="selectedMonths"
-                                        (selectionChange)="selectedMonthsChanged($event.value)">
+                                        (selectionChange)="getBarStats()">
                                         <mat-option *ngFor="let num of monthsPool" [value]="num">{{num}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4">
+                                <mat-form-field>
+                                    <mat-select [(value)]="selectedCurrency"
+                                        (selectionChange)="getBarStats()">
+                                        <mat-option value="HUF">Card</mat-option>
+                                        <mat-option value="EUR">Cash</mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </div>

@@ -302,9 +302,9 @@ public class RestService {
     @Secured
     @Path("/statistics/bar")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getBarStatistics(@QueryParam("months") int month){
+    public Response getBarStatistics(@QueryParam("months") int month, @QueryParam("currency") String currency){
         try{
-            StatisticBarResponse ret =  statisticService.getBarStatistics( month);
+            StatisticBarResponse ret =  statisticService.getBarStatistics( month,currency);
             return Response.status(200).entity(ret).build();
         } catch (Exception e){
             e.printStackTrace();

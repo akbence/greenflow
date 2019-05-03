@@ -56,7 +56,9 @@ export class HomeComponent implements OnInit {
   public barChartLegend = true
   public barChartData = []
   public selectedMonths : number
+  public selectedCurrency : string
   public monthsPool : string
+
 
 
 
@@ -76,6 +78,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.monthsPool = (Array.apply(null, {length: 12}).map(Number.call, Number)).map(function(val){return ++val;})
     this.selectedMonths= 3
+    this.selectedCurrency= 'HUF'
     this.selectedBalance= 'TOTAL'
     this.balance= new Balance()
     this.getExchangeRateEurToHuf()
@@ -155,8 +158,8 @@ export class HomeComponent implements OnInit {
     const headers = new HttpHeaders()
       .set("Authorization", token)
       .append('Content-Type', 'application/json');
-    var months=this.selectedMonths
-    return this.http.get(this.serverURL + "statistics/bar",{params: {months : months}, headers, observe: 'response', withCredentials: true })
+
+    return this.http.get(this.serverURL + "statistics/bar",{params: {months : this.selectedMonths.toString(), currency : this.selectedCurrency}, headers, observe: 'response', withCredentials: true })
       .subscribe((res: any) => {
         console.log(res.body)
         this.barChartLabels=res.body.labels
@@ -167,10 +170,6 @@ export class HomeComponent implements OnInit {
         this.barDataReady = Promise.resolve(true)
         
       });
-  }
-
-  selectedMonthsChanged(value){
-    this.getBarStats(this.selectedMonths)
   }
 
 

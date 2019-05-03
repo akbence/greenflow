@@ -13,7 +13,6 @@ import service.transaction.Transaction;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -89,11 +88,12 @@ public class StatisticService {
         return ret;
     }
 
-    public StatisticBarResponse getBarStatistics(int months) {
+    public StatisticBarResponse getBarStatistics(int months, String currency) {
         String username = loggedInService.getCurrentUserName();
         StatisticBarResponse statisticBarResponse = new StatisticBarResponse();
-        statisticBarResponse.setExpenseData(getBarData(username,months,true));
-        statisticBarResponse.setIncomeData(getBarData(username,months,false));
+        Currency c= Currency.valueOf(currency);
+        statisticBarResponse.setExpenseData(getBarData(username,months,true,Currency.valueOf(currency)));
+        statisticBarResponse.setIncomeData(getBarData(username,months,false,Currency.valueOf(currency)));
         statisticBarResponse.setLabels(getBarLabels(months));
         return statisticBarResponse;
     }
@@ -109,12 +109,12 @@ public class StatisticService {
         return ret;
     }
 
-    private List<Integer> getBarData(String username, int months, boolean isExpense) {
+    private List<Integer> getBarData(String username, int months, boolean isExpense, Currency currency) {
         ArrayList <Integer> ret= new ArrayList<>();
         for (int i = 0; i < months; i++) {
             LocalDate date = LocalDate.now().minusMonths(i);
             int sum=0;
-            ArrayList<Transaction> transactions = transactionDao.getMonthlyTransactions(username, date.getYear(), date.getMonthValue(), isExpense);
+            ArrayList<Transaction> transactions = transactionDao.getMonthlyTransactionsWithCurrency(username, date.getYear(), date.getMonthValue(),isExpense,currency);
             for (Transaction transaction : transactions) {
                 sum+=transaction.getAmmount();
             }

@@ -5,6 +5,7 @@ import dao.UserDao;
 import entities.UserEntity;
 import entities.transactions.CategoryEntity;
 import entities.transactions.TransactionEntity;
+import enums.Currency;
 import service.transaction.Category;
 import service.transaction.Transaction;
 
@@ -70,13 +71,26 @@ public class TransactionDao {
     }
 
     public ArrayList<Transaction> getMonthlyTransactions(String username, int year, int month, boolean isExpense) {
-        ArrayList<TransactionEntity> entityList = new ArrayList<>();
+        ArrayList<TransactionEntity> entityList;
         int user_id = userDao.getId(username);
         entityList = (ArrayList<TransactionEntity>) em.createNamedQuery(TransactionEntity.QUERY_TRANSACTION_GETMONTHLY_BY_USERNAME, TransactionEntity.class)
                 .setParameter("user_id", user_id)
                 .setParameter("year", year)
                 .setParameter("month", month)
                 .setParameter("isExp", isExpense)
+                .getResultList();
+        return transactionConverter.daoToServiceList(entityList);
+    }
+
+    public ArrayList<Transaction> getMonthlyTransactionsWithCurrency(String username, int year, int month, boolean isExpense, Currency currency) {
+        ArrayList<TransactionEntity> entityList;
+        int user_id = userDao.getId(username);
+        entityList = (ArrayList<TransactionEntity>) em.createNamedQuery(TransactionEntity.QUERY_TRANSACTION_GETMONTHLY_BY_USERNAME_CURRENCY, TransactionEntity.class)
+                .setParameter("user_id", user_id)
+                .setParameter("year", year)
+                .setParameter("month", month)
+                .setParameter("isExp", isExpense)
+                .setParameter("currency",currency)
                 .getResultList();
         return transactionConverter.daoToServiceList(entityList);
     }
