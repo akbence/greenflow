@@ -6,7 +6,8 @@
                     <div class="header">
                         <h3 class="title">Actual Balance</h3>
                         <mat-form-field>
-                            <mat-select [(value)]="selectedBalance" (selectionChange)="selectedBalanceChanged($event.value)">
+                            <mat-select [(value)]="selectedBalance"
+                                (selectionChange)="selectedBalanceChanged($event.value)">
                                 <mat-option value="CARD">Card</mat-option>
                                 <mat-option value="CASH">Cash</mat-option>
                                 <mat-option value="TOTAL">Total</mat-option>
@@ -23,6 +24,28 @@
                             <div class="col-md-4">
                                 <h4> {{balance.eurShow}} Euro</h4>
                             </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="header">
+                        <h3 class="title">Conversion datas for HUF</h3>
+                    </div>
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h4> {{balance.eurShow}} Euro worth {{balance.eurToHuf}} Hungarian Forint on the current
+                                    exchange rate </h4>
+                            </div>
+                            <div class="col-md-4">
+                                    <h5>Exhchange rates provider: </h5><h5>https://exchangeratesapi.io/ </h5>
+                                </div>
+                            
                         </div>
 
                     </div>

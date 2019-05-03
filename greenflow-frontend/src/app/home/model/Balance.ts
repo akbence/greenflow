@@ -1,10 +1,12 @@
 export class  Balance{
-    private hufShow : number
-    private eurShow : number
+    public hufShow : number
+    public eurShow : number
+    public eurToHuf : number
     private hufCard : number
     private eurCard : number
     private hufCash : number
     private eurCash : number
+    public exchangeRateEurToHuf : number
   
     hufTotal(){
       return this.hufCard+this.hufCash
@@ -20,6 +22,7 @@ export class  Balance{
           this.hufCard = element.currentCardBalance
           this.hufCash = element.currentCashBalance
           this.hufShow = this.hufTotal()
+          this.convertEurToHuf()
           break
   
           case "EUR":
@@ -34,14 +37,21 @@ export class  Balance{
     showCash(){
       this.eurShow = this.eurCash
       this.hufShow = this.hufCash
+      this.convertEurToHuf()
     }
     showCard(){
       this.eurShow = this.eurCard
       this.hufShow = this.hufCard
+      this.convertEurToHuf()
     }
     showTotal(){
       this.eurShow = this.eurTotal()
       this.hufShow = this.hufTotal()
+      this.convertEurToHuf()
     }
+    convertEurToHuf(){
+        this.eurToHuf =this.exchangeRateEurToHuf*this.eurShow
+    }
+
   }
   

@@ -66,6 +66,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.selectedBalance= 'TOTAL'
     this.balance= new Balance()
+    this.getExchangeRateEurToHuf()
     this.getStats(moment().toDate())
     this.getBalance()
   }
@@ -75,6 +76,14 @@ export class HomeComponent implements OnInit {
     this.getExpenseStats(date)
   }
 
+  getExchangeRateEurToHuf(){
+    return this.http.get("https://api.exchangeratesapi.io/latest?symbols=HUF", { observe: 'response'})
+      .subscribe((res: any) => {
+        this.balance.exchangeRateEurToHuf=res.body.rates.HUF
+        this.balance.convertEurToHuf()
+      });
+  }
+
   getBalance(){
     var token = JSON.parse(localStorage.getItem("currentUser")).token
     const headers = new HttpHeaders()
@@ -82,10 +91,12 @@ export class HomeComponent implements OnInit {
       .append('Content-Type', 'application/json');
     return this.http.get(this.serverURL + "statistics/balance", { headers, observe: 'response', withCredentials: true })
       .subscribe((res: any) => {
-        console.log(res.body)
         this.balance.set(res.body)
+        this.balance.convertEurToHuf()
       });
   }
+
+
 
   selectedBalanceChanged(value){
     if(value=="CASH"){
