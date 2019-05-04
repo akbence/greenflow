@@ -18,11 +18,11 @@
 
         </div>
         <div class="row">
-            <div class="col-md-2" *ngFor="let budgetDetail of actualBudgets; let i = index">
-                <div class="card">
+            <div class="col-md-3" *ngFor="let budgetDetail of actualBudgets; let i = index">
+                <div class="card" >
                     <div class="content">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <label>Limit</label>
                                 <div *ngIf="editingLimit[i]===false">
                                     <p><b>{{budgetDetail.limit}}</b></p>
@@ -35,10 +35,8 @@
                                         (click)="updateLimit(i,budgetDetail.id)">Modify</button>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label>Warning Limit</label>
+                            <div class="col-md-6">
+                                <label>Warn at</label>
                                 <div *ngIf="editingWarning[i]===false">
                                     <p><b>{{budgetDetail.warning}}</b></p>
                                     <button type="button" class="btn btn-warning" 
@@ -52,17 +50,27 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <label>Currency</label>
                                 <p><b>{{budgetDetail.currency}}</b></p>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
+                        
+                            <div class="col-md-6">
                                 <label>Payment Type</label>
                                 <p><b>{{budgetDetail.paymentType}}</b></p>
                             </div>
                         </div>
+                        <div class="row">
+                                <div class="col-md-6">
+                                    <label>Already Spent</label>
+                                    <p><b>{{budgetDetail.spent}}</b></p>
+                                </div>
+                            
+                                <div class="col-md-6">
+                                    <label>By Percentage</label>
+                                    <p><b>{{budgetDetail.percent}}%</b></p>
+                                </div>
+                            </div>
                         <div class="row">
                                 <div class="col-md-4">
                                         <button type="button" class="btn btn-danger" id="remove"

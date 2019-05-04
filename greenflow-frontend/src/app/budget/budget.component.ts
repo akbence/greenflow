@@ -103,6 +103,7 @@ export class BudgetComponent implements OnInit {
           this.editedWarning[index] =  element.limit
           this.editingLimit[index] = false
           this.editingWarning[index] = false
+          element.percent = Number(element.percent).toFixed(2);
           index++;
           
         });
