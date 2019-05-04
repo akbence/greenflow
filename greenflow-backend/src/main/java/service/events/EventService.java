@@ -21,10 +21,17 @@ public class EventService {
     private EventsDao eventsDao;
 
     @Inject
+    private MailService mailService;
+
+    @Inject
     private LoggedInService loggedInService;
+
+
+    //@Schedule(second="*/10", minute="*",hour="*", persistent=false)
+
     @Schedules ({
             @Schedule(dayOfMonth="1"),
-            @Schedule(hour="0",minute = "54")
+            @Schedule(hour="0",minute = "52")
     })
     public void automaticallyScheduled() {
         fireEvent();
@@ -32,6 +39,13 @@ public class EventService {
 
 
     private void fireEvent() {
+
+        try{
+            mailService.main(null);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
         System.out.println("fired at: " + LocalDateTime.now());
     }
 
