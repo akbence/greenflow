@@ -30,6 +30,8 @@ public class BudgetConverter {
         temp.setPaymentType(budget.getPaymentType());
         temp.setId(budget.getId());
         temp.setWarning(budget.getWarning());
+        temp.setPercent(budget.getPercent());
+        temp.setSpent(budget.getSpent());
         return temp;
     }
 

@@ -18,8 +18,6 @@ public class TransactionService {
     @Inject
     private TransactionDao transactionDao;
 
-    @Inject
-    private CategoryDao categoryDao;
 
     @Inject
     private TransactionConverter transactionConverter;

@@ -6,6 +6,7 @@ import entities.UserEntity;
 import entities.transactions.CategoryEntity;
 import entities.transactions.TransactionEntity;
 import enums.Currency;
+import enums.PaymentType;
 import service.transaction.Category;
 import service.transaction.Transaction;
 
@@ -82,7 +83,7 @@ public class TransactionDao {
         return transactionConverter.daoToServiceList(entityList);
     }
 
-    public ArrayList<Transaction> getMonthlyTransactionsWithCurrency(String username, int year, int month, boolean isExpense, Currency currency) {
+    public ArrayList<Transaction> getMonthlyTransactions(String username, int year, int month, boolean isExpense, Currency currency) {
         ArrayList<TransactionEntity> entityList;
         int user_id = userDao.getId(username);
         entityList = (ArrayList<TransactionEntity>) em.createNamedQuery(TransactionEntity.QUERY_TRANSACTION_GETMONTHLY_BY_USERNAME_CURRENCY, TransactionEntity.class)
@@ -91,6 +92,20 @@ public class TransactionDao {
                 .setParameter("month", month)
                 .setParameter("isExp", isExpense)
                 .setParameter("currency",currency)
+                .getResultList();
+        return transactionConverter.daoToServiceList(entityList);
+    }
+
+    public ArrayList<Transaction>  getMonthlyTransactions(String username, int year, int month, boolean isExpense, Currency currency, PaymentType paymentType) {
+        ArrayList<TransactionEntity> entityList;
+        int user_id = userDao.getId(username);
+        entityList = (ArrayList<TransactionEntity>) em.createNamedQuery(TransactionEntity.QUERY_TRANSACTION_GETMONTHLY_BY_USERNAME_CURRENCY_PAYMENTTYPE, TransactionEntity.class)
+                .setParameter("user_id", user_id)
+                .setParameter("year", year)
+                .setParameter("month", month)
+                .setParameter("isExp", isExpense)
+                .setParameter("currency",currency)
+                .setParameter("paymentType",paymentType)
                 .getResultList();
         return transactionConverter.daoToServiceList(entityList);
     }

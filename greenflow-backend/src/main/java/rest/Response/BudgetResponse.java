@@ -11,6 +11,25 @@ public class BudgetResponse {
     private int warning;
     private int id;
 
+    private int spent;
+    private double percent;
+
+    public int getSpent() {
+        return spent;
+    }
+
+    public void setSpent(int spent) {
+        this.spent = spent;
+    }
+
+    public double getPercent() {
+        return percent;
+    }
+
+    public void setPercent(double percent) {
+        this.percent = percent;
+    }
+
     public int getId() {
         return id;
     }

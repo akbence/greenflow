@@ -59,7 +59,7 @@ public class BudgetDao {
             return budgetConverter.daoToServiceList(budgetEntities);
         }catch (Exception e){
             System.out.println(e.getMessage());
-            System.out.println("add budget problem");
+            System.out.println("getAll budget problem");
             throw e;
         }
     }

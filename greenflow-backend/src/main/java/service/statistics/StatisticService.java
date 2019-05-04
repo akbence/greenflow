@@ -114,7 +114,7 @@ public class StatisticService {
         for (int i = 0; i < months; i++) {
             LocalDate date = LocalDate.now().minusMonths(i);
             int sum=0;
-            ArrayList<Transaction> transactions = transactionDao.getMonthlyTransactionsWithCurrency(username, date.getYear(), date.getMonthValue(),isExpense,currency);
+            ArrayList<Transaction> transactions = transactionDao.getMonthlyTransactions(username, date.getYear(), date.getMonthValue(),isExpense,currency);
             for (Transaction transaction : transactions) {
                 sum+=transaction.getAmmount();
             }

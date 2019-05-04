@@ -2,16 +2,15 @@ package service.budget;
 
 import converters.BudgetConverter;
 import dao.BudgetDao;
-import entities.BudgetEntity;
+import dao.transactions.TransactionDao;
 import rest.Input.BudgetInput;
 import rest.Response.BudgetResponse;
-import service.authentication.LoggedIn;
 import service.authentication.LoggedInService;
+import service.transaction.Transaction;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Model
@@ -22,6 +21,9 @@ public class BudgetService {
 
     @Inject
     private BudgetDao budgetDao;
+
+    @Inject
+    private TransactionDao transactionDao;
 
     @Inject
     private BudgetConverter budgetConverter;
@@ -36,13 +38,24 @@ public class BudgetService {
         budgetDao.addBudget(budget);
     }
 
-    public List<BudgetResponse> getAllBudget(String year,String month) {
+    public List<BudgetResponse> getAllBudget(String year,String month) throws Exception {
         List<Budget> budgetList;
+        String username = loggedInService.getCurrentUserName();
         if(month==null ||year == null){
-            budgetList = budgetDao.getAllBudget(loggedInService.getCurrentUserName());
+            //Dead code, in theory, it can never reach this part
+            budgetList = budgetDao.getAllBudget(username);
         }else{
             LocalDate period= LocalDate.of(Integer.parseInt(year),Integer.parseInt(month),1);
-            budgetList = budgetDao.getMonthlyBudget(loggedInService.getCurrentUserName(),period);
+            budgetList = budgetDao.getMonthlyBudget(username,period);
+            for (Budget budget: budgetList
+            ) {List<Transaction> transactions = transactionDao.getMonthlyTransactions(username,Integer.parseInt(year),Integer.parseInt(month),true,budget.getCurrency(),budget.getPaymentType());
+            int spentMoney=0;
+                for (Transaction t: transactions
+                     ) {spentMoney +=t.getAmmount();
+                }
+                budget.setSpent(spentMoney);
+                budget.setPercent(100.0*spentMoney/budget.getLimit());
+            }
         }
         return budgetConverter.serviceToRestList(budgetList);
     }
