@@ -5,6 +5,9 @@ import dao.transactions.CategoryDao;
 import dao.transactions.TransactionDao;
 import rest.Input.TransactionInput;
 import service.authentication.LoggedInService;
+import service.budget.BudgetService;
+import service.events.EventService;
+
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -18,14 +21,18 @@ public class TransactionService {
     @Inject
     private TransactionDao transactionDao;
 
+    @Inject
+    private BudgetService budgetService;
+
 
     @Inject
     private TransactionConverter transactionConverter;
 
     public void post(TransactionInput transactionInput) throws Exception {
-        if (loggedInService.isLoggedIn()) {
-            transactionDao.post(transactionConverter.restInputToService(transactionInput,loggedInService.getCurrentUserName()));
-        }
+        Transaction transaction= transactionConverter.restInputToService(transactionInput,loggedInService.getCurrentUserName());
+        transactionDao.post(transaction);
+        //Whenever a transaction expense posted, the BudgetService checks, if it overextends any limit.
+        budgetService.checkLimitExtension(transaction);
     }
 
 

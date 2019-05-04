@@ -3,14 +3,18 @@ package service.budget;
 import converters.BudgetConverter;
 import dao.BudgetDao;
 import dao.transactions.TransactionDao;
+import enums.Currency;
+import enums.PaymentType;
 import rest.Input.BudgetInput;
 import rest.Response.BudgetResponse;
 import service.authentication.LoggedInService;
+import service.events.EventService;
 import service.transaction.Transaction;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Model
@@ -18,6 +22,9 @@ public class BudgetService {
 
     @Inject
     private LoggedInService loggedInService;
+
+    @Inject
+    private EventService eventService;
 
     @Inject
     private BudgetDao budgetDao;
@@ -75,5 +82,35 @@ public class BudgetService {
     public void modifyBudgetWarning(int id, int warningLimit) {
         String username = loggedInService.getCurrentUserName();
         budgetDao.modifyBudgetWarning(id,warningLimit,username);
+    }
+
+    public void checkLimitExtension(Transaction transaction) throws Exception{
+        String username = loggedInService.getCurrentUserName();
+        List<Budget> budgets = budgetDao.getMonthlyBudget(username, transaction.getDate());
+        PaymentType paymentType = transaction.getPaymentType();
+        Currency currency = transaction.getCurrency();
+        for (Budget budget : budgets){
+            if(budget.getPaymentType().equals(paymentType)
+                    && budget.getCurrency().equals(currency)){
+                ArrayList<Transaction> monthlyResult = transactionDao.getMonthlyTransactions(username, transaction.getDate().getYear(), transaction.getDate().getMonthValue(), true, currency, paymentType);
+                int sum = 0;
+                for (Transaction t : monthlyResult){
+                    sum+=t.getAmmount();
+                }
+                if(isLatestTransactionOverTheValue(transaction,budget.getWarning(),sum)){
+                    eventService.limitWarning(budget);
+                }
+            }
+        }
+    }
+
+    private boolean isLatestTransactionOverTheValue(Transaction transaction, int value, int sum) {
+        if(sum >= value){
+            sum -= transaction.getAmmount();
+            if(sum < value){
+                return true;
+            }
+        }
+        return false;
     }
 }

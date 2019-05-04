@@ -6,6 +6,7 @@ import rest.Input.EventsInput;
 import rest.Response.EventResponse;
 import service.authentication.LoggedIn;
 import service.authentication.LoggedInService;
+import service.budget.Budget;
 
 import javax.ejb.Schedule;
 import javax.ejb.Schedules;
@@ -30,23 +31,21 @@ public class EventService {
     //@Schedule(second="*/10", minute="*",hour="*", persistent=false)
 
     @Schedules ({
-            @Schedule(dayOfMonth="1"),
-            @Schedule(hour="0",minute = "52")
+            @Schedule(dayOfMonth="1")
+//            @Schedule(hour="0",minute = "52")
     })
     public void automaticallyScheduled() {
-        fireEvent();
+        sendMonthlyMails();
     }
 
 
-    private void fireEvent() {
-
+    private void sendMonthlyMails() {
         try{
-            mailService.main(null);
+            mailService.sendMonthly(null);
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
-
-        System.out.println("fired at: " + LocalDateTime.now());
+        System.out.println("Monthly reminder messages sent at: " + LocalDateTime.now());
     }
 
     public void eventsUpdate(EventsInput eventsInput) {
@@ -66,5 +65,13 @@ public class EventService {
         eventResponse.setMonthly(event.isMonthly());
         eventResponse.setWarning(event.isWarning());
         return eventResponse;
+    }
+
+    public void limitWarning(Budget budget) throws Exception{
+        String username = loggedInService.getCurrentUserName();
+        Event event=eventsDao.getEvents(username);
+        if(event.isWarning()){
+            mailService.sendWarning(username,budget);
+        }
     }
 }
