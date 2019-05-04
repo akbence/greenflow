@@ -55,8 +55,8 @@ public class BudgetService {
             LocalDate period= LocalDate.of(Integer.parseInt(year),Integer.parseInt(month),1);
             budgetList = budgetDao.getMonthlyBudget(username,period);
             for (Budget budget: budgetList
-            ) {List<Transaction> transactions = transactionDao.getMonthlyTransactions(username,Integer.parseInt(year),Integer.parseInt(month),true,budget.getCurrency(),budget.getPaymentType());
-            int spentMoney=0;
+            ) {ArrayList<Transaction> transactions = transactionDao.getMonthlyTransactions(username,Integer.parseInt(year),Integer.parseInt(month),true,budget.getCurrency(),budget.getPaymentType());
+            int spentMoney=calcSum(transactions);
                 for (Transaction t: transactions
                      ) {spentMoney +=t.getAmmount();
                 }
@@ -93,15 +93,20 @@ public class BudgetService {
             if(budget.getPaymentType().equals(paymentType)
                     && budget.getCurrency().equals(currency)){
                 ArrayList<Transaction> monthlyResult = transactionDao.getMonthlyTransactions(username, transaction.getDate().getYear(), transaction.getDate().getMonthValue(), true, currency, paymentType);
-                int sum = 0;
-                for (Transaction t : monthlyResult){
-                    sum+=t.getAmmount();
-                }
+                int sum = calcSum(monthlyResult);
                 if(isLatestTransactionOverTheValue(transaction,budget.getWarning(),sum)){
-                    eventService.limitWarning(budget);
+                    eventService.sendLimitWarning(budget);
                 }
             }
         }
+    }
+
+    private int calcSum(ArrayList<Transaction> monthlyResult) {
+        int sum = 0;
+        for (Transaction t : monthlyResult){
+            sum+=t.getAmmount();
+        }
+        return sum;
     }
 
     private boolean isLatestTransactionOverTheValue(Transaction transaction, int value, int sum) {

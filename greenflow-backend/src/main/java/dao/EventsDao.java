@@ -7,6 +7,7 @@ import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Model
 public class EventsDao {
@@ -68,6 +69,17 @@ public class EventsDao {
             Event ret=new Event();
             ret.setMonthly(eventsEntity.IsMonthlyReports());
             ret.setWarning(eventsEntity.IsWarningReports());
+            return ret;
+        }catch (Exception e){
+            System.out.println("getEvents problem");
+            throw e;
+        }
+    }
+
+    public List<Integer> getAllUserIdsWithMonthly() {
+        try{
+            List<Integer> ret= em.createNamedQuery(EventsEntity.QUERY_EVENTS_GET_ID_BY_MONTHLYSET,Integer.class)
+                    .getResultList();
             return ret;
         }catch (Exception e){
             System.out.println("getEvents problem");

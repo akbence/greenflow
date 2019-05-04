@@ -4,6 +4,7 @@ package service.events;
 import dao.UserDao;
 import service.authentication.User;
 import service.budget.Budget;
+import service.transaction.Transaction;
 
 import java.util.*;
 import javax.enterprise.inject.Model;
@@ -22,19 +23,55 @@ public class MailService {
     static MimeMessage generateMailMessage;
     static ResourceBundle rb = ResourceBundle.getBundle("emailcredentials");
 
-    public void sendMonthly(String[] addresses) throws AddressException, MessagingException {
-        mailPropertiesSetup();
+    public void sendMonthly(List<Transaction> transactions) throws AddressException, MessagingException {
+        if(!transactions.isEmpty()) {
+
+            mailPropertiesSetup();
+            String emailAddress = userDao.getEmail(transactions.get(0).getUsername());
+            getMailSession = Session.getDefaultInstance(mailServerProperties, null);
+            generateMailMessage = new MimeMessage(getMailSession);
+            generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(emailAddress));
+            generateMailMessage.setSubject("Greenflow monthly report message");
+
+            StringBuilder sb = new StringBuilder();
+            sb.append("<html><body>");
+            sb.append("Your monthly report consisted the following things");
+            sb.append("<table>");
+            sb.append(" <tr>\n" +
+                    "    <th>Name</th>\n" +
+                    "    <th>Ammount</th> \n" +
+                    "    <th>Currency</th>\n" +
+                    "    <th>Category</th>\n" +
+                    "    <th>PaymentType</th>\n" +
+                    "    <th>Date</th>\n" +
+                    "    <th>Exp/Inc</th>\n" +
+                    "  </tr>\n");
+            for (Transaction t : transactions
+            ) {
+                sb.append("<tr>");
+                sb.append("<td>" + t.getName() + "</td>");
+                sb.append("<td>" + t.getAmmount() + "</td>");
+                sb.append("<td>" + t.getCurrency() + "</td>");
+                sb.append("<td>" + t.getCategory() + "</td>");
+                sb.append("<td>" + t.getPaymentType() + "</td>");
+                sb.append("<td>" + t.getDate().getYear() + "-" + t.getDate().getMonth() + "-" + t.getDate().getDayOfMonth() + "</td>");
+                if (t.isExpense()) {
+                    sb.append("<td>Expense</td>");
+                } else {
+                    sb.append("<td>Income</td>");
+                }
+                sb.append("</tr>");
+            }
+            sb.append("</table>");
+            sb.append("For more detailed statistics, visit the webpage");
+            sb.append("</body></html>");
+            String emailBody = sb.toString();
+
+            generateMailMessage.setContent(emailBody, "text/html; charset=utf-8");
 
 
-        getMailSession = Session.getDefaultInstance(mailServerProperties, null);
-        generateMailMessage = new MimeMessage(getMailSession);
-        generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress("dummy@gmail.com"));
-        generateMailMessage.setSubject("Greetings from Greenflow..");
-        String emailBody = "Test mail, checking the integration of the JAVAMAIL into the application.";
-        generateMailMessage.setContent(emailBody, "text/html");
-
-
-        transportMail();
+            transportMail();
+        }
     }
 
     public void sendWarning(String username, Budget budget)  throws AddressException, MessagingException {
@@ -48,7 +85,7 @@ public class MailService {
             getMailSession = Session.getDefaultInstance(mailServerProperties, null);
             generateMailMessage = new MimeMessage(getMailSession);
             generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(emailAddress));
-            generateMailMessage.setSubject("Greetings from Greenflow..");
+            generateMailMessage.setSubject("Greenflow budget warning message");
             String emailBody = "This is a warning message, because your expense in "+ budget.getCurrency() + " "
                     +budget.getPaymentType() + " overextended the warning limit: "+ budget.getWarning() + ". Your limit  is:" +
                     budget.getLimit() +

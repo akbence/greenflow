@@ -2,24 +2,32 @@ package service.events;
 
 import dao.EventsDao;
 import dao.UserDao;
+import dao.transactions.TransactionDao;
 import rest.Input.EventsInput;
 import rest.Response.EventResponse;
-import service.authentication.LoggedIn;
 import service.authentication.LoggedInService;
 import service.budget.Budget;
+import service.transaction.Transaction;
 
 import javax.ejb.Schedule;
 import javax.ejb.Schedules;
 import javax.ejb.Singleton;
 import javax.inject.Inject;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.List;
 
 @Singleton
 public class EventService {
 
     @Inject
     private EventsDao eventsDao;
+
+    @Inject
+    private TransactionDao transactionDao;
+
+    @Inject
+    private UserDao userDao;
 
     @Inject
     private MailService mailService;
@@ -32,18 +40,20 @@ public class EventService {
 
     @Schedules ({
             @Schedule(dayOfMonth="1")
-//            @Schedule(hour="0",minute = "52")
     })
-    public void automaticallyScheduled() {
-        sendMonthlyMails();
+//    @Schedule(second="*/10", minute="*",hour="*", persistent=false)
+    public void automaticallyScheduled() throws Exception{
+        sendMonthlySummary();
     }
 
 
-    private void sendMonthlyMails() {
-        try{
-            mailService.sendMonthly(null);
-        }catch (Exception e){
-            System.out.println(e.getMessage());
+    private void sendMonthlySummary() throws  Exception{
+        List<Integer> userIds = eventsDao.getAllUserIdsWithMonthly();
+        for (Integer userId : userIds){
+            String username = userDao.getName(userId);
+            LocalDate lastMonth = LocalDate.now().minusMonths(1);
+            List<Transaction> transactions = transactionDao.getMonthlyTransactions(username,lastMonth.getYear(),lastMonth.getMonthValue());
+            mailService.sendMonthly(transactions);
         }
         System.out.println("Monthly reminder messages sent at: " + LocalDateTime.now());
     }
@@ -67,7 +77,7 @@ public class EventService {
         return eventResponse;
     }
 
-    public void limitWarning(Budget budget) throws Exception{
+    public void sendLimitWarning(Budget budget) throws Exception{
         String username = loggedInService.getCurrentUserName();
         Event event=eventsDao.getEvents(username);
         if(event.isWarning()){

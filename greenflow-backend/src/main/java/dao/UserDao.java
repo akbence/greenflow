@@ -95,8 +95,12 @@ public class UserDao {
     }
 
     public String getEmail(User loginUser) {
-        String result = null;
         String username = loginUser.getUsername();
+        return getEmail(username);
+    }
+
+    public String getEmail(String username) {
+        String result = null;
         try {
             result = em.createNamedQuery(UserEntity.QUERY_USER_GET_EMAIL_BY_USERNAME, String.class).setParameter("username",username).getSingleResult();
         }

@@ -15,6 +15,7 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 public class TransactionDao {
 
@@ -69,6 +70,17 @@ public class TransactionDao {
         if (userid == transactionEntity.getUser_id()) {
             em.remove(transactionEntity);
         } else throw new Exception("unauthorized access");
+    }
+
+    public List<Transaction> getMonthlyTransactions(String username, int year, int month) {
+        ArrayList<TransactionEntity> entityList;
+        int user_id = userDao.getId(username);
+        entityList = (ArrayList<TransactionEntity>) em.createNamedQuery(TransactionEntity.QUERY_TRANSACTION_GETMONTHLY_BY_USERNAME_EXPENSE_AND_INCOME, TransactionEntity.class)
+                .setParameter("user_id", user_id)
+                .setParameter("year", year)
+                .setParameter("month", month)
+                .getResultList();
+        return transactionConverter.daoToServiceList(entityList);
     }
 
     public ArrayList<Transaction> getMonthlyTransactions(String username, int year, int month, boolean isExpense) {

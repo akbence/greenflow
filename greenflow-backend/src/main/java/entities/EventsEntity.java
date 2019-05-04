@@ -3,13 +3,15 @@ package entities;
 import javax.persistence.*;
 
 @Entity
-@NamedQueries(
-        @NamedQuery(name = "Events.getEventById", query = "select e from EventsEntity e where e.user_id = :user_id")
-)
+@NamedQueries({
+        @NamedQuery(name = "Events.getEventById", query = "select e from EventsEntity e where e.user_id = :user_id"),
+        @NamedQuery(name = "Events.getIdsByMonthlySet", query = "select e.user_id from EventsEntity e where e.monthlyReports = true")
+        })
 @Table(name = EventsEntity.tableName)
 public class EventsEntity {
     public static final String tableName= "Event";
     public static final String QUERY_EVENTS_BY_ID = "Events.getEventById";
+    public static final String QUERY_EVENTS_GET_ID_BY_MONTHLYSET ="Events.getIdsByMonthlySet" ;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
