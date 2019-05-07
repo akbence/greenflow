@@ -1,6 +1,7 @@
 package service.transaction;
 
 import converters.TransactionConverter;
+import dao.UserDao;
 import dao.transactions.CategoryDao;
 import dao.transactions.TransactionDao;
 import rest.Input.TransactionInput;
@@ -20,6 +21,11 @@ public class TransactionService {
 
     @Inject
     private TransactionDao transactionDao;
+
+    @Inject UserDao userDao;
+
+    @Inject
+    private CategoryDao categoryDao;
 
     @Inject
     private BudgetService budgetService;
@@ -50,6 +56,8 @@ public class TransactionService {
         String username=loggedInService.getCurrentUserName();
         Transaction transaction = transactionConverter.restInputToService(transactionInput,loggedInService.getCurrentUserName());
         transaction.setId(id);
-        transactionDao.modify(transaction);
+
+        int category_id= categoryDao.getID(transaction.getCategory(),userDao.getId(username));
+        transactionDao.modify(transaction,category_id);
     }
 }

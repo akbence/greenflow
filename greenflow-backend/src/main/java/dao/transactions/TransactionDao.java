@@ -123,11 +123,11 @@ public class TransactionDao {
     }
 
     @Transactional
-    public void modify(Transaction transaction) throws Exception {
+    public void modify(Transaction transaction, int category_id) throws Exception {
         TransactionEntity transactionEntity = em.find(TransactionEntity.class, transaction.getId());
         int userid = userDao.getId(transaction.getUsername());
         if (userid == transactionEntity.getUser_id()) {
-            TransactionEntity replace = transactionConverter.serviceToDao(transaction, transactionEntity.getUser_id(), transactionEntity.getCategory_id());
+            TransactionEntity replace = transactionConverter.serviceToDao(transaction, transactionEntity.getUser_id(), category_id);
             em.merge(replace);
         } else throw new Exception("unauthorized access");
     }

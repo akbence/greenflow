@@ -37,7 +37,6 @@ public class AuthService implements Serializable {
         newUser.setPasswordHash(passwordHandler.createPasswordHash(userAuthInput.getPassword(), creationDate));
         userDao.registerUser(newUser);
         eventsService.eventsCreate(newUser.getUsername());
-
     }
 
     public LoginResponse loginUser(UserAuthInput userAuthInput) throws Exception {
