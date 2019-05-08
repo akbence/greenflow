@@ -1,66 +1,43 @@
 <div class="main-content">
-        <div class="container-fluid">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12"> 
+            <div class="col-md-12">
                 <div class="card">
                     <div class="header">
                         <h4 class="title">Category</h4>
                         <p class="category"></p>
-                        <div class="text-right">
-                            <button type="button" class="btn btn-success" id="add" (click)="addRow(row)" pull-right>ADD</button>
-                        </div>
                     </div>
                     <div class="content table-responsive table-full-width">
-                          <table class="table table-hover table-striped">
-                                <thead>
-                                    <tr>
-                                        <th *ngFor="let cell of tableData1.headerRow">{{ cell }}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let row of tableData1.dataRows">
-                                        <td >
-                                                <input type="text" name="row" value={{row.data}}
-                                                [(ngModel)]="row.data">
-                                         </td>
-                                        <td> <button type="button" class="btn btn-warning" id="update" (click)="updateRow(row)">UPDATE</button> </td>
-                                        <td> <button type="button" class="btn btn-danger" id="remove" (click)="deleteRow(row)">DELETE</button> </td>
-                                    </tr>
-                                    <tr>
-                                        <td >
-                                           <input type="text" name="row" id="new_category_input" placeholder="New category..." 
-                                                    [(ngModel)]="addnew">
-                                             </td>
-                                             <button type="button" class="btn btn-success" id="add" (click)="addRow(addnew)">ADD</button>
-                                        </tr>
-                                </tbody>
-                          </table>
+                        <table class="table table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th *ngFor="let cell of tableData1.headerRow">{{ cell }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let row of tableData1.dataRows">
+                                    <td>
+                                        <input type="text" name="row" value={{row.data}} [(ngModel)]="row.data">
+                                    </td>
+                                    <td> <button type="button" class="btn btn-warning" id="update"
+                                            (click)="updateRow(row)">UPDATE</button> </td>
+                                    <td> <button type="button" class="btn btn-danger" id="remove"
+                                            (click)="deleteRow(row)">DELETE</button> </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="text" name="row" id="new_category_input"
+                                            placeholder="New category..." [(ngModel)]="addnew">
+                                    <button type="button" class="btn btn-success" id="add"
+                                        (click)="addRow(addnew)">ADD</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
 
                     </div>
                 </div>
             </div>
-            <!-- <div class="col-md-12">
-                <div class="card card-plain">
-                    <div class="header">
-                        <h4 class="title">Table on Plain Background</h4>
-                        <p class="category">Here is a subtitle for this table</p>
-                    </div>
-                    <div class="content table-responsive table-full-width">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th *ngFor="let cell of tableData2.headerRow">{{ cell }}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let row of tableData2.dataRows">
-                                    <td *ngFor="let cell of row">{{cell}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div> -->
         </div>
     </div>
 </div>
