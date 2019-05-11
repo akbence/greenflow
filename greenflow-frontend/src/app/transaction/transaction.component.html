@@ -1,4 +1,4 @@
-<div class="main-content" >
+<div class="main-content">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-8">
@@ -12,7 +12,8 @@
                                 <div class="col-md-5">
                                     <div class="form-group">
                                         <label>Name of Transaction</label>
-                                        <input type="text" class="form-control"  [(ngModel)]="transaction.name" [ngModelOptions]="{standalone: true}" placeholder="Username">
+                                        <input type="text" class="form-control" [(ngModel)]="transaction.name"
+                                            [ngModelOptions]="{standalone: true}" placeholder="Username">
                                     </div>
                                 </div>
                             </div>
@@ -20,7 +21,8 @@
                                 <div class="col-md-5">
                                     <div class="form-group">
                                         <label>Amount</label>
-                                        <input type="number" class="form-control"  [(ngModel)]="transaction.amount" placeholder="0" [ngModelOptions]="{standalone: true}">
+                                        <input type="number" class="form-control" [(ngModel)]="transaction.amount"
+                                            placeholder="0" [ngModelOptions]="{standalone: true}">
                                     </div>
                                 </div>
                             </div>
@@ -28,7 +30,8 @@
                                 <div class="col-md-5">
                                     <div class="form-group">
                                         <label>Currency</label>
-                                        <input type="text" class="form-control"  [(ngModel)]="transaction.currency" [ngModelOptions]="{standalone: true}">
+                                        <input type="text" class="form-control" [(ngModel)]="transaction.currency"
+                                            [ngModelOptions]="{standalone: true}">
                                     </div>
                                 </div>
                             </div>
@@ -36,8 +39,9 @@
                                 <div class="col-md-5">
                                     <div class="form-group">
                                         <label>Category</label>
-                                        <select name="category" type="text" class="form-control"  [(ngModel)]="transaction.category" [ngModelOptions]="{standalone: true}"
-                                        onselect="console.log(transaction.category)">
+                                        <select name="category" type="text" class="form-control"
+                                            [(ngModel)]="transaction.category" [ngModelOptions]="{standalone: true}"
+                                            onselect="console.log(transaction.category)">
                                             <option *ngFor="let element of categoryList">{{element}}</option>
                                         </select>
                                     </div>
@@ -47,7 +51,8 @@
                                 <div class="col-md-5">
                                     <div class="form-group">
                                         <label>Payment Type</label>
-                                        <select name="paymentType" type="text" class="form-control"  [(ngModel)]="transaction.paymentType" [ngModelOptions]="{standalone: true}">
+                                        <select name="paymentType" type="text" class="form-control"
+                                            [(ngModel)]="transaction.paymentType" [ngModelOptions]="{standalone: true}">
                                             <option *ngFor="let element of paymentTypes">{{element}}</option>
                                         </select>
                                     </div>
@@ -60,9 +65,20 @@
                                         <div></div>
                                         <mat-form-field>
                                             <input matInput [matDatepicker]="picker1" [formControl]="date">
-                                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle> 
+                                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                             <mat-datepicker #picker1></mat-datepicker>
                                         </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label>Auto fill by receipt (only SPAR markets)</label>
+                                        <div></div>
+                                        <input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput>
+                                        <button class="button-info" (click)="fileInput.click()">Select File</button>
+                                        <button class="button-info" (click)="onUpload()">Auto Fill</button>
                                     </div>
                                 </div>
                             </div>
@@ -73,7 +89,7 @@
                                     <button class="button-expense" (click)="addExpense()">Add Expense</button>
                                 </div>
                             </div>
-                         </form>  
+                        </form>
                     </div>
                 </div>
             </div>
