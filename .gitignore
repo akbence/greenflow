@@ -2,3 +2,5 @@
 *.iml
 target/
 greenflow-backend/src/main/resources/emailcredentials\.properties
+
+greenflow-backend/src/main/resources/ocrcredentials\.properties

@@ -5,6 +5,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import net.sourceforge.tess4j.Tesseract;
 import rest.Input.*;
 import rest.Response.*;
 import service.authentication.AuthService;
@@ -17,8 +18,11 @@ import service.transaction.CategoryService;
 import service.transaction.Transaction;
 import service.transaction.TransactionService;
 
-import java.io.File;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 
@@ -407,6 +411,22 @@ public class RestService {
         return Response.status(200).entity("").build();
     }
 
+    @POST
+    @Path("/predict")
+    @Consumes(MediaType.APPLICATION_OCTET_STREAM)
+    @Secured
+    public Response predictByReceipt(String picture){
+        Transaction res=null;
+        try{
+            res=transactionService.predictByReceipt(picture);
+            if(res==null){
+                throw new Exception("cannot predict");
+            }
+        }catch (Exception e){
+            return Response.status(200).build();
+        }
+        return Response.ok().entity(res).build();
+    }
 
 
 }

@@ -129,15 +129,14 @@ export class TransactionComponent implements OnInit, Resolve<any> {
     const headers = new HttpHeaders()
       .set("Authorization", token)
       .append("Content-Type","application/octet-stream")
-    return this.http.request<any>("post", this.serverURL + "test", { body: this.base64, headers, withCredentials: true })
+    return this.http.request<any>("post", this.serverURL + "predict", { body: this.base64, headers, withCredentials: true })
       .pipe()
       .subscribe(
         data => {
-          data.forEach(element => {
-            this.categoryList.push(element.name)
-
-          })
-          this.transaction.category = this.categoryList[0]
+          console.log(data)
+          this.transaction.amount=data.ammount
+          this.transaction.currency=data.currency
+          this.transaction.paymentType=data.paymentType
         },
         error => {
           //this.error = error;
@@ -148,6 +147,5 @@ export class TransactionComponent implements OnInit, Resolve<any> {
   _handleReaderLoaded(readerEvt) {
     var binaryString = readerEvt.target.result;
            this.base64= btoa(binaryString);
-           console.log(btoa(binaryString));
    }
 }
