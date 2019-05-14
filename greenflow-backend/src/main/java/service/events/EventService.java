@@ -3,7 +3,7 @@ package service.events;
 import dao.EventsDao;
 import dao.UserDao;
 import dao.transactions.TransactionDao;
-import rest.Input.EventsInput;
+import rest.Request.EventsInput;
 import rest.Response.EventResponse;
 import service.authentication.LoggedInService;
 import service.budget.Budget;

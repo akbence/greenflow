@@ -6,7 +6,7 @@ import javax.inject.Inject;
 import converters.CategoryConverter;
 import dao.UserDao;
 import dao.transactions.CategoryDao;
-import rest.Input.CategoryInput;
+import rest.Request.CategoryInput;
 import rest.Response.CategoryResponse;
 import service.authentication.LoggedInService;
 

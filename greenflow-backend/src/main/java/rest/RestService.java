@@ -5,8 +5,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import net.sourceforge.tess4j.Tesseract;
-import rest.Input.*;
+import rest.Request.*;
 import rest.Response.*;
 import service.authentication.AuthService;
 import service.authentication.Secured;
@@ -19,10 +18,7 @@ import service.transaction.Transaction;
 import service.transaction.TransactionService;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 
 
@@ -320,7 +316,7 @@ public class RestService {
     @Secured
     @Path("/budget")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response postBudget(BudgetInput budgetInput){
+    public Response postBudget(BudgetRequest budgetInput){
         try{
             budgetService.addBudget(budgetInput);
             return Response.status(200).build();

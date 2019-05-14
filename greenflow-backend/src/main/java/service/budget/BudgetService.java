@@ -5,7 +5,7 @@ import dao.BudgetDao;
 import dao.transactions.TransactionDao;
 import enums.Currency;
 import enums.PaymentType;
-import rest.Input.BudgetInput;
+import rest.Request.BudgetRequest;
 import rest.Response.BudgetResponse;
 import service.authentication.LoggedInService;
 import service.events.EventService;
@@ -35,7 +35,7 @@ public class BudgetService {
     @Inject
     private BudgetConverter budgetConverter;
 
-    public void addBudget(BudgetInput budgetInput) {
+    public void addBudget(BudgetRequest budgetInput) {
         Budget budget = new Budget();
         budget.setUsername(loggedInService.getCurrentUserName());
         budget.setLimit(budgetInput.getLimit());

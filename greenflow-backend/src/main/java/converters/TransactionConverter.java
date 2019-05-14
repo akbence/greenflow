@@ -5,7 +5,7 @@ import dao.transactions.CategoryDao;
 import entities.transactions.TransactionEntity;
 import enums.Currency;
 import enums.PaymentType;
-import rest.Input.TransactionInput;
+import rest.Request.TransactionInput;
 import service.transaction.Transaction;
 
 import javax.enterprise.inject.Model;

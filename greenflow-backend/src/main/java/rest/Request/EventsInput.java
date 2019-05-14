@@ -1,4 +1,4 @@
-package rest.Input;
+package rest.Request;
 
 public class EventsInput {
     private boolean monthlyreport;

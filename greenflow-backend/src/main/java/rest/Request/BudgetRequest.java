@@ -1,11 +1,9 @@
-package rest.Input;
+package rest.Request;
 
 import enums.Currency;
 import enums.PaymentType;
 
-import java.time.LocalDate;
-
-public class BudgetInput {
+public class BudgetRequest {
 
     private PaymentType paymentType;
     private Currency currency;

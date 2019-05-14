@@ -1,11 +1,10 @@
 package service.authentication;
 
 import dao.UserDao;
-import rest.Input.UserAuthInput;
+import rest.Request.UserAuthInput;
 import rest.Response.LoginResponse;
 import service.events.EventService;
 
-import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import java.io.Serializable;
