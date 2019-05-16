@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import converters.CategoryConverter;
 import dao.UserDao;
 import dao.transactions.CategoryDao;
+import dao.transactions.TransactionDao;
 import rest.Request.CategoryInput;
 import rest.Response.CategoryResponse;
 import service.authentication.LoggedInService;
@@ -23,6 +24,9 @@ public class CategoryService {
 
     @Inject
     private UserDao userDao;
+
+    @Inject
+    TransactionService transactionService;
 
     @Inject
     CategoryConverter categoryConverter;
@@ -49,7 +53,12 @@ public class CategoryService {
 
     public void delete(int id) {
         int userId=userDao.getId(loggedInService.getCurrentUserName());
-        categoryDao.delete(userId,id);
+        try{
+            transactionService.deleteAll(id);
+            categoryDao.delete(userId,id);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     public void modify(int categoryId,CategoryInput categoryInput) {

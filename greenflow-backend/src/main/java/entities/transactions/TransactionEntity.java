@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @NamedQueries({ @NamedQuery(name = "Transaction.getAllforUser", query = "select t from TransactionEntity t where t.user_id = :user_id"),
+        @NamedQuery(name = "Transaction.getAllByCategory", query = "select t from TransactionEntity t where t.user_id = :user_id and t.category_id = :category_id"),
         @NamedQuery(name = "Transaction.getMonthlyforUser", query = "select t from TransactionEntity t where t.user_id = :user_id and t.isExpense = :isExp and year (t.date)= :year and month(t.date)= :month "),
         @NamedQuery(name = "Transaction.getMonthlyforUserExpenseIncome", query = "select t from TransactionEntity t where t.user_id = :user_id and year (t.date)= :year and month(t.date)= :month "),
         @NamedQuery(name = "Transaction.getMonthlyforUserCurrency", query = "select t from TransactionEntity t where t.user_id = :user_id and t.isExpense = :isExp and year (t.date)= :year and month(t.date)= :month and t.currency = :currency"),
@@ -26,6 +27,7 @@ public class TransactionEntity {
     public static final String QUERY_TRANSACTION_GETMONTHLY_BY_USERNAME_CURRENCY = "Transaction.getMonthlyforUserCurrency";
     public static final String QUERY_TRANSACTION_GETMONTHLY_BY_USERNAME_CURRENCY_PAYMENTTYPE = "Transaction.getMonthlyforUserCurrencyPaymentType";
     public static final String QUERY_TRANSACTION_GETMONTHLY_BY_USERNAME_EXPENSE_AND_INCOME = "Transaction.getMonthlyforUserExpenseIncome";
+    public static final String QUERY_TRANSACTION_GET_ALL_BY_CATEGORY = "Transaction.getAllByCategory";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

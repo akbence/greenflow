@@ -65,6 +65,11 @@ public class TransactionService {
         transactionDao.delete(id,username);
     }
 
+    public void deleteAll(int category_id) throws Exception {
+        String username=loggedInService.getCurrentUserName();
+        transactionDao.deleteAllWithCategory(category_id,username);
+    }
+
     public void modifyTransaction(int id, TransactionInput transactionInput) throws Exception {
         String username=loggedInService.getCurrentUserName();
         Transaction transaction = transactionConverter.restInputToService(transactionInput,loggedInService.getCurrentUserName());

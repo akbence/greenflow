@@ -142,4 +142,16 @@ public class TransactionDao {
                 .getResultList();
         return transactionConverter.daoToServiceList(entityList);
     }
+
+    @Transactional
+    public void deleteAllWithCategory(int category_id,String username) {
+        ArrayList<TransactionEntity> entityList = new ArrayList<>();
+        int user_id = userDao.getId(username);
+        entityList = (ArrayList<TransactionEntity>) em.createNamedQuery(TransactionEntity.QUERY_TRANSACTION_GET_ALL_BY_CATEGORY, TransactionEntity.class)
+                .setParameter("user_id", user_id)
+                .setParameter("category_id", category_id)
+                .getResultList();
+        entityList.forEach(entity ->
+                em.remove(entity));
+    }
 }
