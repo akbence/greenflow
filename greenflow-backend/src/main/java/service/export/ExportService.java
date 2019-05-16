@@ -88,8 +88,7 @@ public class ExportService {
         case UNIX_LINUX:
             return new URI("file:/tmp/" + Math.abs(randomnumber.nextInt()) + ".csv");
         case WINDOWS:
-            // TODO: Implement windows tmp location
-            return null;
+            return new URI("file:///C:/Temp/"+ Math.abs(randomnumber.nextInt()) + ".csv");
         default:
             return new URI("file:/tmp/" + randomnumber.nextInt() + ".csv");
         }

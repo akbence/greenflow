@@ -39,6 +39,7 @@ public class BudgetService {
         Budget budget = new Budget();
         budget.setUsername(loggedInService.getCurrentUserName());
         budget.setLimit(budgetInput.getLimit());
+        budget.setWarning(budgetInput.getWarning());
         budget.setPeriod(LocalDate.now());
         budget.setCurrency(budgetInput.getCurrency());
         budget.setPaymentType(budgetInput.getPaymentType());

@@ -26,6 +26,7 @@ public class BudgetDao {
     @Transactional
     public void addBudget(Budget budget) {
         BudgetEntity budgetEntity= new BudgetEntity();
+        budgetEntity.setWarning(budget.getWarning());
         budgetEntity.setLimitation(budget.getLimit());
         budgetEntity.setPeriod(budget.getPeriod());
         budgetEntity.setUser_id(userDao.getId(budget.getUsername()));
