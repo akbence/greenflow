@@ -24,6 +24,7 @@ export class TransactionComponent implements OnInit, Resolve<any> {
   public paymentTypes = ['CASH', 'CARD']
   public serverURL: string
   public categoryList: string[]
+  public currencyList: string[]
 
   constructor(private http: HttpClient, globals: Globals) {
     this.serverURL = globals.getBaseUrl()
@@ -31,6 +32,7 @@ export class TransactionComponent implements OnInit, Resolve<any> {
     this.transaction.date = null
     this.date = new FormControl(new Date())
     this.categoryList = []
+    this.currencyList = ["HUF","EUR"]
     this.queryAllCategories()
   }
 

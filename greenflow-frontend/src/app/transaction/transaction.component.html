@@ -30,8 +30,10 @@
                                 <div class="col-md-5">
                                     <div class="form-group">
                                         <label>Currency</label>
-                                        <input type="text" class="form-control" [(ngModel)]="transaction.currency"
-                                            [ngModelOptions]="{standalone: true}">
+                                        <select name="currency" type="text" class="form-control"
+                                        [(ngModel)]="transaction.currency" [ngModelOptions]="{standalone: true}">
+                                        <option *ngFor="let element of currencyList">{{element}}</option>
+                                    </select>
                                     </div>
                                 </div>
                             </div>
