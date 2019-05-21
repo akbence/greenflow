@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class Globals implements HttpInterceptor{
-    public baseUrl: string = 'http://10.0.0.188:8080/greenflow/rest/'
+    public baseUrl: string = 'https://10.0.0.188:8080/greenflow/rest/'
     
     constructor() {}
     intercept(req: HttpRequest<any>, next: HttpHandler) :Observable<HttpEvent<any>> {
@@ -14,7 +14,7 @@ export class Globals implements HttpInterceptor{
     // cloned headers, updated with the authorization.
     const corsReq = req.clone({
       headers: req.headers.set("Content-Type","application/json") 
-      .append("Access-Control-Allow-Origin", "http://10.0.0.188:4200")
+      .append("Access-Control-Allow-Origin", "https://10.0.0.188:4200")
       .append('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT')
 //         .append('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
       .append('Access-Control-Allow-Headers', 'accept, authorization, content-type, x-requested-with, set-cookie,cookie')
