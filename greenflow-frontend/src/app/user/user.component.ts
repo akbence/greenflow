@@ -12,11 +12,11 @@ import { HttpHeaders } from '@angular/common/http';
 })
 export class UserComponent implements OnInit {
 
-  private username : string
-  private registrationDate : Date
-  private isEmailEditing : boolean
-  private email : string
-  private serverURL : string
+   username : string
+   registrationDate : Date
+   isEmailEditing : boolean
+   email : string
+   serverURL : string
 
   constructor(private http: HttpClient,globals : Globals ) {
     this.serverURL = globals.getBaseUrl()

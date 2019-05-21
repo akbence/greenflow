@@ -26,9 +26,10 @@ class TableData {
   styleUrls: ['./category.component.css']
 })
 export class CategoryComponent implements OnInit {
-    public tableData1: TableData;
-    public tableData2: TableData;
-    public serverURL : string;
+    public tableData1: TableData
+    public tableData2: TableData
+    public serverURL : string
+    public addNew: string
 
   constructor(private http: HttpClient, globals : Globals) {
     this.serverURL = globals.getBaseUrl()
@@ -70,9 +71,9 @@ export class CategoryComponent implements OnInit {
       });
   }
   
-  addRow(name){
-    console.log(name)
-    const req=JSON.stringify({name : name});
+  addRow(){
+    console.log(this.addNew)
+    const req=JSON.stringify({name : this.addNew});
     console.log("start query post with " + req)
     var token=  JSON.parse(localStorage.getItem("currentUser")).token
     const headers = new HttpHeaders()

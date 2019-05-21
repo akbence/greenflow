@@ -11,9 +11,9 @@ import { HttpHeaders } from '@angular/common/http';
 })
 export class EmaileventsComponent implements OnInit {
 
-  private monthly : boolean
-  private warning : boolean
-  private serverURL : string
+   monthly : boolean
+   warning : boolean
+   serverURL : string
   
 
   constructor(private http: HttpClient,globals : Globals ) {
