@@ -23,5 +23,21 @@
         ]
       }
     }
+  ],
+  "dataGroups": [
+    {
+      "name" : "transactions",
+      "urls" : [
+        "http://localhost:8080/greenflow/rest/transactions"
+      ],
+      "cacheConfig":{
+        "maxSize" : 5,
+        "maxAge" : "6h",
+        "timeout" : "15s",
+        "strategy" : "freshness"
+      }
+    }
+
   ]
+
 }
