@@ -52,10 +52,11 @@ public class RestService {
     public Response register(UserAuthInput userAuthInput) {
         try {
             authService.registerUser(userAuthInput);
+            return Response.status(200).entity("").build();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return Response.status(200).entity("").build();
+        return Response.status(400).entity("").build();
     }
 
     @POST
@@ -68,7 +69,7 @@ public class RestService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return Response.status(200).entity("").build();
+        return Response.status(400).entity("").build();
     }
 
     @PUT
@@ -78,10 +79,11 @@ public class RestService {
     public Response updateEmail(UserAuthInput userAuthInput){
         try {
             authService.setEmail(userAuthInput.getEmail());
+            return Response.status(200).entity("").build();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return Response.status(200).entity("").build();
+        return Response.status(400).entity("").build();
     }
 
     @DELETE
@@ -91,10 +93,11 @@ public class RestService {
     public Response deleteEmail(){
         try {
             authService.deleteEmail();
+            return Response.status(200).entity("").build();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return Response.status(200).entity("").build();
+        return Response.status(400).entity("").build();
     }
 
 
@@ -124,7 +127,7 @@ public class RestService {
         } catch (Exception e){
             e.printStackTrace();
         }
-        return Response.status(400).entity("testFail").build();
+        return Response.status(400).entity("").build();
     }
 
     @POST
@@ -138,7 +141,7 @@ public class RestService {
         } catch (Exception e){
             e.printStackTrace();
         }
-        return Response.status(400).entity("testFail").build();
+        return Response.status(400).entity("").build();
     }
 
     @GET
@@ -152,7 +155,7 @@ public class RestService {
         } catch (Exception e){
             e.printStackTrace();
         }
-        return Response.status(400).entity("testFail").build();
+        return Response.status(400).entity("").build();
     }
 
     @DELETE
@@ -167,7 +170,7 @@ public class RestService {
         } catch (Exception e){
             e.printStackTrace();
         }
-        return Response.status(400).entity("testFail").build();
+        return Response.status(400).entity("").build();
     }
 
     @PUT
@@ -183,7 +186,7 @@ public class RestService {
         } catch (Exception e){
             e.printStackTrace();
         }
-        return Response.status(400).entity("testFail").build();
+        return Response.status(400).entity("").build();
     }
 
 
@@ -222,7 +225,7 @@ public class RestService {
         } catch (Exception e){
             e.printStackTrace();
         }
-        return Response.status(400).entity("testFail").build();
+        return Response.status(400).entity("").build();
 
     }
 
@@ -237,7 +240,7 @@ public class RestService {
         } catch (Exception e){
             e.printStackTrace();
         }
-        return Response.status(400).entity("testFail").build();
+        return Response.status(400).entity("").build();
 
     }
     @DELETE
@@ -251,7 +254,7 @@ public class RestService {
         } catch (Exception e){
             e.printStackTrace();
         }
-        return Response.status(400).entity("testFail").build();
+        return Response.status(400).entity("").build();
 
     }
 
@@ -266,7 +269,7 @@ public class RestService {
         } catch (Exception e){
             e.printStackTrace();
         }
-        return Response.status(400).entity("testFail").build();
+        return Response.status(400).entity("").build();
     }
 
     @GET
@@ -280,7 +283,7 @@ public class RestService {
         } catch (Exception e){
             e.printStackTrace();
         }
-        return Response.status(400).entity("testFail").build();
+        return Response.status(400).entity("").build();
     }
 
     @GET
@@ -294,7 +297,7 @@ public class RestService {
         } catch (Exception e){
             e.printStackTrace();
         }
-        return Response.status(400).entity("testFail").build();
+        return Response.status(400).entity("").build();
     }
 
 
@@ -309,7 +312,7 @@ public class RestService {
         } catch (Exception e){
             e.printStackTrace();
         }
-        return Response.status(400).entity("testFail").build();
+        return Response.status(400).entity("").build();
     }
 
     @POST
@@ -323,7 +326,7 @@ public class RestService {
         } catch (Exception e){
             e.printStackTrace();
         }
-        return Response.status(400).entity("testFail").build();
+        return Response.status(400).entity("").build();
     }
 
     @GET
@@ -337,7 +340,7 @@ public class RestService {
         } catch (Exception e){
             e.printStackTrace();
         }
-        return Response.status(400).entity("testFail").build();
+        return Response.status(400).entity("").build();
     }
 
     @PUT
@@ -351,7 +354,7 @@ public class RestService {
         } catch (Exception e){
             e.printStackTrace();
         }
-        return Response.status(400).entity("testFail").build();
+        return Response.status(400).entity("").build();
     }
 
     @PUT
@@ -365,7 +368,7 @@ public class RestService {
         } catch (Exception e){
             e.printStackTrace();
         }
-        return Response.status(400).entity("testFail").build();
+        return Response.status(400).entity("").build();
     }
 
     @DELETE
@@ -379,7 +382,7 @@ public class RestService {
         } catch (Exception e){
             e.printStackTrace();
         }
-        return Response.status(400).entity("testFail").build();
+        return Response.status(400).entity("").build();
     }
 
     @GET
@@ -401,10 +404,11 @@ public class RestService {
     public Response eventsUpdate(EventsInput eventsInput){
         try {
             eventService.eventsUpdate(eventsInput);
+            return Response.status(200).entity("").build();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return Response.status(200).entity("").build();
+        return Response.status(400).entity("").build();
     }
 
     @POST
@@ -419,7 +423,7 @@ public class RestService {
                 throw new Exception("cannot predict");
             }
         }catch (Exception e){
-            return Response.status(200).build();
+            return Response.status(400).build();
         }
         return Response.ok().entity(res).build();
     }
